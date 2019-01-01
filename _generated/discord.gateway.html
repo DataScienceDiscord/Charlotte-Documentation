@@ -1,0 +1,441 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>discord.gateway module &mdash; Charlotte  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="discord.message module" href="discord.message.html" />
+    <link rel="prev" title="discord.consumer module" href="discord.consumer.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Charlotte
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="commands.html">commands package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="database.html">database package</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="discord.html">discord package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="discord.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="discord.consumer.html">discord.consumer module</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">discord.gateway module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="discord.message.html">discord.message module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="discord.payload.html">discord.payload module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="discord.html#module-discord">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dispatcher.html">dispatcher module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scripts.html">scripts package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Charlotte</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="discord.html">discord package</a> &raquo;</li>
+        
+      <li>discord.gateway module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/_generated/discord.gateway.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-discord.gateway">
+<span id="discord-gateway-module"></span><h1>discord.gateway module<a class="headerlink" href="#module-discord.gateway" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="discord.gateway.Gateway">
+<em class="property">class </em><code class="descclassname">discord.gateway.</code><code class="descname">Gateway</code><span class="sig-paren">(</span><em>token</em>, <em>message_queue</em>, <em>wslib</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/gateway.html#Gateway"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.gateway.Gateway" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>An interface for discord’s gateway API as described here:
+<a class="reference external" href="https://discordapp.com/developers/docs/topics/gateway">https://discordapp.com/developers/docs/topics/gateway</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>token</strong> – The bot token.</li>
+<li><strong>message_queue</strong> – An empty queue that the gateway will dispatch received messages into.</li>
+<li><strong>wslib</strong> – A websocket library.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="discord.gateway.Gateway.ENDPOINT">
+<code class="descname">ENDPOINT</code><em class="property"> = 'wss://gateway.discord.gg/?v=6&amp;encoding=json'</em><a class="headerlink" href="#discord.gateway.Gateway.ENDPOINT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="discord.gateway.Gateway.DEFAULT_HEARTBEAT_PERIOD">
+<code class="descname">DEFAULT_HEARTBEAT_PERIOD</code><em class="property"> = 45</em><a class="headerlink" href="#discord.gateway.Gateway.DEFAULT_HEARTBEAT_PERIOD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="discord.gateway.Gateway.OS">
+<code class="descname">OS</code><em class="property"> = 'linux'</em><a class="headerlink" href="#discord.gateway.Gateway.OS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="discord.gateway.Gateway.NAME">
+<code class="descname">NAME</code><em class="property"> = 'Charlotte'</em><a class="headerlink" href="#discord.gateway.Gateway.NAME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="discord.gateway.Gateway.ENV">
+<code class="descname">ENV</code><em class="property"> = 'DEV'</em><a class="headerlink" href="#discord.gateway.Gateway.ENV" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="discord.gateway.Gateway.RECONNECTION_FAILURE_THRESHOLD">
+<code class="descname">RECONNECTION_FAILURE_THRESHOLD</code><em class="property"> = 3</em><a class="headerlink" href="#discord.gateway.Gateway.RECONNECTION_FAILURE_THRESHOLD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="discord.gateway.Gateway.RECONNECTION_COUNTER_RESET">
+<code class="descname">RECONNECTION_COUNTER_RESET</code><em class="property"> = 600</em><a class="headerlink" href="#discord.gateway.Gateway.RECONNECTION_COUNTER_RESET" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="discord.gateway.Gateway.endpoint">
+<code class="descname">endpoint</code><a class="headerlink" href="#discord.gateway.Gateway.endpoint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="discord.gateway.Gateway.time_since_last_reconnect">
+<code class="descname">time_since_last_reconnect</code><a class="headerlink" href="#discord.gateway.Gateway.time_since_last_reconnect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="discord.gateway.Gateway.receive_payload">
+<code class="descname">receive_payload</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/gateway.html#Gateway.receive_payload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.gateway.Gateway.receive_payload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Receives a payload packet from the websocket
+and stores its sequence number.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A Payload object.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="discord.gateway.Gateway.send_payload">
+<code class="descname">send_payload</code><span class="sig-paren">(</span><em>payload</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/gateway.html#Gateway.send_payload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.gateway.Gateway.send_payload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends a payload packet to the gateway.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>payload</strong> – A Payload object.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="discord.gateway.Gateway.perform_handshake">
+<code class="descname">perform_handshake</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/gateway.html#Gateway.perform_handshake"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.gateway.Gateway.perform_handshake" title="Permalink to this definition">¶</a></dt>
+<dd><p>Waits for the gateway to say hello then identifies with it and
+waits for its READY acknowledgment.
+In the process the heartbeat interval and session ID are defined.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><strong>AssertionError</strong> – Unexpected behaviour from the gateway during the handshake.</li>
+<li><strong>KeyError</strong> – Handshake messages did not contain necessary information.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="discord.gateway.Gateway.connect">
+<code class="descname">connect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/gateway.html#Gateway.connect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.gateway.Gateway.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Opens a connection to the gateway and perform the agreed upon handshake.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><strong>AssertionError</strong> – Unexpected behaviour from the gateway during the handshake.</li>
+<li><strong>KeyError</strong> – Handshake messages did not contain necessary information.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="discord.gateway.Gateway.resume">
+<code class="descname">resume</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/gateway.html#Gateway.resume"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.gateway.Gateway.resume" title="Permalink to this definition">¶</a></dt>
+<dd><p>Attempts to reopen a connection and send a RESUME Payload to
+get all the events that were sent during the disconnection period.</p>
+<p>In the event that it fails to connect the first time,
+it will attempt to open a new connection without resuming from the last
+message received.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><strong>AssertionError</strong> – Unexpected behaviour from the gateway during the handshake.</li>
+<li><strong>KeyError</strong> – Handshake messages did not contain necessary information.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="discord.gateway.Gateway.reconnect">
+<code class="descname">reconnect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/gateway.html#Gateway.reconnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.gateway.Gateway.reconnect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes the current connection and attempts to open a new one
+and resume at the last message received.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><strong>AssertionError</strong> – Unexpected behaviour from the gateway during the handshake.</li>
+<li><strong>KeyError</strong> – Handshake messages did not contain necessary information.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="discord.gateway.Gateway.send_heartbeat">
+<code class="descname">send_heartbeat</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/gateway.html#Gateway.send_heartbeat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.gateway.Gateway.send_heartbeat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends a single HEARTBEAT Payload to the gateway.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="discord.gateway.Gateway.make_heart_beat">
+<code class="descname">make_heart_beat</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/gateway.html#Gateway.make_heart_beat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.gateway.Gateway.make_heart_beat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends heartbeats at the chosen heartbeat interval
+until told to stop or the connection drops, in which case
+it’ll attempt to reconnect.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="discord.gateway.Gateway.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/gateway.html#Gateway.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.gateway.Gateway.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Receives and handle payloads until told to stop or the connection drops.
+When a DISPATCH Payload is received it’ll be put inside the message queue
+for further processing by listeners.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="discord.gateway.Gateway.close">
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/gateway.html#Gateway.close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.gateway.Gateway.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes the websocket connection.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="discord.gateway.Gateway.start">
+<code class="descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/gateway.html#Gateway.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.gateway.Gateway.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts listening for Payloads and sending heartbeats.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="discord.gateway.Gateway.stop">
+<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/gateway.html#Gateway.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.gateway.Gateway.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stops listening for Payloads and sending heartbeats.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="discord.message.html" class="btn btn-neutral float-right" title="discord.message module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="discord.consumer.html" class="btn btn-neutral" title="discord.consumer module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Charlotte
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

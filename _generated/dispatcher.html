@@ -1,0 +1,314 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>dispatcher module &mdash; Charlotte  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="scripts package" href="scripts.html" />
+    <link rel="prev" title="discord.payload module" href="discord.payload.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Charlotte
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="commands.html">commands package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="database.html">database package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="discord.html">discord package</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">dispatcher module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scripts.html">scripts package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Charlotte</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>dispatcher module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/_generated/dispatcher.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-dispatcher">
+<span id="dispatcher-module"></span><h1>dispatcher module<a class="headerlink" href="#module-dispatcher" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="dispatcher.Dispatcher">
+<em class="property">class </em><code class="descclassname">dispatcher.</code><code class="descname">Dispatcher</code><span class="sig-paren">(</span><em>inc_queue</em>, <em>database_connection</em>, <em>consumer</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dispatcher.html#Dispatcher"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dispatcher.Dispatcher" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A dispatcher to relay the received messages to the appropriate
+commands.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>inc_queue</strong> – The incoming message queue.</li>
+<li><strong>database_connection</strong> – The datanase interface.</li>
+<li><strong>consumer</strong> – The discord REST API consumer to send messages through.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="dispatcher.Dispatcher.COMMAND_PREFIX">
+<code class="descname">COMMAND_PREFIX</code><em class="property"> = '!c:'</em><a class="headerlink" href="#dispatcher.Dispatcher.COMMAND_PREFIX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dispatcher.Dispatcher.is_command">
+<code class="descname">is_command</code><span class="sig-paren">(</span><em>content</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dispatcher.html#Dispatcher.is_command"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dispatcher.Dispatcher.is_command" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indicates whether a message is a command.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>content</strong> – The contents of the message.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A boolean indicating whether the message is a command.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="dispatcher.Dispatcher.parse">
+<code class="descname">parse</code><span class="sig-paren">(</span><em>content</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dispatcher.html#Dispatcher.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dispatcher.Dispatcher.parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses a message to extract the command and its parameters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>content</strong> – The contents of the message.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A tuple containing the command identifier and the parameters.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="dispatcher.Dispatcher.dispatch">
+<code class="descname">dispatch</code><span class="sig-paren">(</span><em>command_id</em>, <em>message</em>, <em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dispatcher.html#Dispatcher.dispatch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dispatcher.Dispatcher.dispatch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calls the appropriate command with the given parameters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>command_id</strong> – The string identifier of the command.</li>
+<li><strong>params</strong> – The parameters to be passed to the command.</li>
+<li><strong>message</strong> – The full message which contained the command.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The results of the command.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="dispatcher.Dispatcher.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dispatcher.html#Dispatcher.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dispatcher.Dispatcher.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Listens for new messages in the incoming queue and dispatches
+them to the appropriate commands and stores them.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dispatcher.Dispatcher.start">
+<code class="descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dispatcher.html#Dispatcher.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dispatcher.Dispatcher.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts listening for incoming messages.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dispatcher.Dispatcher.stop">
+<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dispatcher.html#Dispatcher.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dispatcher.Dispatcher.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stops listening for incoming messages.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="scripts.html" class="btn btn-neutral float-right" title="scripts package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="discord.payload.html" class="btn btn-neutral" title="discord.payload module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Charlotte
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

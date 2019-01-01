@@ -1,0 +1,414 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>discord.gateway &mdash; Charlotte  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Charlotte
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../_generated/commands.html">commands package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_generated/database.html">database package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_generated/discord.html">discord package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_generated/dispatcher.html">dispatcher module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_generated/scripts.html">scripts package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Charlotte</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>discord.gateway</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for discord.gateway</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+
+<span class="kn">from</span> <span class="nn">discord.payload</span> <span class="k">import</span> <span class="n">Payload</span>
+<span class="kn">from</span> <span class="nn">discord.message</span> <span class="k">import</span> <span class="n">Message</span>
+
+
+<div class="viewcode-block" id="Gateway"><a class="viewcode-back" href="../../_generated/discord.gateway.html#discord.gateway.Gateway">[docs]</a><span class="k">class</span> <span class="nc">Gateway</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;An interface for discord&#39;s gateway API as described here:</span>
+<span class="sd">    https://discordapp.com/developers/docs/topics/gateway</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        token: The bot token.</span>
+<span class="sd">        message_queue: An empty queue that the gateway will dispatch received messages into.</span>
+<span class="sd">        wslib: A websocket library.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ENDPOINT</span> <span class="o">=</span> <span class="s2">&quot;wss://gateway.discord.gg/?v=6&amp;encoding=json&quot;</span>
+    <span class="n">DEFAULT_HEARTBEAT_PERIOD</span> <span class="o">=</span> <span class="mi">45</span> <span class="c1"># seconds</span>
+    <span class="n">OS</span> <span class="o">=</span> <span class="s2">&quot;linux&quot;</span>
+    <span class="n">NAME</span> <span class="o">=</span> <span class="s2">&quot;Charlotte&quot;</span>
+    <span class="n">ENV</span> <span class="o">=</span> <span class="s2">&quot;DEV&quot;</span>
+    <span class="n">RECONNECTION_FAILURE_THRESHOLD</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">RECONNECTION_COUNTER_RESET</span>     <span class="o">=</span> <span class="mi">600</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">message_queue</span><span class="p">,</span> <span class="n">wslib</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">token</span> <span class="o">=</span> <span class="n">token</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">message_queue</span> <span class="o">=</span> <span class="n">message_queue</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wslib</span>     <span class="o">=</span> <span class="n">wslib</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">running</span>   <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connected</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_period</span> <span class="o">=</span> <span class="n">Gateway</span><span class="o">.</span><span class="n">DEFAULT_HEARTBEAT_PERIOD</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_acknowledged</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_seq</span>          <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">session_id</span>        <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reconnect_counter</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_reconnect</span>    <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GUILD</span> <span class="o">=</span> <span class="s2">&quot;523141683379175424&quot;</span> <span class="k">if</span> <span class="n">Gateway</span><span class="o">.</span><span class="n">ENV</span> <span class="o">==</span> <span class="s2">&quot;DEV&quot;</span> <span class="k">else</span> <span class="s2">&quot;464539978442211328&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">endpoint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Gateway</span><span class="o">.</span><span class="n">ENDPOINT</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">time_since_last_reconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_reconnect</span>
+
+<div class="viewcode-block" id="Gateway.receive_payload"><a class="viewcode-back" href="../../_generated/discord.gateway.html#discord.gateway.Gateway.receive_payload">[docs]</a>    <span class="k">def</span> <span class="nf">receive_payload</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Receives a payload packet from the websocket</span>
+<span class="sd">        and stores its sequence number.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A Payload object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">packet</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ws</span><span class="o">.</span><span class="n">recv</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">packet</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&lt;&lt;&quot;</span><span class="p">,</span> <span class="n">packet</span><span class="p">)</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">Payload</span><span class="o">.</span><span class="n">from_packet</span><span class="p">(</span><span class="n">packet</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">payload</span><span class="o">.</span><span class="n">seq_number</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">last_seq</span> <span class="o">=</span> <span class="n">payload</span><span class="o">.</span><span class="n">seq_number</span>
+        <span class="k">return</span> <span class="n">payload</span></div>
+
+<div class="viewcode-block" id="Gateway.send_payload"><a class="viewcode-back" href="../../_generated/discord.gateway.html#discord.gateway.Gateway.send_payload">[docs]</a>    <span class="k">def</span> <span class="nf">send_payload</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sends a payload packet to the gateway.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            payload: A Payload object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">packet</span> <span class="o">=</span> <span class="n">payload</span><span class="o">.</span><span class="n">to_packet</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&gt;&gt;&quot;</span><span class="p">,</span> <span class="n">packet</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ws</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">packet</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Gateway.perform_handshake"><a class="viewcode-back" href="../../_generated/discord.gateway.html#discord.gateway.Gateway.perform_handshake">[docs]</a>    <span class="k">def</span> <span class="nf">perform_handshake</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Waits for the gateway to say hello then identifies with it and</span>
+<span class="sd">        waits for its READY acknowledgment.</span>
+<span class="sd">        In the process the heartbeat interval and session ID are defined.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            AssertionError: Unexpected behaviour from the gateway during the handshake.</span>
+<span class="sd">            KeyError: Handshake messages did not contain necessary information.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Say hello</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">receive_payload</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="n">payload</span> <span class="o">==</span> <span class="n">Payload</span><span class="o">.</span><span class="n">HELLO</span><span class="p">,</span> <span class="s2">&quot;First message upon connection was not HELLO.&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_period</span> <span class="o">=</span> <span class="n">payload</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;heartbeat_interval&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">1000</span>
+        <span class="c1"># Identify</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">Payload</span><span class="o">.</span><span class="n">Identify</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">NAME</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_payload</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+        <span class="c1"># Get ready</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">receive_payload</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="n">payload</span> <span class="o">==</span> <span class="n">Payload</span><span class="o">.</span><span class="n">DISPATCH</span> <span class="ow">and</span> <span class="n">payload</span><span class="o">.</span><span class="n">event_name</span> <span class="o">==</span> <span class="s2">&quot;READY&quot;</span><span class="p">,</span> <span class="s2">&quot;Did not receive READY payload after IDENTIFY.&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">session_id</span> <span class="o">=</span> <span class="n">payload</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;session_id&quot;</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Gateway.connect"><a class="viewcode-back" href="../../_generated/discord.gateway.html#discord.gateway.Gateway.connect">[docs]</a>    <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Opens a connection to the gateway and perform the agreed upon handshake.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            AssertionError: Unexpected behaviour from the gateway during the handshake.</span>
+<span class="sd">            KeyError: Handshake messages did not contain necessary information.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ws</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wslib</span><span class="o">.</span><span class="n">WebSocket</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ws</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">perform_handshake</span><span class="p">()</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">AssertionError</span><span class="p">,</span> <span class="ne">KeyError</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ws</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="k">raise</span></div>
+
+<div class="viewcode-block" id="Gateway.resume"><a class="viewcode-back" href="../../_generated/discord.gateway.html#discord.gateway.Gateway.resume">[docs]</a>    <span class="k">def</span> <span class="nf">resume</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Attempts to reopen a connection and send a RESUME Payload to</span>
+<span class="sd">        get all the events that were sent during the disconnection period.</span>
+
+<span class="sd">        In the event that it fails to connect the first time,</span>
+<span class="sd">        it will attempt to open a new connection without resuming from the last</span>
+<span class="sd">        message received.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            AssertionError: Unexpected behaviour from the gateway during the handshake.</span>
+<span class="sd">            KeyError: Handshake messages did not contain necessary information.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span> <span class="c1"># TODO: Move this outside resume</span>
+            <span class="c1"># &quot;It&#39;s also possible that your client cannot reconnect in time to resume,</span>
+            <span class="c1"># in which case the client will receive a Opcode 9 Invalid Session and is expected</span>
+            <span class="c1"># to wait a random amount of time—between 1 and 5 seconds—then send a fresh Opcode 2 Identify.</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+            <span class="k">return</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">Payload</span><span class="o">.</span><span class="n">Resume</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_seq</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_payload</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Gateway.reconnect"><a class="viewcode-back" href="../../_generated/discord.gateway.html#discord.gateway.Gateway.reconnect">[docs]</a>    <span class="k">def</span> <span class="nf">reconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Closes the current connection and attempts to open a new one</span>
+<span class="sd">        and resume at the last message received.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            AssertionError: Unexpected behaviour from the gateway during the handshake.</span>
+<span class="sd">            KeyError: Handshake messages did not contain necessary information.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">reconnect_counter</span> <span class="o">&gt;=</span> <span class="n">Gateway</span><span class="o">.</span><span class="n">RECONNECTION_FAILURE_THRESHOLD</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Reconnection attempts threshold has been reached. Stopping.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resume</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reconnect_counter</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_reconnect</span>     <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Gateway.send_heartbeat"><a class="viewcode-back" href="../../_generated/discord.gateway.html#discord.gateway.Gateway.send_heartbeat">[docs]</a>    <span class="k">def</span> <span class="nf">send_heartbeat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sends a single HEARTBEAT Payload to the gateway.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_acknowledged</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">Payload</span><span class="p">(</span><span class="n">Payload</span><span class="o">.</span><span class="n">HEARTBEAT</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">last_seq</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_payload</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Gateway.make_heart_beat"><a class="viewcode-back" href="../../_generated/discord.gateway.html#discord.gateway.Gateway.make_heart_beat">[docs]</a>    <span class="k">def</span> <span class="nf">make_heart_beat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sends heartbeats at the chosen heartbeat interval</span>
+<span class="sd">        until told to stop or the connection drops, in which case</span>
+<span class="sd">        it&#39;ll attempt to reconnect.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">running</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_acknowledged</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">reconnect</span><span class="p">()</span>
+                <span class="k">break</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">reconnect_counter</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_since_last_reconnect</span> <span class="o">&gt;=</span> <span class="n">Gateway</span><span class="o">.</span><span class="n">RECONNECTION_COUNTER_RESET</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">reconnect_counter</span> <span class="o">=</span> <span class="mi">0</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">send_heartbeat</span><span class="p">()</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_period</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Gateway.run"><a class="viewcode-back" href="../../_generated/discord.gateway.html#discord.gateway.Gateway.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Receives and handle payloads until told to stop or the connection drops.</span>
+<span class="sd">        When a DISPATCH Payload is received it&#39;ll be put inside the message queue</span>
+<span class="sd">        for further processing by listeners.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">running</span><span class="p">:</span>
+            <span class="n">payload</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">receive_payload</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">payload</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Connection closed.&quot;</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="n">payload</span> <span class="o">==</span> <span class="n">Payload</span><span class="o">.</span><span class="n">HEARTBEAT</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">send_heartbeat</span><span class="p">()</span>
+                <span class="c1"># We don&#39;t require acknowledgement for requested beats</span>
+                <span class="c1"># so as not to create race conditions with beating thread.</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_acknowledged</span> <span class="o">=</span> <span class="kc">True</span>
+
+            <span class="k">elif</span> <span class="n">payload</span> <span class="o">==</span> <span class="n">Payload</span><span class="o">.</span><span class="n">HEARTBEAT_ACK</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_acknowledged</span> <span class="o">=</span> <span class="kc">True</span>
+
+            <span class="k">elif</span> <span class="n">payload</span> <span class="o">==</span> <span class="n">Payload</span><span class="o">.</span><span class="n">DISPATCH</span> <span class="ow">and</span> <span class="n">payload</span><span class="o">.</span><span class="n">event_name</span> <span class="o">==</span> <span class="s2">&quot;MESSAGE_CREATE&quot;</span><span class="p">:</span>
+                <span class="n">message</span> <span class="o">=</span> <span class="n">Message</span><span class="o">.</span><span class="n">from_payload</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">message_queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Gateway.close"><a class="viewcode-back" href="../../_generated/discord.gateway.html#discord.gateway.Gateway.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Closes the websocket connection.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ws</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Gateway.start"><a class="viewcode-back" href="../../_generated/discord.gateway.html#discord.gateway.Gateway.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Starts listening for Payloads and sending heartbeats.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">running</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">)</span>
+        <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">make_heart_beat</span><span class="p">)</span>
+        <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Gateway.stop"><a class="viewcode-back" href="../../_generated/discord.gateway.html#discord.gateway.Gateway.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Stops listening for Payloads and sending heartbeats.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">running</span> <span class="o">=</span> <span class="kc">False</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Charlotte
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

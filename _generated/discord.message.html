@@ -1,0 +1,282 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>discord.message module &mdash; Charlotte  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="discord.payload module" href="discord.payload.html" />
+    <link rel="prev" title="discord.gateway module" href="discord.gateway.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Charlotte
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="commands.html">commands package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="database.html">database package</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="discord.html">discord package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="discord.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="discord.consumer.html">discord.consumer module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="discord.gateway.html">discord.gateway module</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">discord.message module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="discord.payload.html">discord.payload module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="discord.html#module-discord">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dispatcher.html">dispatcher module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scripts.html">scripts package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Charlotte</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="discord.html">discord package</a> &raquo;</li>
+        
+      <li>discord.message module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/_generated/discord.message.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-discord.message">
+<span id="discord-message-module"></span><h1>discord.message module<a class="headerlink" href="#module-discord.message" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="discord.message.Message">
+<em class="property">class </em><code class="descclassname">discord.message.</code><code class="descname">Message</code><span class="sig-paren">(</span><em>content</em>, <em>channel_id</em>, <em>user</em>, <em>username</em>, <em>timestamp=None</em>, <em>attachment=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/message.html#Message"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.message.Message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A discord message as described here:
+<a class="reference external" href="https://discordapp.com/developers/docs/resources/channel#message-object">https://discordapp.com/developers/docs/resources/channel#message-object</a>
+A message can be either received through the gateway websocket or sent to the REST API.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>content</strong> – The contents of the message.</li>
+<li><strong>channel_id</strong> – The id of the channel the message will be written to.</li>
+<li><strong>user</strong> – The unique id of the user who sent/sends the message.</li>
+<li><strong>username</strong> – The current username#discriminator combo for that user.</li>
+<li><strong>timestamp</strong> – The time of the message.</li>
+<li><strong>attachment</strong> – The file that will be attached to the message.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="staticmethod">
+<dt id="discord.message.Message.from_payload">
+<em class="property">static </em><code class="descname">from_payload</code><span class="sig-paren">(</span><em>payload</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/message.html#Message.from_payload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.message.Message.from_payload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a Message from a Payload by extracting relevant items.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>payload</strong> – A MESSAGE_CREATE payload.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A message.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="discord.message.Message.to_json">
+<code class="descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/message.html#Message.to_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.message.Message.to_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Encodes the message in json in a format recognized by discord’s APIs.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A json string.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="discord.payload.html" class="btn btn-neutral float-right" title="discord.payload module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="discord.gateway.html" class="btn btn-neutral" title="discord.gateway module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Charlotte
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
