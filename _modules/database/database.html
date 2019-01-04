@@ -148,6 +148,7 @@
   <h1>Source code for database.database</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">database</span> <span class="k">import</span> <span class="n">User</span>
 <span class="kn">from</span> <span class="nn">database</span> <span class="k">import</span> <span class="n">Message</span>
+<span class="kn">from</span> <span class="nn">peewee</span> <span class="k">import</span> <span class="n">fn</span><span class="p">,</span> <span class="n">JOIN</span><span class="p">,</span> <span class="n">SQL</span>
 
 
 <div class="viewcode-block" id="Database"><a class="viewcode-back" href="../../_generated/database.database.html#database.database.Database">[docs]</a><span class="k">class</span> <span class="nc">Database</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -246,7 +247,23 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Whether the message was succesfully deleted.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">Message</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">Message</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">message_id</span><span class="p">)</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span></div></div>
+        <span class="k">return</span> <span class="n">Message</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">Message</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">message_id</span><span class="p">)</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Database.get_top_users_per_message_count"><a class="viewcode-back" href="../../_generated/database.database.html#database.database.Database.get_top_users_per_message_count">[docs]</a>    <span class="k">def</span> <span class="nf">get_top_users_per_message_count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">top_n</span><span class="o">=</span><span class="mi">9</span><span class="p">):</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">fn</span><span class="o">.</span><span class="n">Count</span><span class="p">(</span><span class="n">Message</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s1">&#39;count&#39;</span><span class="p">))</span> \
+                    <span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">Message</span><span class="p">,</span> <span class="n">JOIN</span><span class="o">.</span><span class="n">RIGHT_OUTER</span><span class="p">)</span> \
+                    <span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="n">User</span><span class="p">)</span> \
+                    <span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">SQL</span><span class="p">(</span><span class="s1">&#39;count&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">desc</span><span class="p">())</span> \
+                    <span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="n">top_n</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">query</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Database.get_top_users_per_num_characters"><a class="viewcode-back" href="../../_generated/database.database.html#database.database.Database.get_top_users_per_num_characters">[docs]</a>    <span class="k">def</span> <span class="nf">get_top_users_per_num_characters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">top_n</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">fn</span><span class="o">.</span><span class="n">SUM</span><span class="p">(</span><span class="n">fn</span><span class="o">.</span><span class="n">LENGTH</span><span class="p">(</span><span class="n">Message</span><span class="o">.</span><span class="n">content</span><span class="p">))</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s1">&#39;length&#39;</span><span class="p">))</span> \
+                    <span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">Message</span><span class="p">,</span> <span class="n">JOIN</span><span class="o">.</span><span class="n">RIGHT_OUTER</span><span class="p">)</span> \
+                    <span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="n">User</span><span class="p">)</span> \
+                    <span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">SQL</span><span class="p">(</span><span class="s1">&#39;length&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">desc</span><span class="p">())</span> \
+                    <span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="n">top_n</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">query</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>

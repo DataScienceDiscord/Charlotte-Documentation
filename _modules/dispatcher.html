@@ -159,7 +159,8 @@
 <span class="sd">        database_connection: The datanase interface.</span>
 <span class="sd">        consumer: The discord REST API consumer to send messages through.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">COMMAND_PREFIX</span> <span class="o">=</span> <span class="s2">&quot;!c:&quot;</span>
+    <span class="n">COMMAND_PREFIX</span> <span class="o">=</span> <span class="s2">&quot;!c/&quot;</span>
+    <span class="n">DELIMITER</span>      <span class="o">=</span> <span class="s2">&quot;/&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inc_queue</span><span class="p">,</span> <span class="n">database_connection</span><span class="p">,</span> <span class="n">consumer</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">inc_queue</span> <span class="o">=</span> <span class="n">inc_queue</span>
@@ -190,7 +191,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_command</span><span class="p">(</span><span class="n">content</span><span class="p">):</span>
 
             <span class="c1"># Extract command</span>
-            <span class="n">command</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">command</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">Dispatcher</span><span class="o">.</span><span class="n">DELIMITER</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
             <span class="k">if</span> <span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Badly formatted command.&quot;</span><span class="p">)</span>
 

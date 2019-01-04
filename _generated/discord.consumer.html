@@ -188,6 +188,11 @@
 <dd></dd></dl>
 
 <dl class="attribute">
+<dt id="discord.consumer.Consumer.LIST_GUILD_MEMBERS_ROUTE">
+<code class="descname">LIST_GUILD_MEMBERS_ROUTE</code><em class="property"> = 'guilds/%s/members'</em><a class="headerlink" href="#discord.consumer.Consumer.LIST_GUILD_MEMBERS_ROUTE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
 <dt id="discord.consumer.Consumer.URL">
 <code class="descname">URL</code><em class="property"> = 'https://github.com/DataScienceDiscord/Charlotte'</em><a class="headerlink" href="#discord.consumer.Consumer.URL" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -211,6 +216,24 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>message</strong> – The Message to be sent.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="discord.consumer.Consumer.list_guild_members">
+<code class="descname">list_guild_members</code><span class="sig-paren">(</span><em>guild_id</em>, <em>limit=1000</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/consumer.html#Consumer.list_guild_members"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.consumer.Consumer.list_guild_members" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a list of the guild members.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>guild_id</strong> – The guild whose members we want.</li>
+<li><strong>limit</strong> – The number of members to get.</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>

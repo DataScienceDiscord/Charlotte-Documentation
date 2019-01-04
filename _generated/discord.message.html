@@ -165,7 +165,7 @@
 <span id="discord-message-module"></span><h1>discord.message module<a class="headerlink" href="#module-discord.message" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="discord.message.Message">
-<em class="property">class </em><code class="descclassname">discord.message.</code><code class="descname">Message</code><span class="sig-paren">(</span><em>content</em>, <em>channel_id</em>, <em>user</em>, <em>username</em>, <em>timestamp=None</em>, <em>attachment=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/message.html#Message"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.message.Message" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">discord.message.</code><code class="descname">Message</code><span class="sig-paren">(</span><em>content</em>, <em>channel_id</em>, <em>user</em>, <em>username</em>, <em>timestamp=None</em>, <em>attachment=None</em>, <em>embed=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/message.html#Message"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.message.Message" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>A discord message as described here:
 <a class="reference external" href="https://discordapp.com/developers/docs/resources/channel#message-object">https://discordapp.com/developers/docs/resources/channel#message-object</a>
@@ -197,6 +197,20 @@ A message can be either received through the gateway websocket or sent to the RE
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>payload</strong> – A MESSAGE_CREATE payload.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A message.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="discord.message.Message.to_payload">
+<code class="descname">to_payload</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/message.html#Message.to_payload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.message.Message.to_payload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Encodes the message in json in a format recognized by discord’s APIs.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A json string.</td>
 </tr>
 </tbody>
 </table>

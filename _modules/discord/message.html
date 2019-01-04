@@ -163,15 +163,14 @@
 <span class="sd">        attachment: The file that will be attached to the message.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="n">channel_id</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">timestamp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">attachment</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">attachment</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Can&#39;t add attachments to messages yet.&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="n">channel_id</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">timestamp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">attachment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">embed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">content</span>    <span class="o">=</span> <span class="n">content</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">channel_id</span> <span class="o">=</span> <span class="n">channel_id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">user</span>       <span class="o">=</span> <span class="n">user</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">username</span>   <span class="o">=</span> <span class="n">username</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span>  <span class="o">=</span> <span class="n">timestamp</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">attachment</span> <span class="o">=</span> <span class="n">attachment</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">embed</span>      <span class="o">=</span> <span class="n">embed</span>
 
 <div class="viewcode-block" id="Message.from_payload"><a class="viewcode-back" href="../../_generated/discord.message.html#discord.message.Message.from_payload">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">from_payload</span><span class="p">(</span><span class="n">payload</span><span class="p">):</span>
@@ -190,7 +189,7 @@
                        <span class="n">username</span>   <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;author&quot;</span><span class="p">][</span><span class="s2">&quot;username&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;#&quot;</span> <span class="o">+</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;author&quot;</span><span class="p">][</span><span class="s2">&quot;discriminator&quot;</span><span class="p">],</span>
                        <span class="n">timestamp</span>  <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">])</span></div>
 
-<div class="viewcode-block" id="Message.to_json"><a class="viewcode-back" href="../../_generated/discord.message.html#discord.message.Message.to_json">[docs]</a>    <span class="k">def</span> <span class="nf">to_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Message.to_payload"><a class="viewcode-back" href="../../_generated/discord.message.html#discord.message.Message.to_payload">[docs]</a>    <span class="k">def</span> <span class="nf">to_payload</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Encodes the message in json in a format recognized by discord&#39;s APIs.</span>
 
 <span class="sd">        Returns:</span>
@@ -199,11 +198,17 @@
         <span class="n">payload</span> <span class="o">=</span>  <span class="p">{</span>
             <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="p">,</span>
             <span class="s2">&quot;tts&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-            <span class="s2">&quot;file&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">attachment</span><span class="p">,</span>
-            <span class="s2">&quot;embed&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="s2">&quot;payload_json&quot;</span><span class="p">:</span> <span class="kc">None</span>
+            <span class="s2">&quot;embed&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">embed</span>
         <span class="p">}</span>
-        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="n">payload</span></div>
+
+<div class="viewcode-block" id="Message.to_json"><a class="viewcode-back" href="../../_generated/discord.message.html#discord.message.Message.to_json">[docs]</a>    <span class="k">def</span> <span class="nf">to_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Encodes the message in json in a format recognized by discord&#39;s APIs.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A json string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_payload</span><span class="p">())</span></div></div>
 </pre></div>
 
            </div>
