@@ -1,0 +1,7 @@
+commands.unknown\_command module
+================================
+
+.. automodule:: commands.unknown_command
+    :members:
+    :undoc-members:
+    :show-inheritance:
