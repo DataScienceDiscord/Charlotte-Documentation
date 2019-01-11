@@ -146,8 +146,7 @@
            <div itemprop="articleBody">
             
   <h1>Source code for dispatcher</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">commands</span>
-<span class="kn">import</span> <span class="nn">threading</span>
+<span></span><span class="kn">import</span> <span class="nn">threading</span>
 
 
 <div class="viewcode-block" id="Dispatcher"><a class="viewcode-back" href="../_generated/dispatcher.html#dispatcher.Dispatcher">[docs]</a><span class="k">class</span> <span class="nc">Dispatcher</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -162,10 +161,11 @@
     <span class="n">COMMAND_PREFIX</span> <span class="o">=</span> <span class="s2">&quot;!c/&quot;</span>
     <span class="n">DELIMITER</span>      <span class="o">=</span> <span class="s2">&quot;/&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inc_queue</span><span class="p">,</span> <span class="n">database_connection</span><span class="p">,</span> <span class="n">consumer</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inc_queue</span><span class="p">,</span> <span class="n">database_connection</span><span class="p">,</span> <span class="n">consumer</span><span class="p">,</span> <span class="n">commands</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">inc_queue</span> <span class="o">=</span> <span class="n">inc_queue</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data_conn</span> <span class="o">=</span> <span class="n">database_connection</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">consumer</span>  <span class="o">=</span> <span class="n">consumer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">commands</span>  <span class="o">=</span> <span class="n">commands</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">running</span>   <span class="o">=</span> <span class="kc">False</span>
 
 <div class="viewcode-block" id="Dispatcher.is_command"><a class="viewcode-back" href="../_generated/dispatcher.html#dispatcher.Dispatcher.is_command">[docs]</a>    <span class="k">def</span> <span class="nf">is_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">):</span>
@@ -196,12 +196,12 @@
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Badly formatted command.&quot;</span><span class="p">)</span>
 
             <span class="c1"># Extract params</span>
-            <span class="n">content_start</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">Dispatcher</span><span class="o">.</span><span class="n">COMMAND_PREFIX</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">command</span><span class="p">)</span><span class="c1"># +:</span>
+            <span class="n">content_start</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">Dispatcher</span><span class="o">.</span><span class="n">COMMAND_PREFIX</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">content_start</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">content</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Badly formatted command.&quot;</span><span class="p">)</span>
             <span class="n">params</span> <span class="o">=</span> <span class="n">content</span><span class="p">[</span><span class="n">content_start</span><span class="p">:]</span>
 
-            <span class="c1"># Getting rid of the &quot;:&quot;</span>
+            <span class="c1"># Getting rid of the delimiter</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">params</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="n">params</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
 
@@ -219,9 +219,28 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            The results of the command.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">command</span> <span class="o">=</span> <span class="n">commands</span><span class="o">.</span><span class="n">identifiers</span><span class="p">[</span><span class="n">command_id</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">command</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_conn</span><span class="p">)</span></div>
+        <span class="n">command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">commands</span><span class="o">.</span><span class="n">identifiers</span><span class="p">[</span><span class="n">command_id</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">command</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_conn</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span></div>
 
+<div class="viewcode-block" id="Dispatcher.process_message"><a class="viewcode-back" href="../_generated/dispatcher.html#dispatcher.Dispatcher.process_message">[docs]</a>    <span class="k">def</span> <span class="nf">process_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Calls the appropriate command with the given parameters.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            command_id: The string identifier of the command.</span>
+<span class="sd">            params: The parameters to be passed to the command.</span>
+<span class="sd">            message: The full message which contained the command.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The results of the command.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">command</span><span class="p">,</span> <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">command</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">command</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">commands</span><span class="o">.</span><span class="n">identifiers</span><span class="p">:</span>
+                <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s2">&quot;unknown_command&quot;</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">consumer</span><span class="o">.</span><span class="n">create_message</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s2">&quot;store&quot;</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Dispatcher.run"><a class="viewcode-back" href="../_generated/dispatcher.html#dispatcher.Dispatcher.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Listens for new messages in the incoming queue and dispatches</span>
@@ -234,14 +253,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
                 <span class="k">break</span>
 
-            <span class="n">command</span><span class="p">,</span> <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">command</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">command</span> <span class="ow">in</span> <span class="n">commands</span><span class="o">.</span><span class="n">identifiers</span><span class="p">:</span>
-                    <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s2">&quot;unknown_command&quot;</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">consumer</span><span class="o">.</span><span class="n">create_message</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s2">&quot;store&quot;</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span></div>
+            <span class="n">process_message</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Dispatcher.start"><a class="viewcode-back" href="../_generated/dispatcher.html#dispatcher.Dispatcher.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Starts listening for incoming messages.&quot;&quot;&quot;</span>

@@ -209,7 +209,7 @@
         <span class="n">mysql</span> <span class="o">=</span> <span class="kc">None</span>
 
 
-<span class="n">__version__</span> <span class="o">=</span> <span class="s1">&#39;3.8.0&#39;</span>
+<span class="n">__version__</span> <span class="o">=</span> <span class="s1">&#39;3.8.1&#39;</span>
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;AsIs&#39;</span><span class="p">,</span>
     <span class="s1">&#39;AutoField&#39;</span><span class="p">,</span>
@@ -432,17 +432,18 @@
 <span class="c1"># To support &quot;django-style&quot; double-underscore filters, create a mapping between</span>
 <span class="c1"># operation name and operation code, e.g. &quot;__eq&quot; == OP.EQ.</span>
 <span class="n">DJANGO_MAP</span> <span class="o">=</span> <span class="n">attrdict</span><span class="p">({</span>
-    <span class="s1">&#39;eq&#39;</span><span class="p">:</span> <span class="n">OP</span><span class="o">.</span><span class="n">EQ</span><span class="p">,</span>
-    <span class="s1">&#39;lt&#39;</span><span class="p">:</span> <span class="n">OP</span><span class="o">.</span><span class="n">LT</span><span class="p">,</span>
-    <span class="s1">&#39;lte&#39;</span><span class="p">:</span> <span class="n">OP</span><span class="o">.</span><span class="n">LTE</span><span class="p">,</span>
-    <span class="s1">&#39;gt&#39;</span><span class="p">:</span> <span class="n">OP</span><span class="o">.</span><span class="n">GT</span><span class="p">,</span>
-    <span class="s1">&#39;gte&#39;</span><span class="p">:</span> <span class="n">OP</span><span class="o">.</span><span class="n">GTE</span><span class="p">,</span>
-    <span class="s1">&#39;ne&#39;</span><span class="p">:</span> <span class="n">OP</span><span class="o">.</span><span class="n">NE</span><span class="p">,</span>
-    <span class="s1">&#39;in&#39;</span><span class="p">:</span> <span class="n">OP</span><span class="o">.</span><span class="n">IN</span><span class="p">,</span>
-    <span class="s1">&#39;is&#39;</span><span class="p">:</span> <span class="n">OP</span><span class="o">.</span><span class="n">IS</span><span class="p">,</span>
-    <span class="s1">&#39;like&#39;</span><span class="p">:</span> <span class="n">OP</span><span class="o">.</span><span class="n">LIKE</span><span class="p">,</span>
-    <span class="s1">&#39;ilike&#39;</span><span class="p">:</span> <span class="n">OP</span><span class="o">.</span><span class="n">ILIKE</span><span class="p">,</span>
-    <span class="s1">&#39;regexp&#39;</span><span class="p">:</span> <span class="n">OP</span><span class="o">.</span><span class="n">REGEXP</span><span class="p">})</span>
+    <span class="s1">&#39;eq&#39;</span><span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">eq</span><span class="p">,</span>
+    <span class="s1">&#39;lt&#39;</span><span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">lt</span><span class="p">,</span>
+    <span class="s1">&#39;lte&#39;</span><span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">le</span><span class="p">,</span>
+    <span class="s1">&#39;gt&#39;</span><span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">gt</span><span class="p">,</span>
+    <span class="s1">&#39;gte&#39;</span><span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">ge</span><span class="p">,</span>
+    <span class="s1">&#39;ne&#39;</span><span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">ne</span><span class="p">,</span>
+    <span class="s1">&#39;in&#39;</span><span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">lshift</span><span class="p">,</span>
+    <span class="s1">&#39;is&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">l</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="n">Expression</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">OP</span><span class="o">.</span><span class="n">IS</span><span class="p">,</span> <span class="n">r</span><span class="p">),</span>
+    <span class="s1">&#39;like&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">l</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="n">Expression</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">OP</span><span class="o">.</span><span class="n">LIKE</span><span class="p">,</span> <span class="n">r</span><span class="p">),</span>
+    <span class="s1">&#39;ilike&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">l</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="n">Expression</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">OP</span><span class="o">.</span><span class="n">ILIKE</span><span class="p">,</span> <span class="n">r</span><span class="p">),</span>
+    <span class="s1">&#39;regexp&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">l</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="n">Expression</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">OP</span><span class="o">.</span><span class="n">REGEXP</span><span class="p">,</span> <span class="n">r</span><span class="p">),</span>
+<span class="p">})</span>
 
 <span class="c1">#: Mapping of field type to the data-type supported by the database. Databases</span>
 <span class="c1">#: may override or add to this list.</span>
@@ -1723,11 +1724,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_conflict_target</span> <span class="o">=</span> <span class="n">ensure_tuple</span><span class="p">(</span><span class="n">conflict_target</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_conflict_constraint</span> <span class="o">=</span> <span class="n">conflict_constraint</span>
 
-    <span class="k">def</span> <span class="nf">get_conflict_statement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctx</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">conflict_statement</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">get_conflict_statement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctx</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">conflict_statement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">get_conflict_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctx</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">conflict_update</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">get_conflict_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctx</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">conflict_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">)</span>
 
     <span class="nd">@Node</span><span class="o">.</span><span class="n">copy</span>
     <span class="k">def</span> <span class="nf">preserve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">columns</span><span class="p">):</span>
@@ -2463,12 +2464,12 @@
     <span class="k">def</span> <span class="nf">__sql__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctx</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Insert</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__sql__</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span>
         <span class="k">with</span> <span class="n">ctx</span><span class="o">.</span><span class="n">scope_values</span><span class="p">():</span>
-            <span class="n">statement</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">stmt</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_conflict</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">statement</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_conflict</span><span class="o">.</span><span class="n">get_conflict_statement</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span>
+                <span class="n">stmt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_conflict</span><span class="o">.</span><span class="n">get_conflict_statement</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
 
             <span class="p">(</span><span class="n">ctx</span>
-             <span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="n">statement</span> <span class="ow">or</span> <span class="n">SQL</span><span class="p">(</span><span class="s1">&#39;INSERT&#39;</span><span class="p">))</span>
+             <span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="n">stmt</span> <span class="ow">or</span> <span class="n">SQL</span><span class="p">(</span><span class="s1">&#39;INSERT&#39;</span><span class="p">))</span>
              <span class="o">.</span><span class="n">literal</span><span class="p">(</span><span class="s1">&#39; INTO &#39;</span><span class="p">)</span>
              <span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">)</span>
              <span class="o">.</span><span class="n">literal</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">))</span>
@@ -2490,7 +2491,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_query_type</span> <span class="o">=</span> <span class="n">Insert</span><span class="o">.</span><span class="n">MULTI</span>
 
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_conflict</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">update</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_conflict</span><span class="o">.</span><span class="n">get_conflict_update</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span>
+                <span class="n">update</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_conflict</span><span class="o">.</span><span class="n">get_conflict_update</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">update</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">ctx</span><span class="o">.</span><span class="n">literal</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="n">update</span><span class="p">)</span>
 
@@ -2891,13 +2892,13 @@
             <span class="n">context</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">context_options</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">context_class</span><span class="p">(</span><span class="o">**</span><span class="n">context</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">conflict_statement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">on_conflict</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">conflict_statement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">on_conflict</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 
-    <span class="k">def</span> <span class="nf">conflict_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">on_conflict</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">conflict_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">on_conflict</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 
-    <span class="k">def</span> <span class="nf">_build_on_conflict_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">on_conflict</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_build_on_conflict_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">on_conflict</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">on_conflict</span><span class="o">.</span><span class="n">_conflict_target</span><span class="p">:</span>
             <span class="n">stmt</span> <span class="o">=</span> <span class="n">SQL</span><span class="p">(</span><span class="s1">&#39;ON CONFLICT&#39;</span><span class="p">)</span>
             <span class="n">target</span> <span class="o">=</span> <span class="n">EnclosedNodeList</span><span class="p">([</span>
@@ -2921,6 +2922,10 @@
         <span class="k">if</span> <span class="n">on_conflict</span><span class="o">.</span><span class="n">_update</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">on_conflict</span><span class="o">.</span><span class="n">_update</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">Node</span><span class="p">):</span>
+                    <span class="c1"># Attempt to resolve string field-names to their respective</span>
+                    <span class="c1"># field object, to apply data-type conversions.</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">basestring</span><span class="p">):</span>
+                        <span class="n">k</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">query</span><span class="o">.</span><span class="n">table</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
                     <span class="n">converter</span> <span class="o">=</span> <span class="n">k</span><span class="o">.</span><span class="n">db_value</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">Field</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
                     <span class="n">v</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">converter</span><span class="o">=</span><span class="n">converter</span><span class="p">,</span> <span class="n">unpack</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
@@ -3367,12 +3372,12 @@
     <span class="k">def</span> <span class="nf">get_binary_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">Binary</span>
 
-    <span class="k">def</span> <span class="nf">conflict_statement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">on_conflict</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">conflict_statement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">on_conflict</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
         <span class="n">action</span> <span class="o">=</span> <span class="n">on_conflict</span><span class="o">.</span><span class="n">_action</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">if</span> <span class="n">on_conflict</span><span class="o">.</span><span class="n">_action</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span>
         <span class="k">if</span> <span class="n">action</span> <span class="ow">and</span> <span class="n">action</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;nothing&#39;</span><span class="p">,</span> <span class="s1">&#39;update&#39;</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">SQL</span><span class="p">(</span><span class="s1">&#39;INSERT OR </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">on_conflict</span><span class="o">.</span><span class="n">_action</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
 
-    <span class="k">def</span> <span class="nf">conflict_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">oc</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">conflict_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">oc</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
         <span class="c1"># Sqlite prior to 3.24.0 does not support Postgres-style upsert.</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sqlite_version</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> \
            <span class="nb">any</span><span class="p">((</span><span class="n">oc</span><span class="o">.</span><span class="n">_preserve</span><span class="p">,</span> <span class="n">oc</span><span class="o">.</span><span class="n">_update</span><span class="p">,</span> <span class="n">oc</span><span class="o">.</span><span class="n">_where</span><span class="p">,</span> <span class="n">oc</span><span class="o">.</span><span class="n">_conflict_target</span><span class="p">,</span>
@@ -3398,7 +3403,7 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;SQLite requires that a conflict target be &#39;</span>
                              <span class="s1">&#39;specified when doing an upsert.&#39;</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_on_conflict_update</span><span class="p">(</span><span class="n">oc</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_on_conflict_update</span><span class="p">(</span><span class="n">oc</span><span class="p">,</span> <span class="n">query</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">extract_date</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">date_part</span><span class="p">,</span> <span class="n">date_field</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">fn</span><span class="o">.</span><span class="n">date_part</span><span class="p">(</span><span class="n">date_part</span><span class="p">,</span> <span class="n">date_field</span><span class="p">)</span>
@@ -3546,10 +3551,10 @@
     <span class="k">def</span> <span class="nf">get_binary_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">psycopg2</span><span class="o">.</span><span class="n">Binary</span>
 
-    <span class="k">def</span> <span class="nf">conflict_statement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">on_conflict</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">conflict_statement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">on_conflict</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
         <span class="k">return</span>
 
-    <span class="k">def</span> <span class="nf">conflict_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">oc</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">conflict_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">oc</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
         <span class="n">action</span> <span class="o">=</span> <span class="n">oc</span><span class="o">.</span><span class="n">_action</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">if</span> <span class="n">oc</span><span class="o">.</span><span class="n">_action</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span>
         <span class="k">if</span> <span class="n">action</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">,</span> <span class="s1">&#39;nothing&#39;</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">SQL</span><span class="p">(</span><span class="s1">&#39;ON CONFLICT DO NOTHING&#39;</span><span class="p">)</span>
@@ -3566,7 +3571,7 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Postgres requires that a conflict target be &#39;</span>
                              <span class="s1">&#39;specified when doing an upsert.&#39;</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_on_conflict_update</span><span class="p">(</span><span class="n">oc</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_on_conflict_update</span><span class="p">(</span><span class="n">oc</span><span class="p">,</span> <span class="n">query</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">extract_date</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">date_part</span><span class="p">,</span> <span class="n">date_field</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">fn</span><span class="o">.</span><span class="n">EXTRACT</span><span class="p">(</span><span class="n">NodeList</span><span class="p">((</span><span class="n">date_part</span><span class="p">,</span> <span class="n">SQL</span><span class="p">(</span><span class="s1">&#39;FROM&#39;</span><span class="p">),</span> <span class="n">date_field</span><span class="p">)))</span>
@@ -3674,7 +3679,7 @@
     <span class="k">def</span> <span class="nf">get_binary_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">mysql</span><span class="o">.</span><span class="n">Binary</span>
 
-    <span class="k">def</span> <span class="nf">conflict_statement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">on_conflict</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">conflict_statement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">on_conflict</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">on_conflict</span><span class="o">.</span><span class="n">_action</span><span class="p">:</span> <span class="k">return</span>
 
         <span class="n">action</span> <span class="o">=</span> <span class="n">on_conflict</span><span class="o">.</span><span class="n">_action</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
@@ -3686,7 +3691,7 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Un-supported action for conflict resolution. &#39;</span>
                              <span class="s1">&#39;MySQL supports REPLACE, IGNORE and UPDATE.&#39;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">conflict_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">on_conflict</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">conflict_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">on_conflict</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">on_conflict</span><span class="o">.</span><span class="n">_where</span> <span class="ow">or</span> <span class="n">on_conflict</span><span class="o">.</span><span class="n">_conflict_target</span> <span class="ow">or</span> \
            <span class="n">on_conflict</span><span class="o">.</span><span class="n">_conflict_constraint</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;MySQL does not support the specification of &#39;</span>
@@ -3706,6 +3711,10 @@
         <span class="k">if</span> <span class="n">on_conflict</span><span class="o">.</span><span class="n">_update</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">on_conflict</span><span class="o">.</span><span class="n">_update</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">Node</span><span class="p">):</span>
+                    <span class="c1"># Attempt to resolve string field-names to their respective</span>
+                    <span class="c1"># field object, to apply data-type conversions.</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">basestring</span><span class="p">):</span>
+                        <span class="n">k</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">query</span><span class="o">.</span><span class="n">table</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
                     <span class="n">converter</span> <span class="o">=</span> <span class="n">k</span><span class="o">.</span><span class="n">db_value</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">Field</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
                     <span class="n">v</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">converter</span><span class="o">=</span><span class="n">converter</span><span class="p">,</span> <span class="n">unpack</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
                 <span class="n">updates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">NodeList</span><span class="p">((</span><span class="n">ensure_entity</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">SQL</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">),</span> <span class="n">v</span><span class="p">)))</span>
@@ -4834,17 +4843,24 @@
                                  <span class="s1">&#39;through_model is specified.&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rel_model</span> <span class="o">=</span> <span class="n">model</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">backref</span> <span class="o">=</span> <span class="n">backref</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">through_model</span> <span class="o">=</span> <span class="n">through_model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_user_through_model</span> <span class="o">=</span> <span class="n">through_model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_through_model</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_on_delete</span> <span class="o">=</span> <span class="n">on_delete</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_on_update</span> <span class="o">=</span> <span class="n">on_update</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_is_backref</span> <span class="o">=</span> <span class="n">_is_backref</span>
+
+    <span class="k">def</span> <span class="nf">__deepcopy__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memo</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="bp">self</span><span class="o">.</span><span class="n">rel_model</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">backref</span><span class="p">,</span>
+                          <span class="bp">self</span><span class="o">.</span><span class="n">_user_through_model</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_delete</span><span class="p">,</span>
+                          <span class="bp">self</span><span class="o">.</span><span class="n">_on_update</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_backref</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_descriptor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">ManyToManyFieldAccessor</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">bind</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">set_attribute</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">through_model</span><span class="p">,</span> <span class="n">DeferredThroughModel</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">through_model</span><span class="o">.</span><span class="n">set_field</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_user_through_model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> \
+           <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_user_through_model</span><span class="p">,</span> <span class="n">DeferredThroughModel</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_user_through_model</span><span class="o">.</span><span class="n">set_field</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
             <span class="k">return</span>
 
         <span class="nb">super</span><span class="p">(</span><span class="n">ManyToManyField</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">set_attribute</span><span class="p">)</span>
@@ -4865,31 +4881,41 @@
             <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_is_backref</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">),</span>
             <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_backref</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rel_model</span><span class="p">)))]</span>
 
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">through_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_user_through_model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_user_through_model</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_through_model</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_through_model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_through_model</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_through_model</span>
+
+    <span class="nd">@through_model</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">through_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_user_through_model</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="k">def</span> <span class="nf">_create_through_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_models</span><span class="p">()</span>
+        <span class="n">tables</span> <span class="o">=</span> <span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">table_name</span> <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="p">(</span><span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span><span class="p">)]</span>
+
+        <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+            <span class="n">database</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">database</span>
+            <span class="n">schema</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">schema</span>
+            <span class="n">table_name</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_</span><span class="si">%s</span><span class="s1">_through&#39;</span> <span class="o">%</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">tables</span><span class="p">)</span>
+            <span class="n">indexes</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="p">((</span><span class="n">lhs</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">rhs</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">name</span><span class="p">),</span>
+                 <span class="kc">True</span><span class="p">),)</span>
+
+        <span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">lhs</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">ForeignKeyField</span><span class="p">(</span><span class="n">lhs</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_delete</span><span class="p">,</span>
+                                            <span class="n">on_update</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_update</span><span class="p">),</span>
+            <span class="n">rhs</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">ForeignKeyField</span><span class="p">(</span><span class="n">rhs</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_delete</span><span class="p">,</span>
+                                            <span class="n">on_update</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_update</span><span class="p">)}</span>
+        <span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;Meta&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Meta</span>
+
+        <span class="n">klass_name</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s%s</span><span class="s1">Through&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">lhs</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">rhs</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">klass_name</span><span class="p">,</span> <span class="p">(</span><span class="n">Model</span><span class="p">,),</span> <span class="n">attrs</span><span class="p">)</span>
+
     <span class="k">def</span> <span class="nf">get_through_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">through_model</span><span class="p">:</span>
-            <span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_models</span><span class="p">()</span>
-            <span class="n">tables</span> <span class="o">=</span> <span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">table_name</span> <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="p">(</span><span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span><span class="p">)]</span>
-
-            <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
-                <span class="n">database</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">database</span>
-                <span class="n">schema</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">schema</span>
-                <span class="n">table_name</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_</span><span class="si">%s</span><span class="s1">_through&#39;</span> <span class="o">%</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">tables</span><span class="p">)</span>
-                <span class="n">indexes</span> <span class="o">=</span> <span class="p">(</span>
-                    <span class="p">((</span><span class="n">lhs</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">rhs</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">name</span><span class="p">),</span>
-                     <span class="kc">True</span><span class="p">),)</span>
-
-            <span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="n">lhs</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">ForeignKeyField</span><span class="p">(</span><span class="n">lhs</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_delete</span><span class="p">,</span>
-                                                <span class="n">on_update</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_update</span><span class="p">),</span>
-                <span class="n">rhs</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">ForeignKeyField</span><span class="p">(</span><span class="n">rhs</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_delete</span><span class="p">,</span>
-                                                <span class="n">on_update</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_update</span><span class="p">)}</span>
-            <span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;Meta&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Meta</span>
-
-            <span class="bp">self</span><span class="o">.</span><span class="n">through_model</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span>
-                <span class="s1">&#39;</span><span class="si">%s%s</span><span class="s1">Through&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">lhs</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">rhs</span><span class="o">.</span><span class="vm">__name__</span><span class="p">),</span>
-                <span class="p">(</span><span class="n">Model</span><span class="p">,),</span>
-                <span class="n">attrs</span><span class="p">)</span>
-
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">through_model</span>
 
 
@@ -6386,9 +6412,9 @@
                 <span class="n">key</span><span class="p">,</span> <span class="n">op</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;__&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
                 <span class="n">op</span> <span class="o">=</span> <span class="n">DJANGO_MAP</span><span class="p">[</span><span class="n">op</span><span class="p">]</span>
             <span class="k">elif</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">op</span> <span class="o">=</span> <span class="n">OP</span><span class="o">.</span><span class="n">IS</span>
+                <span class="n">op</span> <span class="o">=</span> <span class="n">DJANGO_MAP</span><span class="p">[</span><span class="s1">&#39;is&#39;</span><span class="p">]</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">op</span> <span class="o">=</span> <span class="n">OP</span><span class="o">.</span><span class="n">EQ</span>
+                <span class="n">op</span> <span class="o">=</span> <span class="n">DJANGO_MAP</span><span class="p">[</span><span class="s1">&#39;eq&#39;</span><span class="p">]</span>
 
             <span class="k">if</span> <span class="s1">&#39;__&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">key</span><span class="p">:</span>
                 <span class="c1"># Handle simplest case. This avoids joining over-eagerly when a</span>
@@ -6406,7 +6432,7 @@
                         <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model_attr</span><span class="p">,</span> <span class="n">fks</span><span class="p">):</span>
                             <span class="n">curr</span> <span class="o">=</span> <span class="n">model_attr</span><span class="o">.</span><span class="n">rel_model</span>
                             <span class="n">joins</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">model_attr</span><span class="p">)</span>
-            <span class="n">accum</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Expression</span><span class="p">(</span><span class="n">model_attr</span><span class="p">,</span> <span class="n">op</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+            <span class="n">accum</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">op</span><span class="p">(</span><span class="n">model_attr</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">accum</span><span class="p">,</span> <span class="n">joins</span>
 
     <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>

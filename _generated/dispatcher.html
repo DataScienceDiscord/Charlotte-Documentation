@@ -153,7 +153,7 @@
 <span id="dispatcher-module"></span><h1>dispatcher module<a class="headerlink" href="#module-dispatcher" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="dispatcher.Dispatcher">
-<em class="property">class </em><code class="descclassname">dispatcher.</code><code class="descname">Dispatcher</code><span class="sig-paren">(</span><em>inc_queue</em>, <em>database_connection</em>, <em>consumer</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dispatcher.html#Dispatcher"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dispatcher.Dispatcher" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">dispatcher.</code><code class="descname">Dispatcher</code><span class="sig-paren">(</span><em>inc_queue</em>, <em>database_connection</em>, <em>consumer</em>, <em>commands</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dispatcher.html#Dispatcher"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dispatcher.Dispatcher" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>A dispatcher to relay the received messages to the appropriate
 commands.</p>
@@ -215,6 +215,28 @@ commands.</p>
 <dl class="method">
 <dt id="dispatcher.Dispatcher.dispatch">
 <code class="descname">dispatch</code><span class="sig-paren">(</span><em>command_id</em>, <em>message</em>, <em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dispatcher.html#Dispatcher.dispatch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dispatcher.Dispatcher.dispatch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calls the appropriate command with the given parameters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>command_id</strong> – The string identifier of the command.</li>
+<li><strong>params</strong> – The parameters to be passed to the command.</li>
+<li><strong>message</strong> – The full message which contained the command.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The results of the command.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="dispatcher.Dispatcher.process_message">
+<code class="descname">process_message</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dispatcher.html#Dispatcher.process_message"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dispatcher.Dispatcher.process_message" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calls the appropriate command with the given parameters.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
