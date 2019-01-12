@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>database.user &mdash; Charlotte  documentation</title>
+  <title>database.member &mdash; Charlotte  documentation</title>
   
 
   
@@ -130,7 +130,7 @@
         
           <li><a href="../index.html">Module code</a> &raquo;</li>
         
-      <li>database.user</li>
+      <li>database.member</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -145,13 +145,13 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for database.user</h1><div class="highlight"><pre>
+  <h1>Source code for database.member</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">database</span> <span class="k">import</span> <span class="n">BaseModel</span>
 <span class="kn">from</span> <span class="nn">peewee</span> <span class="k">import</span> <span class="n">TextField</span>
 
 
-<div class="viewcode-block" id="User"><a class="viewcode-back" href="../../_generated/database.user.html#database.user.User">[docs]</a><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
-    <span class="n">user_id</span>  <span class="o">=</span> <span class="n">TextField</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Member"><a class="viewcode-back" href="../../_generated/database.member.html#database.member.Member">[docs]</a><span class="k">class</span> <span class="nc">Member</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">member_id</span>  <span class="o">=</span> <span class="n">TextField</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">username</span> <span class="o">=</span> <span class="n">TextField</span><span class="p">()</span></div>
 </pre></div>
 

@@ -194,7 +194,6 @@
 <span class="sd">            limit: The number of members to get.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">headers</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="p">)</span>
-        <span class="k">del</span> <span class="n">headers</span><span class="p">[</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">]</span>
         <span class="n">params</span>  <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;limit&quot;</span><span class="p">:</span> <span class="n">limit</span><span class="p">}</span>
         <span class="k">return</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">Consumer</span><span class="o">.</span><span class="n">ENDPOINT</span> <span class="o">+</span> <span class="n">Consumer</span><span class="o">.</span><span class="n">LIST_GUILD_MEMBERS_ROUTE</span> <span class="o">%</span> <span class="n">guild_id</span><span class="p">,</span>
                             <span class="n">headers</span> <span class="o">=</span> <span class="n">headers</span><span class="p">,</span>

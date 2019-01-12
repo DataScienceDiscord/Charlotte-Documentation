@@ -147,6 +147,7 @@
             
   <h1>Source code for dispatcher</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">queue</span>
 
 
 <div class="viewcode-block" id="Dispatcher"><a class="viewcode-back" href="../_generated/dispatcher.html#dispatcher.Dispatcher">[docs]</a><span class="k">class</span> <span class="nc">Dispatcher</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -158,15 +159,16 @@
 <span class="sd">        database_connection: The datanase interface.</span>
 <span class="sd">        consumer: The discord REST API consumer to send messages through.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">COMMAND_PREFIX</span> <span class="o">=</span> <span class="s2">&quot;!c/&quot;</span>
+    <span class="n">COMMAND_PREFIX</span> <span class="o">=</span> <span class="s2">&quot;!c/&quot;</span> <span class="c1"># Must end with delimiter</span>
     <span class="n">DELIMITER</span>      <span class="o">=</span> <span class="s2">&quot;/&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inc_queue</span><span class="p">,</span> <span class="n">database_connection</span><span class="p">,</span> <span class="n">consumer</span><span class="p">,</span> <span class="n">commands</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inc_queue</span><span class="p">,</span> <span class="n">database_connection</span><span class="p">,</span> <span class="n">consumer</span><span class="p">,</span> <span class="n">commands</span><span class="p">,</span> <span class="n">queue_timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">inc_queue</span> <span class="o">=</span> <span class="n">inc_queue</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data_conn</span> <span class="o">=</span> <span class="n">database_connection</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">consumer</span>  <span class="o">=</span> <span class="n">consumer</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">commands</span>  <span class="o">=</span> <span class="n">commands</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">running</span>   <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">queue_timeout</span> <span class="o">=</span> <span class="n">queue_timeout</span>
 
 <div class="viewcode-block" id="Dispatcher.is_command"><a class="viewcode-back" href="../_generated/dispatcher.html#dispatcher.Dispatcher.is_command">[docs]</a>    <span class="k">def</span> <span class="nf">is_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Indicates whether a message is a command.</span>
@@ -191,14 +193,15 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_command</span><span class="p">(</span><span class="n">content</span><span class="p">):</span>
 
             <span class="c1"># Extract command</span>
+            <span class="c1">#commands look like:</span>
+            <span class="c1"># prefix(includes delimiter) command delimiter params</span>
+            <span class="c1"># without spaces</span>
             <span class="n">command</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">Dispatcher</span><span class="o">.</span><span class="n">DELIMITER</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
             <span class="k">if</span> <span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Badly formatted command.&quot;</span><span class="p">)</span>
 
             <span class="c1"># Extract params</span>
             <span class="n">content_start</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">Dispatcher</span><span class="o">.</span><span class="n">COMMAND_PREFIX</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">content_start</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">content</span><span class="p">):</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Badly formatted command.&quot;</span><span class="p">)</span>
             <span class="n">params</span> <span class="o">=</span> <span class="n">content</span><span class="p">[</span><span class="n">content_start</span><span class="p">:]</span>
 
             <span class="c1"># Getting rid of the delimiter</span>
@@ -247,7 +250,10 @@
 <span class="sd">        them to the appropriate commands and stores them.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">running</span><span class="p">:</span>
-            <span class="n">message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inc_queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inc_queue</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">queue_timeout</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">queue</span><span class="o">.</span><span class="n">Empty</span><span class="p">:</span>
+                <span class="k">continue</span>
 
             <span class="k">if</span> <span class="n">message</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
@@ -259,7 +265,8 @@
         <span class="sd">&quot;&quot;&quot;Starts listening for incoming messages.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">running</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="n">t</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">)</span>
-        <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span></div>
+        <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">t</span></div>
 
 <div class="viewcode-block" id="Dispatcher.stop"><a class="viewcode-back" href="../_generated/dispatcher.html#dispatcher.Dispatcher.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Stops listening for incoming messages.&quot;&quot;&quot;</span>

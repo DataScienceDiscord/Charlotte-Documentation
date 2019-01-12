@@ -170,20 +170,20 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>An interface to the bot’s database.</p>
 <dl class="method">
-<dt id="database.database.Database.add_user">
-<code class="descname">add_user</code><span class="sig-paren">(</span><em>user_id</em>, <em>username</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/database/database.html#Database.add_user"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#database.database.Database.add_user" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adds a user to the database.</p>
+<dt id="database.database.Database.add_member">
+<code class="descname">add_member</code><span class="sig-paren">(</span><em>member_id</em>, <em>username</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/database/database.html#Database.add_member"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#database.database.Database.add_member" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a member to the database.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>user_id</strong> – Unique discord id for that user.</li>
-<li><strong>username</strong> – Username and discriminator combination string.</li>
+<li><strong>member_id</strong> – Unique discord id for that member.</li>
+<li><strong>username</strong> – Membername and discriminator combination string.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A user record.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A member record.</p>
 </td>
 </tr>
 </tbody>
@@ -191,48 +191,48 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="database.database.Database.user_exists">
-<code class="descname">user_exists</code><span class="sig-paren">(</span><em>user_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/database/database.html#Database.user_exists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#database.database.Database.user_exists" title="Permalink to this definition">¶</a></dt>
-<dd><p>Checks whether the chosen user is present in the database.</p>
+<dt id="database.database.Database.member_exists">
+<code class="descname">member_exists</code><span class="sig-paren">(</span><em>member_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/database/database.html#Database.member_exists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#database.database.Database.member_exists" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks whether the chosen member is present in the database.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>user_id</strong> – Unique discord id for that user.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>member_id</strong> – Unique discord id for that member.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Whether there is a user with that id in the database.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Whether there is a member with that id in the database.</td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
 <dl class="method">
-<dt id="database.database.Database.get_user">
-<code class="descname">get_user</code><span class="sig-paren">(</span><em>user_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/database/database.html#Database.get_user"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#database.database.Database.get_user" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a user from the database.</p>
+<dt id="database.database.Database.get_member">
+<code class="descname">get_member</code><span class="sig-paren">(</span><em>member_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/database/database.html#Database.get_member"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#database.database.Database.get_member" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a member from the database.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>user_id</strong> – Unique discord id for that user.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>member_id</strong> – Unique discord id for that member.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A user record.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A member record.</td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
 <dl class="method">
-<dt id="database.database.Database.delete_user">
-<code class="descname">delete_user</code><span class="sig-paren">(</span><em>user_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/database/database.html#Database.delete_user"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#database.database.Database.delete_user" title="Permalink to this definition">¶</a></dt>
-<dd><p>Deletes a user from the database.</p>
+<dt id="database.database.Database.delete_member">
+<code class="descname">delete_member</code><span class="sig-paren">(</span><em>member_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/database/database.html#Database.delete_member"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#database.database.Database.delete_member" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes a member from the database.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>user_id</strong> – Unique discord id for that user.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>member_id</strong> – Unique discord id for that member.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Whether the user was succesfully deleted.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Whether the member was succesfully deleted.</td>
 </tr>
 </tbody>
 </table>
@@ -271,14 +271,14 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="database.database.Database.get_messages_for_user">
-<code class="descname">get_messages_for_user</code><span class="sig-paren">(</span><em>user_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/database/database.html#Database.get_messages_for_user"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#database.database.Database.get_messages_for_user" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets all messages for the chosen user.</p>
+<dt id="database.database.Database.get_messages_for_member">
+<code class="descname">get_messages_for_member</code><span class="sig-paren">(</span><em>member_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/database/database.html#Database.get_messages_for_member"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#database.database.Database.get_messages_for_member" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets all messages for the chosen member.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>user_id</strong> – Unique discord id for that user.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>member_id</strong> – Unique discord id for that member.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A list of message records.</td>
 </tr>
@@ -303,13 +303,13 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="database.database.Database.get_top_users_per_message_count">
-<code class="descname">get_top_users_per_message_count</code><span class="sig-paren">(</span><em>top_n=9</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/database/database.html#Database.get_top_users_per_message_count"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#database.database.Database.get_top_users_per_message_count" title="Permalink to this definition">¶</a></dt>
+<dt id="database.database.Database.get_top_members_per_message_count">
+<code class="descname">get_top_members_per_message_count</code><span class="sig-paren">(</span><em>top_n=9</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/database/database.html#Database.get_top_members_per_message_count"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#database.database.Database.get_top_members_per_message_count" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="database.database.Database.get_top_users_per_num_characters">
-<code class="descname">get_top_users_per_num_characters</code><span class="sig-paren">(</span><em>top_n=20</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/database/database.html#Database.get_top_users_per_num_characters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#database.database.Database.get_top_users_per_num_characters" title="Permalink to this definition">¶</a></dt>
+<dt id="database.database.Database.get_top_members_per_num_characters">
+<code class="descname">get_top_members_per_num_characters</code><span class="sig-paren">(</span><em>top_n=20</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/database/database.html#Database.get_top_members_per_num_characters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#database.database.Database.get_top_members_per_num_characters" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>

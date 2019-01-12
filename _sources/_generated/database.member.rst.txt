@@ -1,0 +1,7 @@
+database.member module
+======================
+
+.. automodule:: database.member
+    :members:
+    :undoc-members:
+    :show-inheritance:

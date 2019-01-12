@@ -174,11 +174,11 @@
 <h2 id="A">A</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_generated/database.database.html#database.database.Database.add_message">add_message() (database.database.Database method)</a>
+      <li><a href="_generated/database.database.html#database.database.Database.add_member">add_member() (database.database.Database method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_generated/database.database.html#database.database.Database.add_user">add_user() (database.database.Database method)</a>
+      <li><a href="_generated/database.database.html#database.database.Database.add_message">add_message() (database.database.Database method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -238,17 +238,17 @@
 </li>
       <li><a href="_generated/database.database.html#module-database.database">database.database (module)</a>
 </li>
-      <li><a href="_generated/database.message.html#module-database.message">database.message (module)</a>
+      <li><a href="_generated/database.member.html#module-database.member">database.member (module)</a>
 </li>
-      <li><a href="_generated/database.user.html#module-database.user">database.user (module)</a>
+      <li><a href="_generated/database.message.html#module-database.message">database.message (module)</a>
 </li>
       <li><a href="_generated/database.message.html#database.message.Message.date">date (database.message.Message attribute)</a>
 </li>
       <li><a href="_generated/discord.gateway.html#discord.gateway.Gateway.DEFAULT_HEARTBEAT_PERIOD">DEFAULT_HEARTBEAT_PERIOD (discord.gateway.Gateway attribute)</a>
 </li>
-      <li><a href="_generated/database.database.html#database.database.Database.delete_message">delete_message() (database.database.Database method)</a>
+      <li><a href="_generated/database.database.html#database.database.Database.delete_member">delete_member() (database.database.Database method)</a>
 </li>
-      <li><a href="_generated/database.database.html#database.database.Database.delete_user">delete_user() (database.database.Database method)</a>
+      <li><a href="_generated/database.database.html#database.database.Database.delete_message">delete_message() (database.database.Database method)</a>
 </li>
       <li><a href="_generated/dispatcher.html#dispatcher.Dispatcher.DELIMITER">DELIMITER (dispatcher.Dispatcher attribute)</a>
 </li>
@@ -275,9 +275,9 @@
       <li><a href="_generated/database.base_model.html#database.base_model.BaseModel.DoesNotExist">DoesNotExist (database.base_model.BaseModel attribute)</a>
 
       <ul>
-        <li><a href="_generated/database.message.html#database.message.Message.DoesNotExist">(database.message.Message attribute)</a>
+        <li><a href="_generated/database.member.html#database.member.Member.DoesNotExist">(database.member.Member attribute)</a>
 </li>
-        <li><a href="_generated/database.user.html#database.user.User.DoesNotExist">(database.user.User attribute)</a>
+        <li><a href="_generated/database.message.html#database.message.Message.DoesNotExist">(database.message.Message attribute)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -318,17 +318,17 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_generated/discord.gateway.html#discord.gateway.Gateway">Gateway (class in discord.gateway)</a>
 </li>
-      <li><a href="_generated/database.database.html#database.database.Database.get_message">get_message() (database.database.Database method)</a>
+      <li><a href="_generated/database.database.html#database.database.Database.get_member">get_member() (database.database.Database method)</a>
 </li>
-      <li><a href="_generated/database.database.html#database.database.Database.get_messages_for_user">get_messages_for_user() (database.database.Database method)</a>
+      <li><a href="_generated/database.database.html#database.database.Database.get_message">get_message() (database.database.Database method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_generated/database.database.html#database.database.Database.get_top_users_per_message_count">get_top_users_per_message_count() (database.database.Database method)</a>
+      <li><a href="_generated/database.database.html#database.database.Database.get_messages_for_member">get_messages_for_member() (database.database.Database method)</a>
 </li>
-      <li><a href="_generated/database.database.html#database.database.Database.get_top_users_per_num_characters">get_top_users_per_num_characters() (database.database.Database method)</a>
+      <li><a href="_generated/database.database.html#database.database.Database.get_top_members_per_message_count">get_top_members_per_message_count() (database.database.Database method)</a>
 </li>
-      <li><a href="_generated/database.database.html#database.database.Database.get_user">get_user() (database.database.Database method)</a>
+      <li><a href="_generated/database.database.html#database.database.Database.get_top_members_per_num_characters">get_top_members_per_num_characters() (database.database.Database method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -386,15 +386,27 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_generated/discord.gateway.html#discord.gateway.Gateway.make_heart_beat">make_heart_beat() (discord.gateway.Gateway method)</a>
 </li>
+      <li><a href="_generated/database.member.html#database.member.Member">Member (class in database.member)</a>
+</li>
+      <li><a href="_generated/database.message.html#database.message.Message.member">member (database.message.Message attribute)</a>
+</li>
+      <li><a href="_generated/database.database.html#database.database.Database.member_exists">member_exists() (database.database.Database method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_generated/database.member.html#database.member.Member.member_id">member_id (database.member.Member attribute)</a>
+
+      <ul>
+        <li><a href="_generated/database.message.html#database.message.Message.member_id">(database.message.Message attribute)</a>
+</li>
+      </ul></li>
       <li><a href="_generated/database.message.html#database.message.Message">Message (class in database.message)</a>
 
       <ul>
         <li><a href="_generated/discord.message.html#discord.message.Message">(class in discord.message)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_generated/database.user.html#database.user.User.messages">messages (database.user.User attribute)</a>
+      <li><a href="_generated/database.member.html#database.member.Member.messages">messages (database.member.Member attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -524,23 +536,11 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_generated/commands.unknown_command.html#commands.unknown_command.unknown_command">unknown_command() (in module commands.unknown_command)</a>
 </li>
-      <li><a href="_generated/discord.consumer.html#discord.consumer.Consumer.URL">URL (discord.consumer.Consumer attribute)</a>
-</li>
-      <li><a href="_generated/database.user.html#database.user.User">User (class in database.user)</a>
-</li>
-      <li><a href="_generated/database.message.html#database.message.Message.user">user (database.message.Message attribute)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_generated/database.database.html#database.database.Database.user_exists">user_exists() (database.database.Database method)</a>
+      <li><a href="_generated/discord.consumer.html#discord.consumer.Consumer.URL">URL (discord.consumer.Consumer attribute)</a>
 </li>
-      <li><a href="_generated/database.message.html#database.message.Message.user_id">user_id (database.message.Message attribute)</a>
-
-      <ul>
-        <li><a href="_generated/database.user.html#database.user.User.user_id">(database.user.User attribute)</a>
-</li>
-      </ul></li>
-      <li><a href="_generated/database.user.html#database.user.User.username">username (database.user.User attribute)</a>
+      <li><a href="_generated/database.member.html#database.member.Member.username">username (database.member.Member attribute)</a>
 </li>
   </ul></td>
 </tr></table>

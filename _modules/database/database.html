@@ -146,7 +146,7 @@
            <div itemprop="articleBody">
             
   <h1>Source code for database.database</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">database</span> <span class="k">import</span> <span class="n">User</span>
+<span></span><span class="kn">from</span> <span class="nn">database</span> <span class="k">import</span> <span class="n">Member</span>
 <span class="kn">from</span> <span class="nn">database</span> <span class="k">import</span> <span class="n">Message</span>
 <span class="kn">from</span> <span class="nn">peewee</span> <span class="k">import</span> <span class="n">fn</span><span class="p">,</span> <span class="n">JOIN</span><span class="p">,</span> <span class="n">SQL</span>
 
@@ -154,52 +154,52 @@
 <div class="viewcode-block" id="Database"><a class="viewcode-back" href="../../_generated/database.database.html#database.database.Database">[docs]</a><span class="k">class</span> <span class="nc">Database</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;An interface to the bot&#39;s database.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="Database.add_user"><a class="viewcode-back" href="../../_generated/database.database.html#database.database.Database.add_user">[docs]</a>    <span class="k">def</span> <span class="nf">add_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">username</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Adds a user to the database.</span>
+<div class="viewcode-block" id="Database.add_member"><a class="viewcode-back" href="../../_generated/database.database.html#database.database.Database.add_member">[docs]</a>    <span class="k">def</span> <span class="nf">add_member</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">member_id</span><span class="p">,</span> <span class="n">username</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adds a member to the database.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            user_id: Unique discord id for that user.</span>
-<span class="sd">            username: Username and discriminator combination string.</span>
+<span class="sd">            member_id: Unique discord id for that member.</span>
+<span class="sd">            username: Membername and discriminator combination string.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            A user record.</span>
+<span class="sd">            A member record.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">user_id</span><span class="o">=</span><span class="n">user_id</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="n">username</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">user</span></div>
+        <span class="n">member</span> <span class="o">=</span> <span class="n">Member</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">member_id</span><span class="o">=</span><span class="n">member_id</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="n">username</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">member</span></div>
 
-<div class="viewcode-block" id="Database.user_exists"><a class="viewcode-back" href="../../_generated/database.database.html#database.database.Database.user_exists">[docs]</a>    <span class="k">def</span> <span class="nf">user_exists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Checks whether the chosen user is present in the database.</span>
+<div class="viewcode-block" id="Database.member_exists"><a class="viewcode-back" href="../../_generated/database.database.html#database.database.Database.member_exists">[docs]</a>    <span class="k">def</span> <span class="nf">member_exists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">member_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Checks whether the chosen member is present in the database.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            user_id: Unique discord id for that user.</span>
+<span class="sd">            member_id: Unique discord id for that member.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Whether there is a user with that id in the database.</span>
+<span class="sd">            Whether there is a member with that id in the database.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">query</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">user_id</span> <span class="o">==</span> <span class="n">user_id</span><span class="p">)</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="n">Member</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">Member</span><span class="o">.</span><span class="n">member_id</span> <span class="o">==</span> <span class="n">member_id</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">query</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Database.get_user"><a class="viewcode-back" href="../../_generated/database.database.html#database.database.Database.get_user">[docs]</a>    <span class="k">def</span> <span class="nf">get_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Gets a user from the database.</span>
+<div class="viewcode-block" id="Database.get_member"><a class="viewcode-back" href="../../_generated/database.database.html#database.database.Database.get_member">[docs]</a>    <span class="k">def</span> <span class="nf">get_member</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">member_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gets a member from the database.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            user_id: Unique discord id for that user.</span>
+<span class="sd">            member_id: Unique discord id for that member.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            A user record.</span>
+<span class="sd">            A member record.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">User</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">user_id</span> <span class="o">==</span> <span class="n">user_id</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span></div>
+        <span class="k">return</span> <span class="n">Member</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">Member</span><span class="o">.</span><span class="n">member_id</span> <span class="o">==</span> <span class="n">member_id</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Database.delete_user"><a class="viewcode-back" href="../../_generated/database.database.html#database.database.Database.delete_user">[docs]</a>    <span class="k">def</span> <span class="nf">delete_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Deletes a user from the database.</span>
+<div class="viewcode-block" id="Database.delete_member"><a class="viewcode-back" href="../../_generated/database.database.html#database.database.Database.delete_member">[docs]</a>    <span class="k">def</span> <span class="nf">delete_member</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">member_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Deletes a member from the database.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            user_id: Unique discord id for that user.</span>
+<span class="sd">            member_id: Unique discord id for that member.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Whether the user was succesfully deleted.</span>
+<span class="sd">            Whether the member was succesfully deleted.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">User</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">user_id</span> <span class="o">==</span> <span class="n">user_id</span><span class="p">)</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span></div>
+        <span class="k">return</span> <span class="n">Member</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">Member</span><span class="o">.</span><span class="n">member_id</span> <span class="o">==</span> <span class="n">member_id</span><span class="p">)</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="Database.add_message"><a class="viewcode-back" href="../../_generated/database.database.html#database.database.Database.add_message">[docs]</a>    <span class="k">def</span> <span class="nf">add_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Adds a message to the database.</span>
@@ -212,7 +212,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">message</span> <span class="o">=</span> <span class="n">Message</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">content</span>    <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="p">,</span>
                                  <span class="n">channel_id</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">channel_id</span><span class="p">,</span>
-                                 <span class="n">user</span>       <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">user</span><span class="p">,</span>
+                                 <span class="n">member</span>     <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">author_id</span><span class="p">,</span>
                                  <span class="n">date</span>       <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">timestamp</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">message</span></div>
 
@@ -227,16 +227,16 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">Message</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">Message</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">message_id</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Database.get_messages_for_user"><a class="viewcode-back" href="../../_generated/database.database.html#database.database.Database.get_messages_for_user">[docs]</a>    <span class="k">def</span> <span class="nf">get_messages_for_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Gets all messages for the chosen user.</span>
+<div class="viewcode-block" id="Database.get_messages_for_member"><a class="viewcode-back" href="../../_generated/database.database.html#database.database.Database.get_messages_for_member">[docs]</a>    <span class="k">def</span> <span class="nf">get_messages_for_member</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">member_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gets all messages for the chosen member.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            user_id: Unique discord id for that user.</span>
+<span class="sd">            member_id: Unique discord id for that member.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            A list of message records.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">Message</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">Message</span><span class="o">.</span><span class="n">user</span> <span class="o">==</span> <span class="n">user_id</span><span class="p">))</span></div>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">Message</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">Message</span><span class="o">.</span><span class="n">member</span> <span class="o">==</span> <span class="n">member_id</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="Database.delete_message"><a class="viewcode-back" href="../../_generated/database.database.html#database.database.Database.delete_message">[docs]</a>    <span class="k">def</span> <span class="nf">delete_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message_id</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Deletes a message from the database.</span>
@@ -249,20 +249,20 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">Message</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">Message</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">message_id</span><span class="p">)</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Database.get_top_users_per_message_count"><a class="viewcode-back" href="../../_generated/database.database.html#database.database.Database.get_top_users_per_message_count">[docs]</a>    <span class="k">def</span> <span class="nf">get_top_users_per_message_count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">top_n</span><span class="o">=</span><span class="mi">9</span><span class="p">):</span>
-        <span class="n">query</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">fn</span><span class="o">.</span><span class="n">Count</span><span class="p">(</span><span class="n">Message</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s1">&#39;count&#39;</span><span class="p">))</span> \
-                    <span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">Message</span><span class="p">,</span> <span class="n">JOIN</span><span class="o">.</span><span class="n">RIGHT_OUTER</span><span class="p">)</span> \
-                    <span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="n">User</span><span class="p">)</span> \
-                    <span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">SQL</span><span class="p">(</span><span class="s1">&#39;count&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">desc</span><span class="p">())</span> \
-                    <span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="n">top_n</span><span class="p">)</span>
+<div class="viewcode-block" id="Database.get_top_members_per_message_count"><a class="viewcode-back" href="../../_generated/database.database.html#database.database.Database.get_top_members_per_message_count">[docs]</a>    <span class="k">def</span> <span class="nf">get_top_members_per_message_count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">top_n</span><span class="o">=</span><span class="mi">9</span><span class="p">):</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="n">Member</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">Member</span><span class="p">,</span> <span class="n">fn</span><span class="o">.</span><span class="n">Count</span><span class="p">(</span><span class="n">Message</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s1">&#39;count&#39;</span><span class="p">))</span> \
+                      <span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">Message</span><span class="p">,</span> <span class="n">JOIN</span><span class="o">.</span><span class="n">RIGHT_OUTER</span><span class="p">)</span> \
+                      <span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="n">Member</span><span class="p">)</span> \
+                      <span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">SQL</span><span class="p">(</span><span class="s1">&#39;count&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">desc</span><span class="p">())</span> \
+                      <span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="n">top_n</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">query</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Database.get_top_users_per_num_characters"><a class="viewcode-back" href="../../_generated/database.database.html#database.database.Database.get_top_users_per_num_characters">[docs]</a>    <span class="k">def</span> <span class="nf">get_top_users_per_num_characters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">top_n</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
-        <span class="n">query</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">fn</span><span class="o">.</span><span class="n">SUM</span><span class="p">(</span><span class="n">fn</span><span class="o">.</span><span class="n">LENGTH</span><span class="p">(</span><span class="n">Message</span><span class="o">.</span><span class="n">content</span><span class="p">))</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s1">&#39;length&#39;</span><span class="p">))</span> \
-                    <span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">Message</span><span class="p">,</span> <span class="n">JOIN</span><span class="o">.</span><span class="n">RIGHT_OUTER</span><span class="p">)</span> \
-                    <span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="n">User</span><span class="p">)</span> \
-                    <span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">SQL</span><span class="p">(</span><span class="s1">&#39;length&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">desc</span><span class="p">())</span> \
-                    <span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="n">top_n</span><span class="p">)</span>
+<div class="viewcode-block" id="Database.get_top_members_per_num_characters"><a class="viewcode-back" href="../../_generated/database.database.html#database.database.Database.get_top_members_per_num_characters">[docs]</a>    <span class="k">def</span> <span class="nf">get_top_members_per_num_characters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">top_n</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="n">Member</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">Member</span><span class="p">,</span> <span class="n">fn</span><span class="o">.</span><span class="n">SUM</span><span class="p">(</span><span class="n">fn</span><span class="o">.</span><span class="n">LENGTH</span><span class="p">(</span><span class="n">Message</span><span class="o">.</span><span class="n">content</span><span class="p">))</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s1">&#39;length&#39;</span><span class="p">))</span> \
+                      <span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">Message</span><span class="p">,</span> <span class="n">JOIN</span><span class="o">.</span><span class="n">RIGHT_OUTER</span><span class="p">)</span> \
+                      <span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="n">Member</span><span class="p">)</span> \
+                      <span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">SQL</span><span class="p">(</span><span class="s1">&#39;length&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">desc</span><span class="p">())</span> \
+                      <span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="n">top_n</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">query</span><span class="p">)</span></div></div>
 </pre></div>
 

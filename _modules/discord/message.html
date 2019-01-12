@@ -157,16 +157,16 @@
 <span class="sd">    Args:</span>
 <span class="sd">        content: The contents of the message.</span>
 <span class="sd">        channel_id: The id of the channel the message will be written to.</span>
-<span class="sd">        user: The unique id of the user who sent/sends the message.</span>
+<span class="sd">        author_id: The unique id of the user who sent/sends the message.</span>
 <span class="sd">        username: The current username#discriminator combo for that user.</span>
 <span class="sd">        timestamp: The time of the message.</span>
 <span class="sd">        attachment: The file that will be attached to the message.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="n">channel_id</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">timestamp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">attachment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">embed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="n">channel_id</span><span class="p">,</span> <span class="n">author_id</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">timestamp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">attachment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">embed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">content</span>    <span class="o">=</span> <span class="n">content</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">channel_id</span> <span class="o">=</span> <span class="n">channel_id</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">user</span>       <span class="o">=</span> <span class="n">user</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">author_id</span>  <span class="o">=</span> <span class="n">author_id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">username</span>   <span class="o">=</span> <span class="n">username</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span>  <span class="o">=</span> <span class="n">timestamp</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">attachment</span> <span class="o">=</span> <span class="n">attachment</span>
@@ -185,15 +185,15 @@
         <span class="n">data</span> <span class="o">=</span> <span class="n">payload</span><span class="o">.</span><span class="n">data</span>
         <span class="k">return</span> <span class="n">Message</span><span class="p">(</span><span class="n">content</span>    <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">],</span>
                        <span class="n">channel_id</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;channel_id&quot;</span><span class="p">],</span>
-                       <span class="n">user</span>       <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;author&quot;</span><span class="p">][</span><span class="s2">&quot;id&quot;</span><span class="p">],</span>
+                       <span class="n">author_id</span>  <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;author&quot;</span><span class="p">][</span><span class="s2">&quot;id&quot;</span><span class="p">],</span>
                        <span class="n">username</span>   <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;author&quot;</span><span class="p">][</span><span class="s2">&quot;username&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;#&quot;</span> <span class="o">+</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;author&quot;</span><span class="p">][</span><span class="s2">&quot;discriminator&quot;</span><span class="p">],</span>
                        <span class="n">timestamp</span>  <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">])</span></div>
 
 <div class="viewcode-block" id="Message.to_payload"><a class="viewcode-back" href="../../_generated/discord.message.html#discord.message.Message.to_payload">[docs]</a>    <span class="k">def</span> <span class="nf">to_payload</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Encodes the message in json in a format recognized by discord&#39;s APIs.</span>
+        <span class="sd">&quot;&quot;&quot;Encodes the message into a payload-like dictionary, a format recognized by discord&#39;s APIs.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            A json string.</span>
+<span class="sd">            A payload dictionary.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">payload</span> <span class="o">=</span>  <span class="p">{</span>
             <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="p">,</span>
