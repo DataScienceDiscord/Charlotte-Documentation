@@ -1,7 +1,0 @@
-scripts.init\_backup module
-===========================
-
-.. automodule:: scripts.init_backup
-    :members:
-    :undoc-members:
-    :show-inheritance:
