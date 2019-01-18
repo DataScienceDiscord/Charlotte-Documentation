@@ -209,7 +209,7 @@
         <span class="n">mysql</span> <span class="o">=</span> <span class="kc">None</span>
 
 
-<span class="n">__version__</span> <span class="o">=</span> <span class="s1">&#39;3.8.1&#39;</span>
+<span class="n">__version__</span> <span class="o">=</span> <span class="s1">&#39;3.8.2&#39;</span>
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;AsIs&#39;</span><span class="p">,</span>
     <span class="s1">&#39;AutoField&#39;</span><span class="p">,</span>
@@ -1523,7 +1523,8 @@
             <span class="n">node</span> <span class="o">=</span> <span class="n">WindowAlias</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">node</span> <span class="o">=</span> <span class="n">Window</span><span class="p">(</span><span class="n">partition_by</span><span class="o">=</span><span class="n">partition_by</span><span class="p">,</span> <span class="n">order_by</span><span class="o">=</span><span class="n">order_by</span><span class="p">,</span>
-                          <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">,</span> <span class="n">frame_type</span><span class="o">=</span><span class="n">frame_type</span><span class="p">)</span>
+                          <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">,</span> <span class="n">frame_type</span><span class="o">=</span><span class="n">frame_type</span><span class="p">,</span>
+                          <span class="n">_inline</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">NodeList</span><span class="p">((</span><span class="bp">self</span><span class="p">,</span> <span class="n">SQL</span><span class="p">(</span><span class="s1">&#39;OVER&#39;</span><span class="p">),</span> <span class="n">node</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">__sql__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctx</span><span class="p">):</span>
@@ -1551,7 +1552,7 @@
     <span class="n">ROWS</span> <span class="o">=</span> <span class="s1">&#39;ROWS&#39;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">partition_by</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">order_by</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">frame_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">alias</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+                 <span class="n">frame_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">alias</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">_inline</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Window</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">start</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">SQL</span><span class="p">):</span>
             <span class="n">start</span> <span class="o">=</span> <span class="n">SQL</span><span class="p">(</span><span class="n">start</span><span class="p">)</span>
@@ -1565,6 +1566,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">start</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">end</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Cannot specify WINDOW end without start.&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_alias</span> <span class="o">=</span> <span class="n">alias</span> <span class="ow">or</span> <span class="s1">&#39;w&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_inline</span> <span class="o">=</span> <span class="n">_inline</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">frame_type</span> <span class="o">=</span> <span class="n">frame_type</span>
 
     <span class="k">def</span> <span class="nf">alias</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alias</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -1592,7 +1594,7 @@
         <span class="k">return</span> <span class="n">SQL</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1"> PRECEDING&#39;</span> <span class="o">%</span> <span class="n">value</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__sql__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctx</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">ctx</span><span class="o">.</span><span class="n">scope</span> <span class="o">!=</span> <span class="n">SCOPE_SOURCE</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">ctx</span><span class="o">.</span><span class="n">scope</span> <span class="o">!=</span> <span class="n">SCOPE_SOURCE</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inline</span><span class="p">:</span>
             <span class="n">ctx</span><span class="o">.</span><span class="n">literal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_alias</span><span class="p">)</span>
             <span class="n">ctx</span><span class="o">.</span><span class="n">literal</span><span class="p">(</span><span class="s1">&#39; AS &#39;</span><span class="p">)</span>
 
@@ -4804,9 +4806,17 @@
         <span class="nb">super</span><span class="p">(</span><span class="n">ManyToManyFieldAccessor</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">model</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rel_model</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">rel_model</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">through_model</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">get_through_model</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">src_fk</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">through_model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">model_refs</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dest_fk</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">through_model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">model_refs</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">rel_model</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">through_model</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">through_model</span>
+        <span class="n">src_fks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">through_model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">model_refs</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">]</span>
+        <span class="n">dest_fks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">through_model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">model_refs</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">rel_model</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">src_fks</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Cannot find foreign-key to &quot;</span><span class="si">%s</span><span class="s1">&quot; on &quot;</span><span class="si">%s</span><span class="s1">&quot; model.&#39;</span> <span class="o">%</span>
+                             <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">through_model</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="n">dest_fks</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Cannot find foreign-key to &quot;</span><span class="si">%s</span><span class="s1">&quot; on &quot;</span><span class="si">%s</span><span class="s1">&quot; model.&#39;</span> <span class="o">%</span>
+                             <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rel_model</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">through_model</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">src_fk</span> <span class="o">=</span> <span class="n">src_fks</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dest_fk</span> <span class="o">=</span> <span class="n">dest_fks</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="nf">__get__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">instance_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">force_query</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">instance</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -4843,24 +4853,17 @@
                                  <span class="s1">&#39;through_model is specified.&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rel_model</span> <span class="o">=</span> <span class="n">model</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">backref</span> <span class="o">=</span> <span class="n">backref</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_user_through_model</span> <span class="o">=</span> <span class="n">through_model</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_through_model</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_through_model</span> <span class="o">=</span> <span class="n">through_model</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_on_delete</span> <span class="o">=</span> <span class="n">on_delete</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_on_update</span> <span class="o">=</span> <span class="n">on_update</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_is_backref</span> <span class="o">=</span> <span class="n">_is_backref</span>
-
-    <span class="k">def</span> <span class="nf">__deepcopy__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memo</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="bp">self</span><span class="o">.</span><span class="n">rel_model</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">backref</span><span class="p">,</span>
-                          <span class="bp">self</span><span class="o">.</span><span class="n">_user_through_model</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_delete</span><span class="p">,</span>
-                          <span class="bp">self</span><span class="o">.</span><span class="n">_on_update</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_backref</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_descriptor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">ManyToManyFieldAccessor</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">bind</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">set_attribute</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_user_through_model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> \
-           <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_user_through_model</span><span class="p">,</span> <span class="n">DeferredThroughModel</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_user_through_model</span><span class="o">.</span><span class="n">set_field</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_through_model</span><span class="p">,</span> <span class="n">DeferredThroughModel</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_through_model</span><span class="o">.</span><span class="n">set_field</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
             <span class="k">return</span>
 
         <span class="nb">super</span><span class="p">(</span><span class="n">ManyToManyField</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">set_attribute</span><span class="p">)</span>
@@ -4883,15 +4886,13 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">through_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_user_through_model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_user_through_model</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_through_model</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_through_model</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_through_model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_through_model</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_through_model</span>
 
     <span class="nd">@through_model</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span> <span class="nf">through_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_user_through_model</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_through_model</span> <span class="o">=</span> <span class="n">value</span>
 
     <span class="k">def</span> <span class="nf">_create_through_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_models</span><span class="p">()</span>
@@ -4916,6 +4917,7 @@
         <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">klass_name</span><span class="p">,</span> <span class="p">(</span><span class="n">Model</span><span class="p">,),</span> <span class="n">attrs</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">get_through_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># XXX: Deprecated. Just use the &quot;through_model&quot; property.</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">through_model</span>
 
 
@@ -5232,10 +5234,10 @@
 <span class="k">class</span> <span class="nc">Metadata</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">database</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">table_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">indexes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">primary_key</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">constraints</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">schema</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">only_save_dirty</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">table_alias</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">depends_on</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">options</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">db_table</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">table_function</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">table_settings</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">without_rowid</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">temporary</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                 <span class="n">legacy_table_names</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+                 <span class="n">only_save_dirty</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">depends_on</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">db_table</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">table_function</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">table_settings</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">without_rowid</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">temporary</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">legacy_table_names</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                 <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">db_table</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">__deprecated__</span><span class="p">(</span><span class="s1">&#39;&quot;db_table&quot; has been deprecated in favor of &#39;</span>
                            <span class="s1">&#39;&quot;table_name&quot; for Models.&#39;</span><span class="p">)</span>
@@ -5273,7 +5275,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">primary_key</span> <span class="o">=</span> <span class="n">primary_key</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">composite_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_increment</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">only_save_dirty</span> <span class="o">=</span> <span class="n">only_save_dirty</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">table_alias</span> <span class="o">=</span> <span class="n">table_alias</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">depends_on</span> <span class="o">=</span> <span class="n">depends_on</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">table_settings</span> <span class="o">=</span> <span class="n">table_settings</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">without_rowid</span> <span class="o">=</span> <span class="n">without_rowid</span>
@@ -5349,7 +5350,6 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">table_name</span><span class="p">,</span>
                 <span class="p">[</span><span class="n">field</span><span class="o">.</span><span class="n">column_name</span> <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sorted_fields</span><span class="p">],</span>
                 <span class="n">schema</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span>
-                <span class="n">alias</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">table_alias</span><span class="p">,</span>
                 <span class="n">_model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
                 <span class="n">_database</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_table</span>
@@ -6116,6 +6116,11 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_database</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_database</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">database</span>
 
+    <span class="nd">@Node</span><span class="o">.</span><span class="n">copy</span>
+    <span class="k">def</span> <span class="nf">objects</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constructor</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_row_type</span> <span class="o">=</span> <span class="n">ROW</span><span class="o">.</span><span class="n">CONSTRUCTOR</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_constructor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="k">if</span> <span class="n">constructor</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">constructor</span>
+
     <span class="k">def</span> <span class="nf">_get_cursor_wrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cursor</span><span class="p">):</span>
         <span class="n">row_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_row_type</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_row_type</span>
         <span class="k">if</span> <span class="n">row_type</span> <span class="o">==</span> <span class="n">ROW</span><span class="o">.</span><span class="n">MODEL</span><span class="p">:</span>
@@ -6174,11 +6179,6 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cursor_wrapper</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
         <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cursor_wrapper</span><span class="p">)</span>
-
-    <span class="nd">@Node</span><span class="o">.</span><span class="n">copy</span>
-    <span class="k">def</span> <span class="nf">objects</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constructor</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_row_type</span> <span class="o">=</span> <span class="n">ROW</span><span class="o">.</span><span class="n">CONSTRUCTOR</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_constructor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="k">if</span> <span class="n">constructor</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">constructor</span>
 
     <span class="k">def</span> <span class="nf">prefetch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">subqueries</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">prefetch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">subqueries</span><span class="p">)</span>
@@ -6516,12 +6516,22 @@
 
 
 <span class="k">class</span> <span class="nc">ModelInsert</span><span class="p">(</span><span class="n">_ModelWriteQueryHelper</span><span class="p">,</span> <span class="n">Insert</span><span class="p">):</span>
+    <span class="n">default_row_type</span> <span class="o">=</span> <span class="n">ROW</span><span class="o">.</span><span class="n">TUPLE</span>
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">ModelInsert</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_returning</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">database</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">returning_clause</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_returning</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">get_primary_keys</span><span class="p">()</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_row_type</span> <span class="o">=</span> <span class="n">ROW</span><span class="o">.</span><span class="n">TUPLE</span>
+
+    <span class="k">def</span> <span class="nf">returning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">returning</span><span class="p">):</span>
+        <span class="c1"># By default ModelInsert will yield a `tuple` containing the</span>
+        <span class="c1"># primary-key of the newly inserted row. But if we are explicitly</span>
+        <span class="c1"># specifying a returning clause and have not set a row type, we will</span>
+        <span class="c1"># default to returning model instances instead.</span>
+        <span class="k">if</span> <span class="n">returning</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_row_type</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_row_type</span> <span class="o">=</span> <span class="n">ROW</span><span class="o">.</span><span class="n">MODEL</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">ModelInsert</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">returning</span><span class="p">(</span><span class="o">*</span><span class="n">returning</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">get_default_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">defaults</span>

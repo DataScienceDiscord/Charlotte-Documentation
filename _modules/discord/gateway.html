@@ -166,7 +166,6 @@
     <span class="n">DEFAULT_HEARTBEAT_PERIOD</span> <span class="o">=</span> <span class="mi">45</span> <span class="c1"># seconds</span>
     <span class="n">OS</span> <span class="o">=</span> <span class="s2">&quot;linux&quot;</span>
     <span class="n">NAME</span> <span class="o">=</span> <span class="s2">&quot;Charlotte&quot;</span>
-    <span class="n">ENV</span> <span class="o">=</span> <span class="s2">&quot;DEV&quot;</span>
     <span class="n">RECONNECTION_FAILURE_THRESHOLD</span> <span class="o">=</span> <span class="mi">3</span>
     <span class="n">RECONNECTION_COUNTER_RESET</span>     <span class="o">=</span> <span class="mi">600</span>
 
@@ -182,7 +181,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">session_id</span>        <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reconnect_counter</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">last_reconnect</span>    <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">GUILD</span> <span class="o">=</span> <span class="s2">&quot;523141683379175424&quot;</span> <span class="k">if</span> <span class="n">Gateway</span><span class="o">.</span><span class="n">ENV</span> <span class="o">==</span> <span class="s2">&quot;DEV&quot;</span> <span class="k">else</span> <span class="s2">&quot;464539978442211328&quot;</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">endpoint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
