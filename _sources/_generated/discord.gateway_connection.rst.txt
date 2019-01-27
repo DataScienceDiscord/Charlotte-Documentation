@@ -1,0 +1,7 @@
+discord.gateway\_connection module
+==================================
+
+.. automodule:: discord.gateway_connection
+    :members:
+    :undoc-members:
+    :show-inheritance:

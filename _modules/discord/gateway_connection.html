@@ -1,0 +1,275 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>discord.gateway_connection &mdash; Charlotte  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Charlotte
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../_generated/commands.html">commands package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_generated/database.html">database package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_generated/discord.html">discord package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_generated/dispatcher.html">dispatcher module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_generated/scripts.html">scripts package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Charlotte</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>discord.gateway_connection</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for discord.gateway_connection</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">websocket</span>
+<span class="kn">from</span> <span class="nn">discord.payload</span> <span class="k">import</span> <span class="n">Payload</span>
+<span class="kn">from</span> <span class="nn">discord.gateway_exceptions</span> <span class="k">import</span> <span class="n">DisconnectionException</span>
+
+
+<div class="viewcode-block" id="GatewayConnection"><a class="viewcode-back" href="../../_generated/discord.gateway_connection.html#discord.gateway_connection.GatewayConnection">[docs]</a><span class="k">class</span> <span class="nc">GatewayConnection</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">ENDPOINT</span> <span class="o">=</span> <span class="s2">&quot;wss://gateway.discord.gg/?v=6&amp;encoding=json&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wslib</span><span class="o">=</span><span class="n">websocket</span><span class="p">,</span> <span class="n">logging</span><span class="o">=</span><span class="n">logging</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wslib</span>    <span class="o">=</span> <span class="n">wslib</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ws</span>       <span class="o">=</span> <span class="n">wslib</span><span class="o">.</span><span class="n">WebSocket</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_seq</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span>   <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">traceback</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">endpoint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">GatewayConnection</span><span class="o">.</span><span class="n">ENDPOINT</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">connected</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ws</span><span class="o">.</span><span class="n">connected</span>
+
+<div class="viewcode-block" id="GatewayConnection.open"><a class="viewcode-back" href="../../_generated/discord.gateway_connection.html#discord.gateway_connection.GatewayConnection.open">[docs]</a>    <span class="k">def</span> <span class="nf">open</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Opens a websocket connection to the gateway.</span>
+
+<span class="sd">        raises:</span>
+<span class="sd">            ValueError: When the gateway connection is already open.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Creating new websocket.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ws</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Gateway connection already open.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ws</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GatewayConnection.close"><a class="viewcode-back" href="../../_generated/discord.gateway_connection.html#discord.gateway_connection.GatewayConnection.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Closes the websocket connection.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Closing gateway websocket.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ws</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="GatewayConnection.receive_payload"><a class="viewcode-back" href="../../_generated/discord.gateway_connection.html#discord.gateway_connection.GatewayConnection.receive_payload">[docs]</a>    <span class="k">def</span> <span class="nf">receive_payload</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Receives a payload packet from the websocket</span>
+<span class="sd">        and stores its sequence number.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A Payload object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">packet</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ws</span><span class="o">.</span><span class="n">recv</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Inc. packet: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">packet</span><span class="p">[:</span><span class="mi">1000</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">packet</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">DisconnectionException</span><span class="p">()</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">Payload</span><span class="o">.</span><span class="n">from_packet</span><span class="p">(</span><span class="n">packet</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">payload</span><span class="o">.</span><span class="n">seq_number</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">last_seq</span> <span class="o">=</span> <span class="n">payload</span><span class="o">.</span><span class="n">seq_number</span>
+        <span class="k">return</span> <span class="n">payload</span></div>
+
+<div class="viewcode-block" id="GatewayConnection.send_payload"><a class="viewcode-back" href="../../_generated/discord.gateway_connection.html#discord.gateway_connection.GatewayConnection.send_payload">[docs]</a>    <span class="k">def</span> <span class="nf">send_payload</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sends a payload packet to the gateway.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            payload: A Payload object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">packet</span> <span class="o">=</span> <span class="n">payload</span><span class="o">.</span><span class="n">to_packet</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ws</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">packet</span><span class="p">)</span>
+        <span class="c1"># Make sure we don&#39;t log confidential info.</span>
+        <span class="n">to_log</span> <span class="o">=</span> <span class="n">packet</span>
+        <span class="k">if</span> <span class="n">payload</span><span class="o">.</span><span class="n">opcode</span> <span class="o">==</span> <span class="n">Payload</span><span class="o">.</span><span class="n">IDENTIFY</span> <span class="ow">or</span> <span class="n">payload</span><span class="o">.</span><span class="n">opcode</span> <span class="o">==</span> <span class="n">Payload</span><span class="o">.</span><span class="n">RESUME</span><span class="p">:</span>
+            <span class="n">to_log</span> <span class="o">=</span> <span class="s2">&quot;CENSORED_PACKET_</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">payload</span><span class="o">.</span><span class="n">opcode</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Out. packet: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">to_log</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Charlotte
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

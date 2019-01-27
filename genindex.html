@@ -196,7 +196,7 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_generated/database.message.html#database.message.Message.channel_id">channel_id (database.message.Message attribute)</a>
 </li>
-      <li><a href="_generated/discord.gateway.html#discord.gateway.Gateway.close">close() (discord.gateway.Gateway method)</a>
+      <li><a href="_generated/discord.gateway_connection.html#discord.gateway_connection.GatewayConnection.close">close() (discord.gateway_connection.GatewayConnection method)</a>
 </li>
       <li><a href="_generated/dispatcher.html#dispatcher.Dispatcher.COMMAND_PREFIX">COMMAND_PREFIX (dispatcher.Dispatcher attribute)</a>
 </li>
@@ -206,13 +206,15 @@
 </li>
       <li><a href="_generated/commands.store.html#module-commands.store">commands.store (module)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_generated/commands.top.html#module-commands.top">commands.top (module)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_generated/commands.unknown_command.html#module-commands.unknown_command">commands.unknown_command (module)</a>
 </li>
-      <li><a href="_generated/discord.gateway.html#discord.gateway.Gateway.connect">connect() (discord.gateway.Gateway method)</a>
+      <li><a href="_generated/discord.gateway_connection.html#discord.gateway_connection.GatewayConnection.connected">connected (discord.gateway_connection.GatewayConnection attribute)</a>
+</li>
+      <li><a href="_generated/discord.gateway.html#discord.gateway.Gateway.connection_interval">connection_interval (discord.gateway.Gateway attribute)</a>
 </li>
       <li><a href="_generated/discord.consumer.html#discord.consumer.Consumer">Consumer (class in discord.consumer)</a>
 </li>
@@ -252,6 +254,8 @@
 </li>
       <li><a href="_generated/dispatcher.html#dispatcher.Dispatcher.DELIMITER">DELIMITER (dispatcher.Dispatcher attribute)</a>
 </li>
+      <li><a href="_generated/discord.gateway_exceptions.html#discord.gateway_exceptions.DisconnectionException">DisconnectionException</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_generated/discord.html#module-discord">discord (module)</a>
@@ -259,6 +263,10 @@
       <li><a href="_generated/discord.consumer.html#module-discord.consumer">discord.consumer (module)</a>
 </li>
       <li><a href="_generated/discord.gateway.html#module-discord.gateway">discord.gateway (module)</a>
+</li>
+      <li><a href="_generated/discord.gateway_connection.html#module-discord.gateway_connection">discord.gateway_connection (module)</a>
+</li>
+      <li><a href="_generated/discord.gateway_exceptions.html#module-discord.gateway_exceptions">discord.gateway_exceptions (module)</a>
 </li>
       <li><a href="_generated/discord.message.html#module-discord.message">discord.message (module)</a>
 </li>
@@ -289,12 +297,12 @@
       <li><a href="_generated/discord.consumer.html#discord.consumer.Consumer.ENDPOINT">ENDPOINT (discord.consumer.Consumer attribute)</a>
 
       <ul>
-        <li><a href="_generated/discord.gateway.html#discord.gateway.Gateway.ENDPOINT">(discord.gateway.Gateway attribute)</a>
+        <li><a href="_generated/discord.gateway_connection.html#discord.gateway_connection.GatewayConnection.ENDPOINT">(discord.gateway_connection.GatewayConnection attribute)</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_generated/discord.gateway.html#discord.gateway.Gateway.endpoint">endpoint (discord.gateway.Gateway attribute)</a>
+      <li><a href="_generated/discord.gateway_connection.html#discord.gateway_connection.GatewayConnection.endpoint">endpoint (discord.gateway_connection.GatewayConnection attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -316,12 +324,14 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_generated/discord.gateway.html#discord.gateway.Gateway">Gateway (class in discord.gateway)</a>
 </li>
-      <li><a href="_generated/database.database.html#database.database.Database.get_member">get_member() (database.database.Database method)</a>
+      <li><a href="_generated/discord.gateway_connection.html#discord.gateway_connection.GatewayConnection">GatewayConnection (class in discord.gateway_connection)</a>
 </li>
-      <li><a href="_generated/database.database.html#database.database.Database.get_message">get_message() (database.database.Database method)</a>
+      <li><a href="_generated/database.database.html#database.database.Database.get_member">get_member() (database.database.Database method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_generated/database.database.html#database.database.Database.get_message">get_message() (database.database.Database method)</a>
+</li>
       <li><a href="_generated/database.database.html#database.database.Database.get_messages_for_member">get_messages_for_member() (database.database.Database method)</a>
 </li>
       <li><a href="_generated/database.database.html#database.database.Database.get_top_members_per_message_count">get_top_members_per_message_count() (database.database.Database method)</a>
@@ -362,6 +372,8 @@
 </li>
       <li><a href="_generated/discord.payload.html#discord.payload.Payload.INVALID">INVALID (discord.payload.Payload attribute)</a>
 </li>
+      <li><a href="_generated/discord.gateway_exceptions.html#discord.gateway_exceptions.InvalidSessionException">InvalidSessionException</a>
+</li>
       <li><a href="_generated/dispatcher.html#dispatcher.Dispatcher.is_command">is_command() (dispatcher.Dispatcher method)</a>
 </li>
   </ul></td>
@@ -384,7 +396,7 @@
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_generated/discord.gateway.html#discord.gateway.Gateway.make_heart_beat">make_heart_beat() (discord.gateway.Gateway method)</a>
+      <li><a href="_generated/discord.gateway.html#discord.gateway.Gateway.MAX_RECONNECTION_WAIT">MAX_RECONNECTION_WAIT (discord.gateway.Gateway attribute)</a>
 </li>
       <li><a href="_generated/database.member.html#database.member.Member">Member (class in database.member)</a>
 </li>
@@ -392,14 +404,14 @@
 </li>
       <li><a href="_generated/database.database.html#database.database.Database.member_exists">member_exists() (database.database.Database method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_generated/database.member.html#database.member.Member.member_id">member_id (database.member.Member attribute)</a>
 
       <ul>
         <li><a href="_generated/database.message.html#database.message.Message.member_id">(database.message.Message attribute)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_generated/database.message.html#database.message.Message">Message (class in database.message)</a>
 
       <ul>
@@ -407,6 +419,8 @@
 </li>
       </ul></li>
       <li><a href="_generated/database.member.html#database.member.Member.messages">messages (database.member.Member attribute)</a>
+</li>
+      <li><a href="_generated/discord.gateway.html#discord.gateway.Gateway.MIN_RECONNECTION_WAIT">MIN_RECONNECTION_WAIT (discord.gateway.Gateway attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -426,6 +440,10 @@
 <h2 id="O">O</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_generated/discord.gateway_connection.html#discord.gateway_connection.GatewayConnection.open">open() (discord.gateway_connection.GatewayConnection method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_generated/discord.gateway.html#discord.gateway.Gateway.OS">OS (discord.gateway.Gateway attribute)</a>
 </li>
   </ul></td>
@@ -438,11 +456,15 @@
 </li>
       <li><a href="_generated/discord.payload.html#discord.payload.Payload">Payload (class in discord.payload)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_generated/discord.gateway.html#discord.gateway.Gateway.perform_handshake">perform_handshake() (discord.gateway.Gateway method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_generated/dispatcher.html#dispatcher.Dispatcher.process_message">process_message() (dispatcher.Dispatcher method)</a>
+</li>
+      <li><a href="_generated/discord.gateway.html#discord.gateway.Gateway.process_payload">process_payload() (discord.gateway.Gateway method)</a>
+</li>
+      <li><a href="_generated/discord.gateway.html#discord.gateway.Gateway.process_payloads">process_payloads() (discord.gateway.Gateway method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -450,23 +472,15 @@
 <h2 id="R">R</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_generated/discord.gateway.html#discord.gateway.Gateway.receive_payload">receive_payload() (discord.gateway.Gateway method)</a>
+      <li><a href="_generated/discord.gateway_connection.html#discord.gateway_connection.GatewayConnection.receive_payload">receive_payload() (discord.gateway_connection.GatewayConnection method)</a>
 </li>
       <li><a href="_generated/discord.payload.html#discord.payload.Payload.RECONNECT">RECONNECT (discord.payload.Payload attribute)</a>
 </li>
-      <li><a href="_generated/discord.gateway.html#discord.gateway.Gateway.reconnect">reconnect() (discord.gateway.Gateway method)</a>
-</li>
-      <li><a href="_generated/discord.gateway.html#discord.gateway.Gateway.RECONNECTION_COUNTER_RESET">RECONNECTION_COUNTER_RESET (discord.gateway.Gateway attribute)</a>
-</li>
-      <li><a href="_generated/discord.gateway.html#discord.gateway.Gateway.RECONNECTION_FAILURE_THRESHOLD">RECONNECTION_FAILURE_THRESHOLD (discord.gateway.Gateway attribute)</a>
+      <li><a href="_generated/discord.payload.html#discord.payload.Payload.REQUEST_MEMB">REQUEST_MEMB (discord.payload.Payload attribute)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_generated/discord.payload.html#discord.payload.Payload.REQUEST_MEMB">REQUEST_MEMB (discord.payload.Payload attribute)</a>
-</li>
       <li><a href="_generated/discord.payload.html#discord.payload.Payload.RESUME">RESUME (discord.payload.Payload attribute)</a>
-</li>
-      <li><a href="_generated/discord.gateway.html#discord.gateway.Gateway.resume">resume() (discord.gateway.Gateway method)</a>
 </li>
       <li><a href="_generated/discord.payload.html#discord.payload.Payload.Resume">Resume() (discord.payload.Payload static method)</a>
 </li>
@@ -490,7 +504,9 @@
 </li>
       <li><a href="_generated/discord.gateway.html#discord.gateway.Gateway.send_heartbeat">send_heartbeat() (discord.gateway.Gateway method)</a>
 </li>
-      <li><a href="_generated/discord.gateway.html#discord.gateway.Gateway.send_payload">send_payload() (discord.gateway.Gateway method)</a>
+      <li><a href="_generated/discord.gateway.html#discord.gateway.Gateway.send_heartbeats">send_heartbeats() (discord.gateway.Gateway method)</a>
+</li>
+      <li><a href="_generated/discord.gateway_connection.html#discord.gateway_connection.GatewayConnection.send_payload">send_payload() (discord.gateway_connection.GatewayConnection method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -516,14 +532,12 @@
 <h2 id="T">T</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_generated/discord.gateway.html#discord.gateway.Gateway.time_since_last_reconnect">time_since_last_reconnect (discord.gateway.Gateway attribute)</a>
-</li>
       <li><a href="_generated/discord.message.html#discord.message.Message.to_json">to_json() (discord.message.Message method)</a>
+</li>
+      <li><a href="_generated/discord.payload.html#discord.payload.Payload.to_packet">to_packet() (discord.payload.Payload method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_generated/discord.payload.html#discord.payload.Payload.to_packet">to_packet() (discord.payload.Payload method)</a>
-</li>
       <li><a href="_generated/discord.message.html#discord.message.Message.to_payload">to_payload() (discord.message.Message method)</a>
 </li>
       <li><a href="_generated/commands.top.html#commands.top.top">top() (in module commands.top)</a>

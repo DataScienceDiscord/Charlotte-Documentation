@@ -165,7 +165,7 @@
 <span id="discord-gateway-module"></span><h1>discord.gateway module<a class="headerlink" href="#module-discord.gateway" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="discord.gateway.Gateway">
-<em class="property">class </em><code class="descclassname">discord.gateway.</code><code class="descname">Gateway</code><span class="sig-paren">(</span><em>token</em>, <em>message_queue</em>, <em>wslib</em>, <em>logging=&lt;module 'logging' from '/opt/python/3.6.3/lib/python3.6/logging/__init__.py'&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/gateway.html#Gateway"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.gateway.Gateway" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">discord.gateway.</code><code class="descname">Gateway</code><span class="sig-paren">(</span><em>token</em>, <em>message_queue</em>, <em>GatewayConnection=&lt;class 'discord.gateway_connection.GatewayConnection'&gt;</em>, <em>logging=&lt;module 'logging' from '/opt/python/3.6.3/lib/python3.6/logging/__init__.py'&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/gateway.html#Gateway"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.gateway.Gateway" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>An interface for discord’s gateway API as described here:
 <a class="reference external" href="https://discordapp.com/developers/docs/topics/gateway">https://discordapp.com/developers/docs/topics/gateway</a></p>
@@ -183,11 +183,6 @@
 </tbody>
 </table>
 <dl class="attribute">
-<dt id="discord.gateway.Gateway.ENDPOINT">
-<code class="descname">ENDPOINT</code><em class="property"> = 'wss://gateway.discord.gg/?v=6&amp;encoding=json'</em><a class="headerlink" href="#discord.gateway.Gateway.ENDPOINT" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
 <dt id="discord.gateway.Gateway.DEFAULT_HEARTBEAT_PERIOD">
 <code class="descname">DEFAULT_HEARTBEAT_PERIOD</code><em class="property"> = 45</em><a class="headerlink" href="#discord.gateway.Gateway.DEFAULT_HEARTBEAT_PERIOD" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -203,57 +198,23 @@
 <dd></dd></dl>
 
 <dl class="attribute">
-<dt id="discord.gateway.Gateway.RECONNECTION_FAILURE_THRESHOLD">
-<code class="descname">RECONNECTION_FAILURE_THRESHOLD</code><em class="property"> = 3</em><a class="headerlink" href="#discord.gateway.Gateway.RECONNECTION_FAILURE_THRESHOLD" title="Permalink to this definition">¶</a></dt>
+<dt id="discord.gateway.Gateway.MIN_RECONNECTION_WAIT">
+<code class="descname">MIN_RECONNECTION_WAIT</code><em class="property"> = 5</em><a class="headerlink" href="#discord.gateway.Gateway.MIN_RECONNECTION_WAIT" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
-<dt id="discord.gateway.Gateway.RECONNECTION_COUNTER_RESET">
-<code class="descname">RECONNECTION_COUNTER_RESET</code><em class="property"> = 600</em><a class="headerlink" href="#discord.gateway.Gateway.RECONNECTION_COUNTER_RESET" title="Permalink to this definition">¶</a></dt>
+<dt id="discord.gateway.Gateway.MAX_RECONNECTION_WAIT">
+<code class="descname">MAX_RECONNECTION_WAIT</code><em class="property"> = 1800</em><a class="headerlink" href="#discord.gateway.Gateway.MAX_RECONNECTION_WAIT" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
-<dt id="discord.gateway.Gateway.endpoint">
-<code class="descname">endpoint</code><a class="headerlink" href="#discord.gateway.Gateway.endpoint" title="Permalink to this definition">¶</a></dt>
+<dt id="discord.gateway.Gateway.connection_interval">
+<code class="descname">connection_interval</code><a class="headerlink" href="#discord.gateway.Gateway.connection_interval" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
-
-<dl class="attribute">
-<dt id="discord.gateway.Gateway.time_since_last_reconnect">
-<code class="descname">time_since_last_reconnect</code><a class="headerlink" href="#discord.gateway.Gateway.time_since_last_reconnect" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="discord.gateway.Gateway.receive_payload">
-<code class="descname">receive_payload</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/gateway.html#Gateway.receive_payload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.gateway.Gateway.receive_payload" title="Permalink to this definition">¶</a></dt>
-<dd><p>Receives a payload packet from the websocket
-and stores its sequence number.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A Payload object.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="discord.gateway.Gateway.send_payload">
-<code class="descname">send_payload</code><span class="sig-paren">(</span><em>payload</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/gateway.html#Gateway.send_payload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.gateway.Gateway.send_payload" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sends a payload packet to the gateway.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>payload</strong> – A Payload object.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
 
 <dl class="method">
 <dt id="discord.gateway.Gateway.perform_handshake">
-<code class="descname">perform_handshake</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/gateway.html#Gateway.perform_handshake"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.gateway.Gateway.perform_handshake" title="Permalink to this definition">¶</a></dt>
+<code class="descname">perform_handshake</code><span class="sig-paren">(</span><em>connection</em>, <em>resume=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/gateway.html#Gateway.perform_handshake"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.gateway.Gateway.perform_handshake" title="Permalink to this definition">¶</a></dt>
 <dd><p>Waits for the gateway to say hello then identifies with it and
 waits for its READY acknowledgment.
 In the process the heartbeat interval and session ID are defined.</p>
@@ -272,77 +233,27 @@ In the process the heartbeat interval and session ID are defined.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="discord.gateway.Gateway.connect">
-<code class="descname">connect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/gateway.html#Gateway.connect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.gateway.Gateway.connect" title="Permalink to this definition">¶</a></dt>
-<dd><p>Opens a connection to the gateway and perform the agreed upon handshake.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
-<li><strong>AssertionError</strong> – Unexpected behaviour from the gateway during the handshake.</li>
-<li><strong>KeyError</strong> – Handshake messages did not contain necessary information.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="discord.gateway.Gateway.resume">
-<code class="descname">resume</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/gateway.html#Gateway.resume"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.gateway.Gateway.resume" title="Permalink to this definition">¶</a></dt>
-<dd><p>Attempts to reopen a connection and send a RESUME Payload to
-get all the events that were sent during the disconnection period.</p>
-<p>In the event that it fails to connect the first time,
-it will attempt to open a new connection without resuming from the last
-message received.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
-<li><strong>AssertionError</strong> – Unexpected behaviour from the gateway during the handshake.</li>
-<li><strong>KeyError</strong> – Handshake messages did not contain necessary information.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="discord.gateway.Gateway.reconnect">
-<code class="descname">reconnect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/gateway.html#Gateway.reconnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.gateway.Gateway.reconnect" title="Permalink to this definition">¶</a></dt>
-<dd><p>Closes the current connection and attempts to open a new one
-and resume at the last message received.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
-<li><strong>AssertionError</strong> – Unexpected behaviour from the gateway during the handshake.</li>
-<li><strong>KeyError</strong> – Handshake messages did not contain necessary information.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
 <dt id="discord.gateway.Gateway.send_heartbeat">
-<code class="descname">send_heartbeat</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/gateway.html#Gateway.send_heartbeat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.gateway.Gateway.send_heartbeat" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sends a single HEARTBEAT Payload to the gateway.</p>
-</dd></dl>
+<code class="descname">send_heartbeat</code><span class="sig-paren">(</span><em>connection</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/gateway.html#Gateway.send_heartbeat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.gateway.Gateway.send_heartbeat" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
-<dt id="discord.gateway.Gateway.make_heart_beat">
-<code class="descname">make_heart_beat</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/gateway.html#Gateway.make_heart_beat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.gateway.Gateway.make_heart_beat" title="Permalink to this definition">¶</a></dt>
+<dt id="discord.gateway.Gateway.send_heartbeats">
+<code class="descname">send_heartbeats</code><span class="sig-paren">(</span><em>connection</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/gateway.html#Gateway.send_heartbeats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.gateway.Gateway.send_heartbeats" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sends heartbeats at the chosen heartbeat interval
 until told to stop or the connection drops, in which case
 it’ll attempt to reconnect.</p>
 </dd></dl>
+
+<dl class="method">
+<dt id="discord.gateway.Gateway.process_payload">
+<code class="descname">process_payload</code><span class="sig-paren">(</span><em>payload</em>, <em>connection</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/gateway.html#Gateway.process_payload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.gateway.Gateway.process_payload" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="discord.gateway.Gateway.process_payloads">
+<code class="descname">process_payloads</code><span class="sig-paren">(</span><em>connection</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/gateway.html#Gateway.process_payloads"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.gateway.Gateway.process_payloads" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="discord.gateway.Gateway.run">
@@ -350,12 +261,6 @@ it’ll attempt to reconnect.</p>
 <dd><p>Receives and handle payloads until told to stop or the connection drops.
 When a DISPATCH Payload is received it’ll be put inside the message queue
 for further processing by listeners.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="discord.gateway.Gateway.close">
-<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/gateway.html#Gateway.close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.gateway.Gateway.close" title="Permalink to this definition">¶</a></dt>
-<dd><p>Closes the websocket connection.</p>
 </dd></dl>
 
 <dl class="method">

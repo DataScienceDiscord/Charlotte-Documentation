@@ -1,0 +1,7 @@
+discord.gateway\_exceptions module
+==================================
+
+.. automodule:: discord.gateway_exceptions
+    :members:
+    :undoc-members:
+    :show-inheritance:

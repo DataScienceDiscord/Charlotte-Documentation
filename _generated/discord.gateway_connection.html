@@ -1,0 +1,274 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>discord.gateway_connection module &mdash; Charlotte  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Charlotte
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="commands.html">commands package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="database.html">database package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="discord.html">discord package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dispatcher.html">dispatcher module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scripts.html">scripts package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Charlotte</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>discord.gateway_connection module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/_generated/discord.gateway_connection.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-discord.gateway_connection">
+<span id="discord-gateway-connection-module"></span><h1>discord.gateway_connection module<a class="headerlink" href="#module-discord.gateway_connection" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="discord.gateway_connection.GatewayConnection">
+<em class="property">class </em><code class="descclassname">discord.gateway_connection.</code><code class="descname">GatewayConnection</code><span class="sig-paren">(</span><em>wslib=&lt;module 'websocket' from '/home/travis/virtualenv/python3.6.3/lib/python3.6/site-packages/websocket/__init__.py'&gt;</em>, <em>logging=&lt;module 'logging' from '/opt/python/3.6.3/lib/python3.6/logging/__init__.py'&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/gateway_connection.html#GatewayConnection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.gateway_connection.GatewayConnection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="discord.gateway_connection.GatewayConnection.ENDPOINT">
+<code class="descname">ENDPOINT</code><em class="property"> = 'wss://gateway.discord.gg/?v=6&amp;encoding=json'</em><a class="headerlink" href="#discord.gateway_connection.GatewayConnection.ENDPOINT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="discord.gateway_connection.GatewayConnection.endpoint">
+<code class="descname">endpoint</code><a class="headerlink" href="#discord.gateway_connection.GatewayConnection.endpoint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="discord.gateway_connection.GatewayConnection.connected">
+<code class="descname">connected</code><a class="headerlink" href="#discord.gateway_connection.GatewayConnection.connected" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="discord.gateway_connection.GatewayConnection.open">
+<code class="descname">open</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/gateway_connection.html#GatewayConnection.open"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.gateway_connection.GatewayConnection.open" title="Permalink to this definition">¶</a></dt>
+<dd><p>Opens a websocket connection to the gateway.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><strong>ValueError</strong> – When the gateway connection is already open.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="discord.gateway_connection.GatewayConnection.close">
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/gateway_connection.html#GatewayConnection.close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.gateway_connection.GatewayConnection.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes the websocket connection.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="discord.gateway_connection.GatewayConnection.receive_payload">
+<code class="descname">receive_payload</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/gateway_connection.html#GatewayConnection.receive_payload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.gateway_connection.GatewayConnection.receive_payload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Receives a payload packet from the websocket
+and stores its sequence number.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A Payload object.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="discord.gateway_connection.GatewayConnection.send_payload">
+<code class="descname">send_payload</code><span class="sig-paren">(</span><em>payload</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/gateway_connection.html#GatewayConnection.send_payload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.gateway_connection.GatewayConnection.send_payload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends a payload packet to the gateway.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>payload</strong> – A Payload object.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Charlotte
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
