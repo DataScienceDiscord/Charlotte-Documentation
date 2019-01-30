@@ -8,4 +8,5 @@ Charlotte
    database
    discord
    dispatcher
+   logging_config
    scripts

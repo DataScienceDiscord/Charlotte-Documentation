@@ -8,6 +8,8 @@ Submodules
 
    discord.consumer
    discord.gateway
+   discord.gateway_connection
+   discord.gateway_exceptions
    discord.message
    discord.payload
 

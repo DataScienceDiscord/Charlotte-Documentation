@@ -9,8 +9,8 @@ Submodules
    database.base_model
    database.config
    database.database
+   database.member
    database.message
-   database.user
 
 Module contents
 ---------------

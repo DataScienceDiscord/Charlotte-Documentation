@@ -8,6 +8,8 @@ Submodules
 
    commands.say
    commands.store
+   commands.top
+   commands.unknown_command
 
 Module contents
 ---------------
