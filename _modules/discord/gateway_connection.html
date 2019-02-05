@@ -148,6 +148,7 @@
   <h1>Source code for discord.gateway_connection</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">websocket</span>
+<span class="kn">from</span> <span class="nn">websocket._exceptions</span> <span class="k">import</span> <span class="n">WebSocketConnectionClosedException</span>
 <span class="kn">from</span> <span class="nn">discord.payload</span> <span class="k">import</span> <span class="n">Payload</span>
 <span class="kn">from</span> <span class="nn">discord.gateway_exceptions</span> <span class="k">import</span> <span class="n">DisconnectionException</span>
 
@@ -191,7 +192,10 @@
 <div class="viewcode-block" id="GatewayConnection.close"><a class="viewcode-back" href="../../_generated/discord.gateway_connection.html#discord.gateway_connection.GatewayConnection.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Closes the websocket connection.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Closing gateway websocket.&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ws</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ws</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">WebSocketConnectionClosedException</span><span class="p">:</span>
+            <span class="k">pass</span></div>
 
 <div class="viewcode-block" id="GatewayConnection.receive_payload"><a class="viewcode-back" href="../../_generated/discord.gateway_connection.html#discord.gateway_connection.GatewayConnection.receive_payload">[docs]</a>    <span class="k">def</span> <span class="nf">receive_payload</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Receives a payload packet from the websocket</span>
