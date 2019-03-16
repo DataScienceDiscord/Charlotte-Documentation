@@ -158,7 +158,7 @@
 
 
 
-<div class="viewcode-block" id="activity"><a class="viewcode-back" href="../../_generated/commands.activity.html#commands.activity.activity">[docs]</a><span class="k">def</span> <span class="nf">activity</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">database</span><span class="p">):</span>
+<div class="viewcode-block" id="activity"><a class="viewcode-back" href="../../_generated/commands.activity.html#commands.activity.activity">[docs]</a><span class="k">def</span> <span class="nf">activity</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">database</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
     <span class="n">messages</span> <span class="o">=</span> <span class="n">database</span><span class="o">.</span><span class="n">get_message_count_per_date</span><span class="p">()</span>
     <span class="n">records</span>  <span class="o">=</span> <span class="p">[(</span><span class="n">message</span><span class="o">.</span><span class="n">day</span><span class="p">,</span> <span class="n">message</span><span class="o">.</span><span class="n">count</span><span class="p">)</span> <span class="k">for</span> <span class="n">message</span> <span class="ow">in</span> <span class="n">messages</span><span class="p">]</span>
 

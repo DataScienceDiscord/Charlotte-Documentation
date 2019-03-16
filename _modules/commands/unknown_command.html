@@ -151,7 +151,7 @@
 <span></span><span class="kn">from</span> <span class="nn">discord</span> <span class="k">import</span> <span class="n">Message</span>
 
 
-<div class="viewcode-block" id="unknown_command"><a class="viewcode-back" href="../../_generated/commands.unknown_command.html#commands.unknown_command.unknown_command">[docs]</a><span class="k">def</span> <span class="nf">unknown_command</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">database</span><span class="p">):</span>
+<div class="viewcode-block" id="unknown_command"><a class="viewcode-back" href="../../_generated/commands.unknown_command.html#commands.unknown_command.unknown_command">[docs]</a><span class="k">def</span> <span class="nf">unknown_command</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">database</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
     <span class="n">response</span> <span class="o">=</span> <span class="n">Message</span><span class="p">(</span><span class="s2">&quot;There is no such command.&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">.</span><span class="n">channel_id</span><span class="p">,</span> <span class="s2">&quot;Charlotte&quot;</span><span class="p">,</span> <span class="s2">&quot;Charlotte&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">response</span></div>
 </pre></div>
