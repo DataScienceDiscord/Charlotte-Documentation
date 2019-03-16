@@ -17,32 +17,34 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -209,7 +211,7 @@
         <span class="n">mysql</span> <span class="o">=</span> <span class="kc">None</span>
 
 
-<span class="n">__version__</span> <span class="o">=</span> <span class="s1">&#39;3.8.2&#39;</span>
+<span class="n">__version__</span> <span class="o">=</span> <span class="s1">&#39;3.9.2&#39;</span>
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;AsIs&#39;</span><span class="p">,</span>
     <span class="s1">&#39;AutoField&#39;</span><span class="p">,</span>
@@ -231,6 +233,7 @@
     <span class="s1">&#39;Context&#39;</span><span class="p">,</span>
     <span class="s1">&#39;Database&#39;</span><span class="p">,</span>
     <span class="s1">&#39;DatabaseError&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;DatabaseProxy&#39;</span><span class="p">,</span>
     <span class="s1">&#39;DataError&#39;</span><span class="p">,</span>
     <span class="s1">&#39;DateField&#39;</span><span class="p">,</span>
     <span class="s1">&#39;DateTimeField&#39;</span><span class="p">,</span>
@@ -293,15 +296,6 @@
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;peewee&#39;</span><span class="p">)</span>
 <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">NullHandler</span><span class="p">())</span>
-
-<span class="c1"># Import any speedups or provide alternate implementations.</span>
-<span class="k">try</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">playhouse._speedups</span> <span class="k">import</span> <span class="n">quote</span>
-<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-    <span class="k">def</span> <span class="nf">quote</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">quote_chars</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">path</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">quote_chars</span><span class="p">)</span>
-        <span class="k">return</span> <span class="s1">&#39;.&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">part</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">quote_chars</span><span class="p">)</span> <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">path</span><span class="p">])</span>
 
 
 <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
@@ -493,6 +487,11 @@
 <span class="n">SCOPE_CTE</span> <span class="o">=</span> <span class="mi">8</span>
 <span class="n">SCOPE_COLUMN</span> <span class="o">=</span> <span class="mi">16</span>
 
+<span class="c1"># Rules for parentheses around subqueries in compound select.</span>
+<span class="n">CSQ_PARENTHESES_NEVER</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">CSQ_PARENTHESES_ALWAYS</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">CSQ_PARENTHESES_UNNESTED</span> <span class="o">=</span> <span class="mi">2</span>
+
 <span class="c1"># Regular expressions used to convert class names to snake-case table names.</span>
 <span class="c1"># First regex handles acronym followed by word or initial lower-word followed</span>
 <span class="c1"># by a capitalized word. e.g. APIResponse -&gt; API_Response / fooBar -&gt; foo_Bar.</span>
@@ -511,6 +510,11 @@
     <span class="k">if</span> <span class="n">overrides</span><span class="p">:</span>
         <span class="n">merged</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">overrides</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">merged</span>
+
+<span class="k">def</span> <span class="nf">quote</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">quote_chars</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">path</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">quote_chars</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s1">&#39;.&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">part</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">quote_chars</span><span class="p">)</span> <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">path</span><span class="p">])</span>
 
 <span class="n">is_model</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">o</span><span class="p">:</span> <span class="n">isclass</span><span class="p">(</span><span class="n">o</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">Model</span><span class="p">)</span>
 
@@ -579,6 +583,22 @@
         <span class="k">if</span> <span class="n">attr</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__slots__</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s1">&#39;Cannot set attribute on proxy.&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">Proxy</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">DatabaseProxy</span><span class="p">(</span><span class="n">Proxy</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Proxy implementation specifically for proxying `Database` objects.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">connection_context</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ConnectionContext</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">atomic</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">_atomic</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">manual_commit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">_manual</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">_transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">savepoint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">_savepoint</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
 
 <span class="c1"># SQL Generation.</span>
@@ -658,12 +678,17 @@
 
 
 <span class="k">class</span> <span class="nc">Context</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;stack&#39;</span><span class="p">,</span> <span class="s1">&#39;_sql&#39;</span><span class="p">,</span> <span class="s1">&#39;_values&#39;</span><span class="p">,</span> <span class="s1">&#39;alias_manager&#39;</span><span class="p">,</span> <span class="s1">&#39;state&#39;</span><span class="p">)</span>
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">settings</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_sql</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_values</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">alias_manager</span> <span class="o">=</span> <span class="n">AliasManager</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="o">**</span><span class="n">settings</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">as_new</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Context</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">settings</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">column_sort_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_sort_key</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
@@ -751,6 +776,46 @@
         <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sql</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_values</span>
 
 
+<span class="k">def</span> <span class="nf">query_to_string</span><span class="p">(</span><span class="n">query</span><span class="p">):</span>
+    <span class="c1"># NOTE: this function is not exported by default as it might be misused --</span>
+    <span class="c1"># and this misuse could lead to sql injection vulnerabilities. This</span>
+    <span class="c1"># function is intended for debugging or logging purposes ONLY.</span>
+    <span class="n">db</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="s1">&#39;_database&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">db</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">ctx</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">get_sql_context</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ctx</span> <span class="o">=</span> <span class="n">Context</span><span class="p">()</span>
+
+    <span class="n">sql</span><span class="p">,</span> <span class="n">params</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="n">query</span><span class="p">)</span><span class="o">.</span><span class="n">query</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">params</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">sql</span>
+
+    <span class="n">param</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">param</span> <span class="ow">or</span> <span class="s1">&#39;?&#39;</span>
+    <span class="k">if</span> <span class="n">param</span> <span class="o">==</span> <span class="s1">&#39;?&#39;</span><span class="p">:</span>
+        <span class="n">sql</span> <span class="o">=</span> <span class="n">sql</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;?&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">sql</span> <span class="o">%</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">_query_val_transform</span><span class="p">,</span> <span class="n">params</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">_query_val_transform</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
+    <span class="c1"># Interpolate parameters.</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="p">(</span><span class="n">text_type</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">,</span>
+                      <span class="n">datetime</span><span class="o">.</span><span class="n">time</span><span class="p">)):</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="s2">&quot;&#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">v</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">bytes_type</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">v</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf8&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">UnicodeDecodeError</span><span class="p">:</span>
+            <span class="n">v</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;raw_unicode_escape&#39;</span><span class="p">)</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="s2">&quot;&#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">v</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">int</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>  <span class="c1"># Also handles booleans -&gt; 1 or 0.</span>
+    <span class="k">elif</span> <span class="n">v</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="s1">&#39;NULL&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">v</span>
+
+
 <span class="c1"># AST.</span>
 
 
@@ -829,6 +894,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_alias</span> <span class="o">=</span> <span class="n">name</span>
 
     <span class="k">def</span> <span class="nf">select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">columns</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">columns</span><span class="p">:</span>
+            <span class="n">columns</span> <span class="o">=</span> <span class="p">(</span><span class="n">SQL</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="p">),)</span>
         <span class="k">return</span> <span class="n">Select</span><span class="p">((</span><span class="bp">self</span><span class="p">,),</span> <span class="n">columns</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">join</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dest</span><span class="p">,</span> <span class="n">join_type</span><span class="o">=</span><span class="s1">&#39;INNER&#39;</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -1440,7 +1507,7 @@
             <span class="c1"># Postgresql reports an error for IN/NOT IN (), so convert to</span>
             <span class="c1"># the equivalent boolean expression.</span>
             <span class="n">op_in</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">op</span> <span class="o">==</span> <span class="n">OP</span><span class="o">.</span><span class="n">IN</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">op</span> <span class="o">==</span> <span class="n">OP</span><span class="o">.</span><span class="n">NOT_IN</span>
-            <span class="k">if</span> <span class="n">op_in</span> <span class="ow">and</span> <span class="n">Context</span><span class="p">()</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rhs</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;()&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">op_in</span> <span class="ow">and</span> <span class="n">ctx</span><span class="o">.</span><span class="n">as_new</span><span class="p">()</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rhs</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;()&#39;</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">ctx</span><span class="o">.</span><span class="n">literal</span><span class="p">(</span><span class="s1">&#39;0 = 1&#39;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">op</span> <span class="o">==</span> <span class="n">OP</span><span class="o">.</span><span class="n">IN</span> <span class="k">else</span> <span class="s1">&#39;1 = 1&#39;</span><span class="p">)</span>
 
             <span class="k">return</span> <span class="p">(</span><span class="n">ctx</span>
@@ -1715,7 +1782,8 @@
 
 <span class="k">class</span> <span class="nc">OnConflict</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">update</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">preserve</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">where</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">conflict_target</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">conflict_constraint</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+                 <span class="n">conflict_target</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">conflict_where</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">conflict_constraint</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_action</span> <span class="o">=</span> <span class="n">action</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_update</span> <span class="o">=</span> <span class="n">update</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_preserve</span> <span class="o">=</span> <span class="n">ensure_tuple</span><span class="p">(</span><span class="n">preserve</span><span class="p">)</span>
@@ -1724,6 +1792,7 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;only one of &quot;conflict_target&quot; and &#39;</span>
                              <span class="s1">&#39;&quot;conflict_constraint&quot; may be specified.&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_conflict_target</span> <span class="o">=</span> <span class="n">ensure_tuple</span><span class="p">(</span><span class="n">conflict_target</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_conflict_where</span> <span class="o">=</span> <span class="n">conflict_where</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_conflict_constraint</span> <span class="o">=</span> <span class="n">conflict_constraint</span>
 
     <span class="k">def</span> <span class="nf">get_conflict_statement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctx</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
@@ -1756,6 +1825,12 @@
     <span class="k">def</span> <span class="nf">conflict_target</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">constraints</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_conflict_constraint</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_conflict_target</span> <span class="o">=</span> <span class="n">constraints</span>
+
+    <span class="nd">@Node</span><span class="o">.</span><span class="n">copy</span>
+    <span class="k">def</span> <span class="nf">conflict_where</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">expressions</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_conflict_where</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">expressions</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_conflict_where</span><span class="p">,)</span> <span class="o">+</span> <span class="n">expressions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_conflict_where</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">and_</span><span class="p">,</span> <span class="n">expressions</span><span class="p">)</span>
 
     <span class="nd">@Node</span><span class="o">.</span><span class="n">copy</span>
     <span class="k">def</span> <span class="nf">conflict_constraint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constraint</span><span class="p">):</span>
@@ -1874,6 +1949,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_execution</span><span class="p">()</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cursor_wrapper</span><span class="p">)</span>
 
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">query_to_string</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
 
 <span class="k">class</span> <span class="nc">RawQuery</span><span class="p">(</span><span class="n">BaseQuery</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sql</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -1917,6 +1995,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_where</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">and_</span><span class="p">,</span> <span class="n">expressions</span><span class="p">)</span>
 
     <span class="nd">@Node</span><span class="o">.</span><span class="n">copy</span>
+    <span class="k">def</span> <span class="nf">orwhere</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">expressions</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_where</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">expressions</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_where</span><span class="p">,)</span> <span class="o">+</span> <span class="n">expressions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_where</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">or_</span><span class="p">,</span> <span class="n">expressions</span><span class="p">)</span>
+
+    <span class="nd">@Node</span><span class="o">.</span><span class="n">copy</span>
     <span class="k">def</span> <span class="nf">order_by</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">values</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_order_by</span> <span class="o">=</span> <span class="n">values</span>
 
@@ -1956,7 +2040,10 @@
             <span class="c1"># The CTE scope is only used at the very beginning of the query,</span>
             <span class="c1"># when we are describing the various CTEs we will be using.</span>
             <span class="n">recursive</span> <span class="o">=</span> <span class="nb">any</span><span class="p">(</span><span class="n">cte</span><span class="o">.</span><span class="n">_recursive</span> <span class="k">for</span> <span class="n">cte</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cte_list</span><span class="p">)</span>
-            <span class="k">with</span> <span class="n">ctx</span><span class="o">.</span><span class="n">scope_cte</span><span class="p">():</span>
+
+            <span class="c1"># Explicitly disable the &quot;subquery&quot; flag here, so as to avoid</span>
+            <span class="c1"># unnecessary parentheses around subsequent selects.</span>
+            <span class="k">with</span> <span class="n">ctx</span><span class="o">.</span><span class="n">scope_cte</span><span class="p">(</span><span class="n">subquery</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
                 <span class="p">(</span><span class="n">ctx</span>
                  <span class="o">.</span><span class="n">literal</span><span class="p">(</span><span class="s1">&#39;WITH RECURSIVE &#39;</span> <span class="k">if</span> <span class="n">recursive</span> <span class="k">else</span> <span class="s1">&#39;WITH &#39;</span><span class="p">)</span>
                  <span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="n">CommaNodeList</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cte_list</span><span class="p">))</span>
@@ -1984,6 +2071,17 @@
 
     <span class="k">def</span> <span class="nf">cte</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">CTE</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="n">recursive</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">select_from</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">columns</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">columns</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;select_from() must specify one or more columns.&#39;</span><span class="p">)</span>
+
+        <span class="n">query</span> <span class="o">=</span> <span class="p">(</span><span class="n">Select</span><span class="p">((</span><span class="bp">self</span><span class="p">,),</span> <span class="n">columns</span><span class="p">)</span>
+                 <span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_database</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;model&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># Bind to the sub-select&#39;s model type, if defined.</span>
+            <span class="n">query</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">objects</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">query</span>
 
 
 <span class="k">class</span> <span class="nc">SelectBase</span><span class="p">(</span><span class="n">_HashableSource</span><span class="p">,</span> <span class="n">Source</span><span class="p">,</span> <span class="n">SelectQuery</span><span class="p">):</span>
@@ -2061,24 +2159,39 @@
     <span class="k">def</span> <span class="nf">_get_query_key</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lhs</span><span class="o">.</span><span class="n">get_query_key</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">rhs</span><span class="o">.</span><span class="n">get_query_key</span><span class="p">())</span>
 
+    <span class="k">def</span> <span class="nf">_wrap_parens</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctx</span><span class="p">,</span> <span class="n">subq</span><span class="p">):</span>
+        <span class="n">csq_setting</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">compound_select_parentheses</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">csq_setting</span> <span class="ow">or</span> <span class="n">csq_setting</span> <span class="o">==</span> <span class="n">CSQ_PARENTHESES_NEVER</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">elif</span> <span class="n">csq_setting</span> <span class="o">==</span> <span class="n">CSQ_PARENTHESES_ALWAYS</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="n">csq_setting</span> <span class="o">==</span> <span class="n">CSQ_PARENTHESES_UNNESTED</span><span class="p">:</span>
+            <span class="k">return</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">subq</span><span class="p">,</span> <span class="n">CompoundSelectQuery</span><span class="p">)</span>
+
     <span class="k">def</span> <span class="nf">__sql__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctx</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">ctx</span><span class="o">.</span><span class="n">scope</span> <span class="o">==</span> <span class="n">SCOPE_COLUMN</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_column</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span>
 
-        <span class="n">parens_around_query</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">compound_select_parentheses</span>
         <span class="n">outer_parens</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">subquery</span> <span class="ow">or</span> <span class="p">(</span><span class="n">ctx</span><span class="o">.</span><span class="n">scope</span> <span class="o">==</span> <span class="n">SCOPE_SOURCE</span><span class="p">)</span>
         <span class="k">with</span> <span class="n">ctx</span><span class="p">(</span><span class="n">parentheses</span><span class="o">=</span><span class="n">outer_parens</span><span class="p">):</span>
-            <span class="k">with</span> <span class="n">ctx</span><span class="o">.</span><span class="n">scope_normal</span><span class="p">(</span><span class="n">parentheses</span><span class="o">=</span><span class="n">parens_around_query</span><span class="p">,</span>
-                                  <span class="n">subquery</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+            <span class="c1"># Should the left-hand query be wrapped in parentheses?</span>
+            <span class="n">lhs_parens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wrap_parens</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lhs</span><span class="p">)</span>
+            <span class="k">with</span> <span class="n">ctx</span><span class="o">.</span><span class="n">scope_normal</span><span class="p">(</span><span class="n">parentheses</span><span class="o">=</span><span class="n">lhs_parens</span><span class="p">,</span> <span class="n">subquery</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
                 <span class="n">ctx</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lhs</span><span class="p">)</span>
             <span class="n">ctx</span><span class="o">.</span><span class="n">literal</span><span class="p">(</span><span class="s1">&#39; </span><span class="si">%s</span><span class="s1"> &#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">op</span><span class="p">)</span>
             <span class="k">with</span> <span class="n">ctx</span><span class="o">.</span><span class="n">push_alias</span><span class="p">():</span>
-                <span class="k">with</span> <span class="n">ctx</span><span class="o">.</span><span class="n">scope_normal</span><span class="p">(</span><span class="n">parentheses</span><span class="o">=</span><span class="n">parens_around_query</span><span class="p">,</span>
-                                      <span class="n">subquery</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+                <span class="c1"># Should the right-hand query be wrapped in parentheses?</span>
+                <span class="n">rhs_parens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wrap_parens</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rhs</span><span class="p">)</span>
+                <span class="k">with</span> <span class="n">ctx</span><span class="o">.</span><span class="n">scope_normal</span><span class="p">(</span><span class="n">parentheses</span><span class="o">=</span><span class="n">rhs_parens</span><span class="p">,</span> <span class="n">subquery</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
                     <span class="n">ctx</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rhs</span><span class="p">)</span>
 
-            <span class="c1"># Apply ORDER BY, LIMIT, OFFSET.</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_apply_ordering</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span>
+            <span class="c1"># Apply ORDER BY, LIMIT, OFFSET. We use the &quot;values&quot; scope so that</span>
+            <span class="c1"># entity names are not fully-qualified. This is a bit of a hack, as</span>
+            <span class="c1"># we&#39;re relying on the logic in Column.__sql__() to not fully</span>
+            <span class="c1"># qualify column names.</span>
+            <span class="k">with</span> <span class="n">ctx</span><span class="o">.</span><span class="n">scope_values</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_apply_ordering</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_alias</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span>
 
@@ -2180,7 +2293,6 @@
         <span class="k">return</span> <span class="n">ctx</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="n">CommaNodeList</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_returning</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">__sql__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctx</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">Select</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__sql__</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">ctx</span><span class="o">.</span><span class="n">scope</span> <span class="o">==</span> <span class="n">SCOPE_COLUMN</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_column</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span>
 
@@ -2195,6 +2307,11 @@
             <span class="n">state</span><span class="p">[</span><span class="s1">&#39;parentheses&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">with</span> <span class="n">ctx</span><span class="o">.</span><span class="n">scope_normal</span><span class="p">(</span><span class="o">**</span><span class="n">state</span><span class="p">):</span>
+            <span class="c1"># Defer calling parent SQL until here. This ensures that any CTEs</span>
+            <span class="c1"># for this query will be properly nested if this query is a</span>
+            <span class="c1"># sub-select or is used in an expression. See GH#1809 for example.</span>
+            <span class="nb">super</span><span class="p">(</span><span class="n">Select</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__sql__</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span>
+
             <span class="n">ctx</span><span class="o">.</span><span class="n">literal</span><span class="p">(</span><span class="s1">&#39;SELECT &#39;</span><span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_simple_distinct</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_distinct</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">ctx</span><span class="o">.</span><span class="n">literal</span><span class="p">(</span><span class="s1">&#39;DISTINCT &#39;</span><span class="p">)</span>
@@ -2725,10 +2842,11 @@
     <span class="n">operations</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">param</span> <span class="o">=</span> <span class="s1">&#39;?&#39;</span>
     <span class="n">quote</span> <span class="o">=</span> <span class="s1">&#39;&quot;&quot;&#39;</span>
+    <span class="n">server_version</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="c1"># Feature toggles.</span>
     <span class="n">commit_select</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="n">compound_select_parentheses</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">compound_select_parentheses</span> <span class="o">=</span> <span class="n">CSQ_PARENTHESES_NEVER</span>
     <span class="n">for_update</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="n">index_schema_prefix</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="n">limit_max</span> <span class="o">=</span> <span class="kc">None</span>
@@ -2807,11 +2925,16 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
             <span class="k">with</span> <span class="n">__exception_wrapper__</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">set_connection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_connect</span><span class="p">())</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">server_version</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_set_server_version</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">conn</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_initialize_connection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">conn</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">True</span>
 
     <span class="k">def</span> <span class="nf">_initialize_connection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conn</span><span class="p">):</span>
         <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">_set_server_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conn</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">server_version</span> <span class="o">=</span> <span class="mi">0</span>
 
     <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lock</span><span class="p">:</span>
@@ -2906,6 +3029,9 @@
             <span class="n">target</span> <span class="o">=</span> <span class="n">EnclosedNodeList</span><span class="p">([</span>
                 <span class="n">Entity</span><span class="p">(</span><span class="n">col</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">basestring</span><span class="p">)</span> <span class="k">else</span> <span class="n">col</span>
                 <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">on_conflict</span><span class="o">.</span><span class="n">_conflict_target</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">on_conflict</span><span class="o">.</span><span class="n">_conflict_where</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">target</span> <span class="o">=</span> <span class="n">NodeList</span><span class="p">([</span><span class="n">target</span><span class="p">,</span> <span class="n">SQL</span><span class="p">(</span><span class="s1">&#39;WHERE&#39;</span><span class="p">),</span>
+                                   <span class="n">on_conflict</span><span class="o">.</span><span class="n">_conflict_where</span><span class="p">])</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">stmt</span> <span class="o">=</span> <span class="n">SQL</span><span class="p">(</span><span class="s1">&#39;ON CONFLICT ON CONSTRAINT&#39;</span><span class="p">)</span>
             <span class="n">target</span> <span class="o">=</span> <span class="n">on_conflict</span><span class="o">.</span><span class="n">_conflict_constraint</span>
@@ -3060,7 +3186,7 @@
         <span class="s1">&#39;ILIKE&#39;</span><span class="p">:</span> <span class="s1">&#39;LIKE&#39;</span><span class="p">}</span>
     <span class="n">index_schema_prefix</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="n">limit_max</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-    <span class="n">_sqlite_version</span> <span class="o">=</span> <span class="n">__sqlite_version__</span>
+    <span class="n">server_version</span> <span class="o">=</span> <span class="n">__sqlite_version__</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">database</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_pragmas</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;pragmas&#39;</span><span class="p">,</span> <span class="p">())</span>
@@ -3083,6 +3209,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_timeout</span> <span class="o">=</span> <span class="n">timeout</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">SqliteDatabase</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">database</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
+    <span class="k">def</span> <span class="nf">_set_server_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conn</span><span class="p">):</span>
+        <span class="k">pass</span>
+
     <span class="k">def</span> <span class="nf">_connect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">sqlite3</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">ImproperlyConfigured</span><span class="p">(</span><span class="s1">&#39;SQLite driver not installed!&#39;</span><span class="p">)</span>
@@ -3104,7 +3233,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_load_aggregates</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_load_collations</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_load_functions</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sqlite_version</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">server_version</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_load_window_functions</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_table_functions</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">table_function</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_table_functions</span><span class="p">:</span>
@@ -3381,7 +3510,7 @@
 
     <span class="k">def</span> <span class="nf">conflict_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">oc</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
         <span class="c1"># Sqlite prior to 3.24.0 does not support Postgres-style upsert.</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sqlite_version</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> \
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">server_version</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> \
            <span class="nb">any</span><span class="p">((</span><span class="n">oc</span><span class="o">.</span><span class="n">_preserve</span><span class="p">,</span> <span class="n">oc</span><span class="o">.</span><span class="n">_update</span><span class="p">,</span> <span class="n">oc</span><span class="o">.</span><span class="n">_where</span><span class="p">,</span> <span class="n">oc</span><span class="o">.</span><span class="n">_conflict_target</span><span class="p">,</span>
                 <span class="n">oc</span><span class="o">.</span><span class="n">_conflict_constraint</span><span class="p">)):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;SQLite does not support specifying which values &#39;</span>
@@ -3429,7 +3558,7 @@
     <span class="n">param</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span>
 
     <span class="n">commit_select</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="n">compound_select_parentheses</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">compound_select_parentheses</span> <span class="o">=</span> <span class="n">CSQ_PARENTHESES_ALWAYS</span>
     <span class="n">for_update</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="n">returning_clause</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="n">safe_create_index</span> <span class="o">=</span> <span class="kc">False</span>
@@ -3438,7 +3567,6 @@
     <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">database</span><span class="p">,</span> <span class="n">register_unicode</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_register_unicode</span> <span class="o">=</span> <span class="n">register_unicode</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_encoding</span> <span class="o">=</span> <span class="n">encoding</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_need_server_version</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">PostgresqlDatabase</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">database</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_connect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -3450,13 +3578,11 @@
             <span class="n">pg_extensions</span><span class="o">.</span><span class="n">register_type</span><span class="p">(</span><span class="n">pg_extensions</span><span class="o">.</span><span class="n">UNICODEARRAY</span><span class="p">,</span> <span class="n">conn</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_encoding</span><span class="p">:</span>
             <span class="n">conn</span><span class="o">.</span><span class="n">set_client_encoding</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_encoding</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_need_server_version</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">set_server_version</span><span class="p">(</span><span class="n">conn</span><span class="o">.</span><span class="n">server_version</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_need_server_version</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">return</span> <span class="n">conn</span>
 
-    <span class="k">def</span> <span class="nf">set_server_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">version</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">version</span> <span class="o">&gt;=</span> <span class="mi">90600</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">_set_server_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conn</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">server_version</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">server_version</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">server_version</span> <span class="o">&gt;=</span> <span class="mi">90600</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">safe_create_index</span> <span class="o">=</span> <span class="kc">True</span>
 
     <span class="k">def</span> <span class="nf">last_insert_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cursor</span><span class="p">,</span> <span class="n">query_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -3605,6 +3731,7 @@
     <span class="n">quote</span> <span class="o">=</span> <span class="s1">&#39;``&#39;</span>
 
     <span class="n">commit_select</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">compound_select_parentheses</span> <span class="o">=</span> <span class="n">CSQ_PARENTHESES_UNNESTED</span>
     <span class="n">for_update</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="n">limit_max</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">64</span> <span class="o">-</span> <span class="mi">1</span>
     <span class="n">safe_create_index</span> <span class="o">=</span> <span class="kc">False</span>
@@ -3620,7 +3747,27 @@
     <span class="k">def</span> <span class="nf">_connect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">mysql</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">ImproperlyConfigured</span><span class="p">(</span><span class="s1">&#39;MySQL driver not installed!&#39;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">mysql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">db</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">connect_params</span><span class="p">)</span>
+        <span class="n">conn</span> <span class="o">=</span> <span class="n">mysql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">db</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">connect_params</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">conn</span>
+
+    <span class="k">def</span> <span class="nf">_set_server_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conn</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">version_raw</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">server_version</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="n">version_raw</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">get_server_info</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">server_version</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_server_version</span><span class="p">(</span><span class="n">version_raw</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_extract_server_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">version</span><span class="p">):</span>
+        <span class="n">version</span> <span class="o">=</span> <span class="n">version</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">if</span> <span class="s1">&#39;maria&#39;</span> <span class="ow">in</span> <span class="n">version</span><span class="p">:</span>
+            <span class="n">match_obj</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(1\d\.\d+\.\d+)&#39;</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">match_obj</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(\d\.\d+\.\d+)&#39;</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">match_obj</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">match_obj</span><span class="o">.</span><span class="n">groups</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">))</span>
+
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;Unable to determine MySQL version: &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">version</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># Unable to determine version!</span>
 
     <span class="k">def</span> <span class="nf">default_values_insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctx</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">ctx</span><span class="o">.</span><span class="n">literal</span><span class="p">(</span><span class="s1">&#39;() VALUES ()&#39;</span><span class="p">)</span>
@@ -3702,12 +3849,21 @@
 
         <span class="n">updates</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="n">on_conflict</span><span class="o">.</span><span class="n">_preserve</span><span class="p">:</span>
+            <span class="c1"># Here we need to determine which function to use, which varies</span>
+            <span class="c1"># depending on the MySQL server version. MySQL and MariaDB prior to</span>
+            <span class="c1"># 10.3.3 use &quot;VALUES&quot;, while MariaDB 10.3.3+ use &quot;VALUE&quot;.</span>
+            <span class="n">version</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">server_version</span> <span class="ow">or</span> <span class="p">(</span><span class="mi">0</span><span class="p">,)</span>
+            <span class="k">if</span> <span class="n">version</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">10</span> <span class="ow">and</span> <span class="n">version</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+                <span class="n">VALUE_FN</span> <span class="o">=</span> <span class="n">fn</span><span class="o">.</span><span class="n">VALUE</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">VALUE_FN</span> <span class="o">=</span> <span class="n">fn</span><span class="o">.</span><span class="n">VALUES</span>
+
             <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">on_conflict</span><span class="o">.</span><span class="n">_preserve</span><span class="p">:</span>
                 <span class="n">entity</span> <span class="o">=</span> <span class="n">ensure_entity</span><span class="p">(</span><span class="n">column</span><span class="p">)</span>
                 <span class="n">expression</span> <span class="o">=</span> <span class="n">NodeList</span><span class="p">((</span>
                     <span class="n">ensure_entity</span><span class="p">(</span><span class="n">column</span><span class="p">),</span>
                     <span class="n">SQL</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">),</span>
-                    <span class="n">fn</span><span class="o">.</span><span class="n">VALUES</span><span class="p">(</span><span class="n">entity</span><span class="p">)))</span>
+                    <span class="n">VALUE_FN</span><span class="p">(</span><span class="n">entity</span><span class="p">)))</span>
                 <span class="n">updates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">expression</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">on_conflict</span><span class="o">.</span><span class="n">_update</span><span class="p">:</span>
@@ -4071,13 +4227,14 @@
     <span class="n">_order</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">accessor_class</span> <span class="o">=</span> <span class="n">FieldAccessor</span>
     <span class="n">auto_increment</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">default_index_type</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">field_type</span> <span class="o">=</span> <span class="s1">&#39;DEFAULT&#39;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">column_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">constraints</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">sequence</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">collation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">unindexed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">help_text</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">db_column</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">_hidden</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+                 <span class="n">help_text</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">index_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">db_column</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">_hidden</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">db_column</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">__deprecated__</span><span class="p">(</span><span class="s1">&#39;&quot;db_column&quot; has been deprecated in favor of &#39;</span>
                            <span class="s1">&#39;&quot;column_name&quot; for Field objects.&#39;</span><span class="p">)</span>
@@ -4096,6 +4253,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">choices</span> <span class="o">=</span> <span class="n">choices</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">help_text</span> <span class="o">=</span> <span class="n">help_text</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">verbose_name</span> <span class="o">=</span> <span class="n">verbose_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index_type</span> <span class="o">=</span> <span class="n">index_type</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_index_type</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_hidden</span> <span class="o">=</span> <span class="n">_hidden</span>
 
         <span class="c1"># Used internally for recovering the order in which Fields were defined</span>
@@ -4602,9 +4760,7 @@
 
     <span class="k">def</span> <span class="nf">python_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">long</span><span class="p">)):</span>
-            <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="k">return</span>
-            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">resolution</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">resolution</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="n">ticks_to_microsecond</span> <span class="o">=</span> <span class="mi">1000000</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">resolution</span>
                 <span class="n">value</span><span class="p">,</span> <span class="n">ticks</span> <span class="o">=</span> <span class="nb">divmod</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">resolution</span><span class="p">)</span>
                 <span class="n">microseconds</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ticks</span> <span class="o">*</span> <span class="n">ticks_to_microsecond</span><span class="p">)</span>
@@ -5382,6 +5538,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">sorted_fields</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sorted_field_list</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sorted_field_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sorted_fields</span><span class="p">]</span>
 
+    <span class="k">def</span> <span class="nf">get_rel_for_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">ModelAlias</span><span class="p">):</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">model</span>
+        <span class="n">forwardrefs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_refs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="n">backrefs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_backrefs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">forwardrefs</span><span class="p">,</span> <span class="n">backrefs</span><span class="p">)</span>
+
     <span class="k">def</span> <span class="nf">add_field</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">set_attribute</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">field_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">remove_field</span><span class="p">(</span><span class="n">field_name</span><span class="p">)</span>
@@ -5473,7 +5636,8 @@
             <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">primary_key</span><span class="p">:</span>
                 <span class="k">continue</span>
             <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">index</span> <span class="ow">or</span> <span class="n">f</span><span class="o">.</span><span class="n">unique</span><span class="p">:</span>
-                <span class="n">indexes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ModelIndex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="p">(</span><span class="n">f</span><span class="p">,),</span> <span class="n">unique</span><span class="o">=</span><span class="n">f</span><span class="o">.</span><span class="n">unique</span><span class="p">))</span>
+                <span class="n">indexes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ModelIndex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="p">(</span><span class="n">f</span><span class="p">,),</span> <span class="n">unique</span><span class="o">=</span><span class="n">f</span><span class="o">.</span><span class="n">unique</span><span class="p">,</span>
+                                          <span class="n">using</span><span class="o">=</span><span class="n">f</span><span class="o">.</span><span class="n">index_type</span><span class="p">))</span>
 
         <span class="k">for</span> <span class="n">index_obj</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">indexes</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">index_obj</span><span class="p">,</span> <span class="n">Node</span><span class="p">):</span>
@@ -5786,7 +5950,11 @@
     <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">query</span><span class="p">,</span> <span class="o">**</span><span class="n">filters</span><span class="p">):</span>
         <span class="n">sq</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">select</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">query</span><span class="p">:</span>
-            <span class="n">sq</span> <span class="o">=</span> <span class="n">sq</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="o">*</span><span class="n">query</span><span class="p">)</span>
+            <span class="c1"># Handle simple lookup using just the primary key.</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">query</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">query</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">int</span><span class="p">):</span>
+                <span class="n">sq</span> <span class="o">=</span> <span class="n">sq</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">primary_key</span> <span class="o">==</span> <span class="n">query</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">sq</span> <span class="o">=</span> <span class="n">sq</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="o">*</span><span class="n">query</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">filters</span><span class="p">:</span>
             <span class="n">sq</span> <span class="o">=</span> <span class="n">sq</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="o">**</span><span class="n">filters</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">sq</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
@@ -6852,10 +7020,12 @@
                 <span class="n">field_to_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">fields</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">is_backref</span><span class="p">:</span>
-                <span class="n">rel_models</span> <span class="o">=</span> <span class="p">[</span><span class="n">field</span><span class="o">.</span><span class="n">model</span> <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">rel_models</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">rel_models</span> <span class="o">=</span> <span class="p">[</span><span class="n">field</span><span class="o">.</span><span class="n">model</span> <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">]</span>
                 <span class="n">foreign_key_attrs</span> <span class="o">=</span> <span class="p">[</span><span class="n">field</span><span class="o">.</span><span class="n">rel_field</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">]</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">rel_models</span> <span class="o">=</span> <span class="p">[</span><span class="n">field</span><span class="o">.</span><span class="n">rel_model</span> <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">rel_models</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">rel_models</span> <span class="o">=</span> <span class="p">[</span><span class="n">field</span><span class="o">.</span><span class="n">rel_model</span> <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">]</span>
                 <span class="n">foreign_key_attrs</span> <span class="o">=</span> <span class="p">[</span><span class="n">field</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">]</span>
             <span class="n">field_to_name</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">fields</span><span class="p">,</span> <span class="n">foreign_key_attrs</span><span class="p">))</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">model</span>
@@ -6904,14 +7074,16 @@
         <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)):</span>
             <span class="n">fixed</span> <span class="o">=</span> <span class="n">fixed_queries</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
             <span class="n">last_query</span> <span class="o">=</span> <span class="n">fixed</span><span class="o">.</span><span class="n">query</span>
-            <span class="n">last_model</span> <span class="o">=</span> <span class="n">fixed</span><span class="o">.</span><span class="n">model</span>
+            <span class="n">last_model</span> <span class="o">=</span> <span class="n">last_obj</span> <span class="o">=</span> <span class="n">fixed</span><span class="o">.</span><span class="n">model</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">last_model</span><span class="p">,</span> <span class="n">ModelAlias</span><span class="p">):</span>
+                <span class="n">last_model</span> <span class="o">=</span> <span class="n">last_model</span><span class="o">.</span><span class="n">model</span>
             <span class="n">rels</span> <span class="o">=</span> <span class="n">subquery_model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">model_refs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">last_model</span><span class="p">,</span> <span class="p">[])</span>
             <span class="k">if</span> <span class="n">rels</span><span class="p">:</span>
                 <span class="n">fks</span> <span class="o">=</span> <span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="n">subquery_model</span><span class="p">,</span> <span class="n">fk</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">fk</span> <span class="ow">in</span> <span class="n">rels</span><span class="p">]</span>
-                <span class="n">pks</span> <span class="o">=</span> <span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="n">last_model</span><span class="p">,</span> <span class="n">fk</span><span class="o">.</span><span class="n">rel_field</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">fk</span> <span class="ow">in</span> <span class="n">rels</span><span class="p">]</span>
+                <span class="n">pks</span> <span class="o">=</span> <span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="n">last_obj</span><span class="p">,</span> <span class="n">fk</span><span class="o">.</span><span class="n">rel_field</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">fk</span> <span class="ow">in</span> <span class="n">rels</span><span class="p">]</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">backrefs</span> <span class="o">=</span> <span class="n">subquery_model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">model_backrefs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">last_model</span><span class="p">)</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">fks</span> <span class="ow">or</span> <span class="n">backrefs</span><span class="p">)</span> <span class="ow">and</span> <span class="p">((</span><span class="n">target_model</span> <span class="ow">is</span> <span class="n">last_model</span><span class="p">)</span> <span class="ow">or</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">fks</span> <span class="ow">or</span> <span class="n">backrefs</span><span class="p">)</span> <span class="ow">and</span> <span class="p">((</span><span class="n">target_model</span> <span class="ow">is</span> <span class="n">last_obj</span><span class="p">)</span> <span class="ow">or</span>
                                       <span class="p">(</span><span class="n">target_model</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)):</span>
                 <span class="k">break</span>
 
@@ -6920,20 +7092,22 @@
             <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s1">&#39;Error: unable to find foreign key for &#39;</span>
                                  <span class="s1">&#39;query: </span><span class="si">%s%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">subquery</span><span class="p">,</span> <span class="n">tgt_err</span><span class="p">))</span>
 
+        <span class="n">dest</span> <span class="o">=</span> <span class="p">(</span><span class="n">target_model</span><span class="p">,)</span> <span class="k">if</span> <span class="n">target_model</span> <span class="k">else</span> <span class="kc">None</span>
+
         <span class="k">if</span> <span class="n">fks</span><span class="p">:</span>
             <span class="n">expr</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">or_</span><span class="p">,</span> <span class="p">[</span>
                 <span class="p">(</span><span class="n">fk</span> <span class="o">&lt;&lt;</span> <span class="n">last_query</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">pk</span><span class="p">))</span>
                 <span class="k">for</span> <span class="p">(</span><span class="n">fk</span><span class="p">,</span> <span class="n">pk</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">fks</span><span class="p">,</span> <span class="n">pks</span><span class="p">)])</span>
             <span class="n">subquery</span> <span class="o">=</span> <span class="n">subquery</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span>
-            <span class="n">fixed_queries</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">PrefetchQuery</span><span class="p">(</span><span class="n">subquery</span><span class="p">,</span> <span class="n">fks</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+            <span class="n">fixed_queries</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">PrefetchQuery</span><span class="p">(</span><span class="n">subquery</span><span class="p">,</span> <span class="n">fks</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">dest</span><span class="p">))</span>
         <span class="k">elif</span> <span class="n">backrefs</span><span class="p">:</span>
             <span class="n">expressions</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="k">for</span> <span class="n">backref</span> <span class="ow">in</span> <span class="n">backrefs</span><span class="p">:</span>
                 <span class="n">rel_field</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">subquery_model</span><span class="p">,</span> <span class="n">backref</span><span class="o">.</span><span class="n">rel_field</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-                <span class="n">fk_field</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">last_model</span><span class="p">,</span> <span class="n">backref</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                <span class="n">fk_field</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">last_obj</span><span class="p">,</span> <span class="n">backref</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
                 <span class="n">expressions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rel_field</span> <span class="o">&lt;&lt;</span> <span class="n">last_query</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">fk_field</span><span class="p">))</span>
             <span class="n">subquery</span> <span class="o">=</span> <span class="n">subquery</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">reduce</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">or_</span><span class="p">,</span> <span class="n">expressions</span><span class="p">))</span>
-            <span class="n">fixed_queries</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">PrefetchQuery</span><span class="p">(</span><span class="n">subquery</span><span class="p">,</span> <span class="n">backrefs</span><span class="p">,</span> <span class="kc">True</span><span class="p">))</span>
+            <span class="n">fixed_queries</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">PrefetchQuery</span><span class="p">(</span><span class="n">subquery</span><span class="p">,</span> <span class="n">backrefs</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">dest</span><span class="p">))</span>
 
     <span class="k">return</span> <span class="n">fixed_queries</span>
 
@@ -6993,26 +7167,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

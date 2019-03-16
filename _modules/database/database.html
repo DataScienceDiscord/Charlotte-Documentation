@@ -17,32 +17,34 @@
   
 
   
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
-
-  
-  <script src="../../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -250,6 +252,14 @@
         <span class="k">return</span> <span class="n">Message</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">Message</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">message_id</span><span class="p">)</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="Database.get_top_members_per_message_count"><a class="viewcode-back" href="../../_generated/database.database.html#database.database.Database.get_top_members_per_message_count">[docs]</a>    <span class="k">def</span> <span class="nf">get_top_members_per_message_count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">top_n</span><span class="o">=</span><span class="mi">9</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gets the most active members sorted by number of messages posted.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            top_n: The maximum number of members to return.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A list of the top n most active members.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">query</span> <span class="o">=</span> <span class="n">Member</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">Member</span><span class="p">,</span> <span class="n">fn</span><span class="o">.</span><span class="n">Count</span><span class="p">(</span><span class="n">Message</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s1">&#39;count&#39;</span><span class="p">))</span> \
                       <span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">Message</span><span class="p">,</span> <span class="n">JOIN</span><span class="o">.</span><span class="n">RIGHT_OUTER</span><span class="p">)</span> \
                       <span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="n">Member</span><span class="p">)</span> \
@@ -258,11 +268,31 @@
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">query</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Database.get_top_members_per_num_characters"><a class="viewcode-back" href="../../_generated/database.database.html#database.database.Database.get_top_members_per_num_characters">[docs]</a>    <span class="k">def</span> <span class="nf">get_top_members_per_num_characters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">top_n</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gets the most active members sorted by the sum of the number of</span>
+<span class="sd">        characters in the messages they posted.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            top_n: The maximum number of members to return.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A list of the top n most active members.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">query</span> <span class="o">=</span> <span class="n">Member</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">Member</span><span class="p">,</span> <span class="n">fn</span><span class="o">.</span><span class="n">SUM</span><span class="p">(</span><span class="n">fn</span><span class="o">.</span><span class="n">LENGTH</span><span class="p">(</span><span class="n">Message</span><span class="o">.</span><span class="n">content</span><span class="p">))</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s1">&#39;length&#39;</span><span class="p">))</span> \
                       <span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">Message</span><span class="p">,</span> <span class="n">JOIN</span><span class="o">.</span><span class="n">RIGHT_OUTER</span><span class="p">)</span> \
                       <span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="n">Member</span><span class="p">)</span> \
                       <span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">SQL</span><span class="p">(</span><span class="s1">&#39;length&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">desc</span><span class="p">())</span> \
                       <span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="n">top_n</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">query</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Database.get_message_count_per_date"><a class="viewcode-back" href="../../_generated/database.database.html#database.database.Database.get_message_count_per_date">[docs]</a>    <span class="k">def</span> <span class="nf">get_message_count_per_date</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gets the number of messages posted by date.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A list of objects containing a day (date) and a count (number of messages posted that day) for every date</span>
+<span class="sd">            where a message was posted on the channel.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="n">Message</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">truncate_date</span><span class="p">(</span><span class="s2">&quot;day&quot;</span><span class="p">,</span> <span class="n">Message</span><span class="o">.</span><span class="n">date</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">&quot;day&quot;</span><span class="p">),</span> <span class="n">fn</span><span class="o">.</span><span class="n">Count</span><span class="p">(</span><span class="n">Message</span><span class="o">.</span><span class="n">id</span><span class="p">))</span> \
+                       <span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">truncate_date</span><span class="p">(</span><span class="s2">&quot;day&quot;</span><span class="p">,</span> <span class="n">Message</span><span class="o">.</span><span class="n">date</span><span class="p">))</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">query</span><span class="p">)</span></div></div>
 </pre></div>
 
@@ -293,26 +323,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../_static/language_data.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

@@ -17,34 +17,36 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="database.member module" href="database.member.html" />
     <link rel="prev" title="database.config module" href="database.config.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -305,12 +307,50 @@
 <dl class="method">
 <dt id="database.database.Database.get_top_members_per_message_count">
 <code class="descname">get_top_members_per_message_count</code><span class="sig-paren">(</span><em>top_n=9</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/database/database.html#Database.get_top_members_per_message_count"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#database.database.Database.get_top_members_per_message_count" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Gets the most active members sorted by number of messages posted.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>top_n</strong> – The maximum number of members to return.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A list of the top n most active members.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="database.database.Database.get_top_members_per_num_characters">
 <code class="descname">get_top_members_per_num_characters</code><span class="sig-paren">(</span><em>top_n=20</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/database/database.html#Database.get_top_members_per_num_characters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#database.database.Database.get_top_members_per_num_characters" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Gets the most active members sorted by the sum of the number of
+characters in the messages they posted.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>top_n</strong> – The maximum number of members to return.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A list of the top n most active members.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="database.database.Database.get_message_count_per_date">
+<code class="descname">get_message_count_per_date</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/database/database.html#Database.get_message_count_per_date"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#database.database.Database.get_message_count_per_date" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the number of messages posted by date.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A list of objects containing a day (date) and a count (number of messages posted that day) for every date
+where a message was posted on the channel.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
@@ -327,7 +367,7 @@
         <a href="database.member.html" class="btn btn-neutral float-right" title="database.member module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="database.config.html" class="btn btn-neutral" title="database.config module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="database.config.html" class="btn btn-neutral float-left" title="database.config module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -353,26 +393,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

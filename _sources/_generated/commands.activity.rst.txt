@@ -1,0 +1,7 @@
+commands.activity module
+========================
+
+.. automodule:: commands.activity
+    :members:
+    :undoc-members:
+    :show-inheritance:
