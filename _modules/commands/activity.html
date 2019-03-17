@@ -175,6 +175,14 @@
 
 
 <div class="viewcode-block" id="activity"><a class="viewcode-back" href="../../_generated/commands.activity.html#commands.activity.activity">[docs]</a><span class="k">def</span> <span class="nf">activity</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">database</span><span class="p">,</span> <span class="n">period</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Displays the number of messages posted over a given period.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        period: The period over which to count messages, can be &quot;day&quot; or &quot;week&quot;.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A discord message containing an activity graph attachment.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">period</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;week&quot;</span><span class="p">,</span> <span class="s2">&quot;day&quot;</span><span class="p">]:</span>
         <span class="n">response</span> <span class="o">=</span> <span class="n">Message</span><span class="p">(</span><span class="s2">&quot;Wrong command parameters.&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">.</span><span class="n">channel_id</span><span class="p">,</span> <span class="s2">&quot;Charlotte&quot;</span><span class="p">,</span> <span class="s2">&quot;Charlotte&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">response</span>

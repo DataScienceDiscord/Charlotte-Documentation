@@ -35,7 +35,7 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="commands.say module" href="commands.say.html" />
+    <link rel="next" title="commands.help module" href="commands.help.html" />
     <link rel="prev" title="commands package" href="commands.html" /> 
 </head>
 
@@ -85,6 +85,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="commands.html">commands package</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="commands.html#submodules">Submodules</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">commands.activity module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="commands.help.html">commands.help module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="commands.say.html">commands.say module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="commands.store.html">commands.store module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="commands.top.html">commands.top module</a></li>
@@ -179,7 +180,18 @@
 <dl class="function">
 <dt id="commands.activity.activity">
 <code class="descclassname">commands.activity.</code><code class="descname">activity</code><span class="sig-paren">(</span><em>message</em>, <em>database</em>, <em>period</em>, <em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/commands/activity.html#activity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#commands.activity.activity" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Displays the number of messages posted over a given period.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>period</strong> – The period over which to count messages, can be “day” or “week”.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A discord message containing an activity graph attachment.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </div>
 
@@ -191,7 +203,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="commands.say.html" class="btn btn-neutral float-right" title="commands.say module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="commands.help.html" class="btn btn-neutral float-right" title="commands.help module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="commands.html" class="btn btn-neutral float-left" title="commands package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

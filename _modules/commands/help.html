@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>commands.unknown_command &mdash; Charlotte  documentation</title>
+  <title>commands.help &mdash; Charlotte  documentation</title>
   
 
   
@@ -132,7 +132,7 @@
         
           <li><a href="../index.html">Module code</a> &raquo;</li>
         
-      <li>commands.unknown_command</li>
+      <li>commands.help</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -147,17 +147,28 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for commands.unknown_command</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">discord</span> <span class="k">import</span> <span class="n">Message</span>
+  <h1>Source code for commands.help</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">commands</span>
+<span class="kn">from</span> <span class="nn">discord</span> <span class="k">import</span> <span class="n">Message</span>
 
 
-<div class="viewcode-block" id="unknown_command"><a class="viewcode-back" href="../../_generated/commands.unknown_command.html#commands.unknown_command.unknown_command">[docs]</a><span class="k">def</span> <span class="nf">unknown_command</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">database</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Informs the user that the command was malformed or doesn&#39;t exist.</span>
+<div class="viewcode-block" id="help"><a class="viewcode-back" href="../../_generated/commands.help.html#commands.help.help">[docs]</a><span class="k">def</span> <span class="nf">help</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">database</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Displays the list of commands or the documentation for a specific command.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        command: The name of the command whose documentation must be displayed. If this</span>
+<span class="sd">        parameter isn&#39;t given the list of commands will be displayed.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        A discord message.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">Message</span><span class="p">(</span><span class="s2">&quot;There is no such command.&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">.</span><span class="n">channel_id</span><span class="p">,</span> <span class="s2">&quot;Charlotte&quot;</span><span class="p">,</span> <span class="s2">&quot;Charlotte&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">help_message</span> <span class="o">=</span> <span class="s2">&quot;```Commands: </span><span class="se">\n</span><span class="s2"> - &quot;</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> - &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">commands</span><span class="o">.</span><span class="n">identifiers</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;```&quot;</span>
+    <span class="k">elif</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">commands</span><span class="o">.</span><span class="n">identifiers</span><span class="p">:</span>
+        <span class="n">help_message</span> <span class="o">=</span> <span class="s2">&quot;```</span><span class="si">%s</span><span class="s2">```&quot;</span> <span class="o">%</span> <span class="n">commands</span><span class="o">.</span><span class="n">identifiers</span><span class="p">[</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="vm">__doc__</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">commands</span><span class="o">.</span><span class="n">unknown_command</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">database</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">Message</span><span class="p">(</span><span class="n">help_message</span><span class="p">,</span> <span class="n">message</span><span class="o">.</span><span class="n">channel_id</span><span class="p">,</span> <span class="s2">&quot;Charlotte&quot;</span><span class="p">,</span> <span class="s2">&quot;Charlotte&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">response</span></div>
 </pre></div>
 

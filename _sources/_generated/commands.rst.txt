@@ -7,6 +7,7 @@ Submodules
 .. toctree::
 
    commands.activity
+   commands.help
    commands.say
    commands.store
    commands.top

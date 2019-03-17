@@ -1,0 +1,7 @@
+commands.help module
+====================
+
+.. automodule:: commands.help
+    :members:
+    :undoc-members:
+    :show-inheritance:

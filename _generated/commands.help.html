@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>commands package &mdash; Charlotte  documentation</title>
+  <title>commands.help module &mdash; Charlotte  documentation</title>
   
 
   
@@ -35,8 +35,8 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="commands.activity module" href="commands.activity.html" />
-    <link rel="prev" title="Welcome to Charlotte’s documentation!" href="../index.html" /> 
+    <link rel="next" title="commands.say module" href="commands.say.html" />
+    <link rel="prev" title="commands.activity module" href="commands.activity.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -82,17 +82,17 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">commands package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a><ul>
+<li class="toctree-l1 current"><a class="reference internal" href="commands.html">commands package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="commands.html#submodules">Submodules</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="commands.activity.html">commands.activity module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="commands.help.html">commands.help module</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">commands.help module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="commands.say.html">commands.say module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="commands.store.html">commands.store module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="commands.top.html">commands.top module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="commands.unknown_command.html">commands.unknown_command module</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#module-commands">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="database.html">database package</a></li>
@@ -144,13 +144,15 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>commands package</li>
+          <li><a href="commands.html">commands package</a> &raquo;</li>
+        
+      <li>commands.help module</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/_generated/commands.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/_generated/commands.help.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -163,24 +165,29 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="commands-package">
-<h1>commands package<a class="headerlink" href="#commands-package" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="commands.activity.html">commands.activity module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="commands.help.html">commands.help module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="commands.say.html">commands.say module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="commands.store.html">commands.store module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="commands.top.html">commands.top module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="commands.unknown_command.html">commands.unknown_command module</a></li>
+  <div class="section" id="module-commands.help">
+<span id="commands-help-module"></span><h1>commands.help module<a class="headerlink" href="#module-commands.help" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="commands.help.help">
+<code class="descclassname">commands.help.</code><code class="descname">help</code><span class="sig-paren">(</span><em>message</em>, <em>database</em>, <em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/commands/help.html#help"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#commands.help.help" title="Permalink to this definition">¶</a></dt>
+<dd><p>Displays the list of commands or the documentation for a specific command.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>command</strong> – The name of the command whose documentation must be displayed. If this</li>
+<li><strong>isn't given the list of commands will be displayed.</strong> (<em>parameter</em>) – </li>
 </ul>
-</div>
-</div>
-<div class="section" id="module-commands">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-commands" title="Permalink to this headline">¶</a></h2>
-</div>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A discord message.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 
 
@@ -191,10 +198,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="commands.activity.html" class="btn btn-neutral float-right" title="commands.activity module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="commands.say.html" class="btn btn-neutral float-right" title="commands.say module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../index.html" class="btn btn-neutral float-left" title="Welcome to Charlotte’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="commands.activity.html" class="btn btn-neutral float-left" title="commands.activity module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
