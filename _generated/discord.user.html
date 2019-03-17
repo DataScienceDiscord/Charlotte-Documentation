@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>discord package &mdash; Charlotte  documentation</title>
+  <title>discord.user module &mdash; Charlotte  documentation</title>
   
 
   
@@ -35,8 +35,8 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="discord.consumer module" href="discord.consumer.html" />
-    <link rel="prev" title="database.thanks module" href="database.thanks.html" /> 
+    <link rel="next" title="dispatcher module" href="dispatcher.html" />
+    <link rel="prev" title="discord.payload module" href="discord.payload.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -84,8 +84,8 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="commands.html">commands package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="database.html">database package</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">discord package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a><ul>
+<li class="toctree-l1 current"><a class="reference internal" href="discord.html">discord package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="discord.html#submodules">Submodules</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="discord.consumer.html">discord.consumer module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="discord.gateway.html">discord.gateway module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="discord.gateway_connection.html">discord.gateway_connection module</a></li>
@@ -93,10 +93,10 @@
 <li class="toctree-l3"><a class="reference internal" href="discord.invite.html">discord.invite module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="discord.message.html">discord.message module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="discord.payload.html">discord.payload module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="discord.user.html">discord.user module</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">discord.user module</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#module-discord">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="discord.html#module-discord">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="dispatcher.html">dispatcher module</a></li>
@@ -146,13 +146,15 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>discord package</li>
+          <li><a href="discord.html">discord package</a> &raquo;</li>
+        
+      <li>discord.user module</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/_generated/discord.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/_generated/discord.user.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -165,26 +167,46 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="discord-package">
-<h1>discord package<a class="headerlink" href="#discord-package" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="discord.consumer.html">discord.consumer module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="discord.gateway.html">discord.gateway module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="discord.gateway_connection.html">discord.gateway_connection module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="discord.gateway_exceptions.html">discord.gateway_exceptions module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="discord.invite.html">discord.invite module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="discord.message.html">discord.message module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="discord.payload.html">discord.payload module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="discord.user.html">discord.user module</a></li>
+  <div class="section" id="module-discord.user">
+<span id="discord-user-module"></span><h1>discord.user module<a class="headerlink" href="#module-discord.user" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="discord.user.User">
+<em class="property">class </em><code class="descclassname">discord.user.</code><code class="descname">User</code><span class="sig-paren">(</span><em>id</em>, <em>username</em>, <em>discriminator</em>, <em>avatar</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/user.html#User"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.user.User" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A discord user as described here:
+<a class="reference external" href="https://discordapp.com/developers/docs/resources/user#user-object">https://discordapp.com/developers/docs/resources/user#user-object</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>id</strong> – The user’s id</li>
+<li><strong>username</strong> – The user’s username, not unique across the platform</li>
+<li><strong>discriminator</strong> – The user’s 4-digit discord-tag</li>
+<li><strong>avatar</strong> – The user’s avatar hash</li>
 </ul>
-</div>
-</div>
-<div class="section" id="module-discord">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-discord" title="Permalink to this headline">¶</a></h2>
-</div>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="staticmethod">
+<dt id="discord.user.User.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>json_data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/user.html#User.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.user.User.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a User from a json object by extracting relevant items.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>json_data</strong> – A user encoded as a json object.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A User.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 
@@ -195,10 +217,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="discord.consumer.html" class="btn btn-neutral float-right" title="discord.consumer module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="dispatcher.html" class="btn btn-neutral float-right" title="dispatcher module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="database.thanks.html" class="btn btn-neutral float-left" title="database.thanks module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="discord.payload.html" class="btn btn-neutral float-left" title="discord.payload module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

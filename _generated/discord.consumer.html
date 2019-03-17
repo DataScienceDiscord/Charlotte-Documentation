@@ -90,8 +90,10 @@
 <li class="toctree-l3"><a class="reference internal" href="discord.gateway.html">discord.gateway module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="discord.gateway_connection.html">discord.gateway_connection module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="discord.gateway_exceptions.html">discord.gateway_exceptions module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="discord.invite.html">discord.invite module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="discord.message.html">discord.message module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="discord.payload.html">discord.payload module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="discord.user.html">discord.user module</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="discord.html#module-discord">Module contents</a></li>
@@ -197,6 +199,11 @@
 <dd></dd></dl>
 
 <dl class="attribute">
+<dt id="discord.consumer.Consumer.LIST_GUILD_INVITES_ROUTE">
+<code class="descname">LIST_GUILD_INVITES_ROUTE</code><em class="property"> = 'guilds/%s/invites'</em><a class="headerlink" href="#discord.consumer.Consumer.LIST_GUILD_INVITES_ROUTE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
 <dt id="discord.consumer.Consumer.URL">
 <code class="descname">URL</code><em class="property"> = 'https://github.com/DataScienceDiscord/Charlotte'</em><a class="headerlink" href="#discord.consumer.Consumer.URL" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -238,6 +245,20 @@
 <li><strong>limit</strong> – The number of members to get.</li>
 </ul>
 </td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="discord.consumer.Consumer.list_guild_invites">
+<code class="descname">list_guild_invites</code><span class="sig-paren">(</span><em>guild_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/consumer.html#Consumer.list_guild_invites"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.consumer.Consumer.list_guild_invites" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a list of the active guild invites.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>guild_id</strong> – The guild whose invites we want.</td>
 </tr>
 </tbody>
 </table>

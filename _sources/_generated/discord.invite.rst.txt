@@ -1,0 +1,7 @@
+discord.invite module
+=====================
+
+.. automodule:: discord.invite
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -10,6 +10,7 @@ Submodules
    commands.help
    commands.say
    commands.store
+   commands.thank
    commands.top
    commands.unknown_command
 

@@ -10,8 +10,10 @@ Submodules
    discord.gateway
    discord.gateway_connection
    discord.gateway_exceptions
+   discord.invite
    discord.message
    discord.payload
+   discord.user
 
 Module contents
 ---------------

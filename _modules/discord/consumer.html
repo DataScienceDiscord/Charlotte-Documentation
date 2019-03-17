@@ -162,6 +162,7 @@
     <span class="n">ENDPOINT</span> <span class="o">=</span> <span class="s2">&quot;https://discordapp.com/api/&quot;</span>
     <span class="n">CREATE_MESSAGE_ROUTE</span> <span class="o">=</span> <span class="s2">&quot;channels/</span><span class="si">%s</span><span class="s2">/messages&quot;</span>
     <span class="n">LIST_GUILD_MEMBERS_ROUTE</span> <span class="o">=</span> <span class="s2">&quot;guilds/</span><span class="si">%s</span><span class="s2">/members&quot;</span>
+    <span class="n">LIST_GUILD_INVITES_ROUTE</span> <span class="o">=</span> <span class="s2">&quot;guilds/</span><span class="si">%s</span><span class="s2">/invites&quot;</span>
     <span class="n">URL</span>     <span class="o">=</span> <span class="s2">&quot;https://github.com/DataScienceDiscord/Charlotte&quot;</span>
     <span class="n">NAME</span>    <span class="o">=</span> <span class="s2">&quot;Charlotte&quot;</span>
     <span class="n">VERSION</span> <span class="o">=</span> <span class="mf">0.1</span>
@@ -199,7 +200,17 @@
         <span class="n">params</span>  <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;limit&quot;</span><span class="p">:</span> <span class="n">limit</span><span class="p">}</span>
         <span class="k">return</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">Consumer</span><span class="o">.</span><span class="n">ENDPOINT</span> <span class="o">+</span> <span class="n">Consumer</span><span class="o">.</span><span class="n">LIST_GUILD_MEMBERS_ROUTE</span> <span class="o">%</span> <span class="n">guild_id</span><span class="p">,</span>
                             <span class="n">headers</span> <span class="o">=</span> <span class="n">headers</span><span class="p">,</span>
-                            <span class="n">params</span>  <span class="o">=</span> <span class="n">params</span><span class="p">)</span></div></div>
+                            <span class="n">params</span>  <span class="o">=</span> <span class="n">params</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Consumer.list_guild_invites"><a class="viewcode-back" href="../../_generated/discord.consumer.html#discord.consumer.Consumer.list_guild_invites">[docs]</a>    <span class="k">def</span> <span class="nf">list_guild_invites</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">guild_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gets a list of the active guild invites.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            guild_id: The guild whose invites we want.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">Consumer</span><span class="o">.</span><span class="n">ENDPOINT</span> <span class="o">+</span> <span class="n">Consumer</span><span class="o">.</span><span class="n">LIST_GUILD_INVITES_ROUTE</span> <span class="o">%</span> <span class="n">guild_id</span><span class="p">,</span>
+                            <span class="n">headers</span> <span class="o">=</span> <span class="n">headers</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>

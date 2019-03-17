@@ -11,6 +11,7 @@ Submodules
    database.database
    database.member
    database.message
+   database.thanks
 
 Module contents
 ---------------

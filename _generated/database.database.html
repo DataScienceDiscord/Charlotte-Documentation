@@ -90,6 +90,7 @@
 <li class="toctree-l3 current"><a class="current reference internal" href="#">database.database module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="database.member.html">database.member module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="database.message.html">database.message module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="database.thanks.html">database.thanks module</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="database.html#module-database">Module contents</a></li>
@@ -349,6 +350,27 @@ characters in the messages they posted.</p>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A list of objects containing a date and a count (number of messages posted that day) for every date
 where a message was posted on the channel.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="database.database.Database.thank_member">
+<code class="descname">thank_member</code><span class="sig-paren">(</span><em>thanks_recipient_id</em>, <em>thanks_giver_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/database/database.html#Database.thank_member"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#database.database.Database.thank_member" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a thank you to the database.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>thanks_recipient_id</strong> – The id of the member to be thanked.</li>
+<li><strong>thanks_giver_id</strong> – The id of the member who’s thankful.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A thanks record.</p>
+</td>
 </tr>
 </tbody>
 </table>

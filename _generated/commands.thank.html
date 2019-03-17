@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>scripts package &mdash; Charlotte  documentation</title>
+  <title>commands.thank module &mdash; Charlotte  documentation</title>
   
 
   
@@ -35,8 +35,8 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="scripts.init_tables module" href="scripts.init_tables.html" />
-    <link rel="prev" title="dispatcher module" href="dispatcher.html" /> 
+    <link rel="next" title="commands.top module" href="commands.top.html" />
+    <link rel="prev" title="commands.store module" href="commands.store.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -82,19 +82,24 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="commands.html">commands package</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="commands.html">commands package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="commands.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="commands.activity.html">commands.activity module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="commands.help.html">commands.help module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="commands.say.html">commands.say module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="commands.store.html">commands.store module</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">commands.thank module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="commands.top.html">commands.top module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="commands.unknown_command.html">commands.unknown_command module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="commands.html#module-commands">Module contents</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="database.html">database package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="discord.html">discord package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="dispatcher.html">dispatcher module</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">scripts package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="scripts.init_tables.html">scripts.init_tables module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="scripts.migrate.html">scripts.migrate module</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#module-scripts">Module contents</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="scripts.html">scripts package</a></li>
 </ul>
 
             
@@ -140,13 +145,15 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>scripts package</li>
+          <li><a href="commands.html">commands package</a> &raquo;</li>
+        
+      <li>commands.thank module</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/_generated/scripts.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/_generated/commands.thank.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -159,20 +166,24 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="scripts-package">
-<h1>scripts package<a class="headerlink" href="#scripts-package" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="scripts.init_tables.html">scripts.init_tables module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="scripts.migrate.html">scripts.migrate module</a></li>
-</ul>
-</div>
-</div>
-<div class="section" id="module-scripts">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-scripts" title="Permalink to this headline">¶</a></h2>
-</div>
+  <div class="section" id="module-commands.thank">
+<span id="commands-thank-module"></span><h1>commands.thank module<a class="headerlink" href="#module-commands.thank" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="commands.thank.thank">
+<code class="descclassname">commands.thank.</code><code class="descname">thank</code><span class="sig-paren">(</span><em>message</em>, <em>database</em>, <em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/commands/thank.html#thank"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#commands.thank.thank" title="Permalink to this definition">¶</a></dt>
+<dd><p>Thanks a particular user for his help.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>recipient</strong> – Mention of the user to be thanked (e.g &#64;Username#1234).</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A discord message acknowledging the thanks have been recorded.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 
 
@@ -183,10 +194,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="scripts.init_tables.html" class="btn btn-neutral float-right" title="scripts.init_tables module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="commands.top.html" class="btn btn-neutral float-right" title="commands.top module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="dispatcher.html" class="btn btn-neutral float-left" title="dispatcher module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="commands.store.html" class="btn btn-neutral float-left" title="commands.store module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

@@ -1,0 +1,7 @@
+discord.user module
+===================
+
+.. automodule:: discord.user
+    :members:
+    :undoc-members:
+    :show-inheritance:

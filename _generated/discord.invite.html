@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>discord package &mdash; Charlotte  documentation</title>
+  <title>discord.invite module &mdash; Charlotte  documentation</title>
   
 
   
@@ -35,8 +35,8 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="discord.consumer module" href="discord.consumer.html" />
-    <link rel="prev" title="database.thanks module" href="database.thanks.html" /> 
+    <link rel="next" title="discord.message module" href="discord.message.html" />
+    <link rel="prev" title="discord.gateway_exceptions module" href="discord.gateway_exceptions.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -84,19 +84,19 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="commands.html">commands package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="database.html">database package</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">discord package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a><ul>
+<li class="toctree-l1 current"><a class="reference internal" href="discord.html">discord package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="discord.html#submodules">Submodules</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="discord.consumer.html">discord.consumer module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="discord.gateway.html">discord.gateway module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="discord.gateway_connection.html">discord.gateway_connection module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="discord.gateway_exceptions.html">discord.gateway_exceptions module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="discord.invite.html">discord.invite module</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">discord.invite module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="discord.message.html">discord.message module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="discord.payload.html">discord.payload module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="discord.user.html">discord.user module</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#module-discord">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="discord.html#module-discord">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="dispatcher.html">dispatcher module</a></li>
@@ -146,13 +146,15 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>discord package</li>
+          <li><a href="discord.html">discord package</a> &raquo;</li>
+        
+      <li>discord.invite module</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/_generated/discord.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/_generated/discord.invite.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -165,26 +167,48 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="discord-package">
-<h1>discord package<a class="headerlink" href="#discord-package" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="discord.consumer.html">discord.consumer module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="discord.gateway.html">discord.gateway module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="discord.gateway_connection.html">discord.gateway_connection module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="discord.gateway_exceptions.html">discord.gateway_exceptions module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="discord.invite.html">discord.invite module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="discord.message.html">discord.message module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="discord.payload.html">discord.payload module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="discord.user.html">discord.user module</a></li>
+  <div class="section" id="module-discord.invite">
+<span id="discord-invite-module"></span><h1>discord.invite module<a class="headerlink" href="#module-discord.invite" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="discord.invite.Invite">
+<em class="property">class </em><code class="descclassname">discord.invite.</code><code class="descname">Invite</code><span class="sig-paren">(</span><em>code</em>, <em>guild_id</em>, <em>channel</em>, <em>created_at</em>, <em>temporary</em>, <em>uses</em>, <em>max_uses</em>, <em>max_age</em>, <em>inviter_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/invite.html#Invite"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.invite.Invite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A discord invite as described here:
+<a class="reference external" href="https://discordapp.com/developers/docs/resources/invite#invite-object">https://discordapp.com/developers/docs/resources/invite#invite-object</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>content</strong> – The contents of the message.</li>
+<li><strong>channel_id</strong> – The id of the channel the message will be written to.</li>
+<li><strong>author_id</strong> – The unique id of the user who sent/sends the message.</li>
+<li><strong>username</strong> – The current username#discriminator combo for that user.</li>
+<li><strong>timestamp</strong> – The time of the message.</li>
+<li><strong>attachment</strong> – The file that will be attached to the message.</li>
 </ul>
-</div>
-</div>
-<div class="section" id="module-discord">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-discord" title="Permalink to this headline">¶</a></h2>
-</div>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="staticmethod">
+<dt id="discord.invite.Invite.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>json_data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/invite.html#Invite.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.invite.Invite.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an Invite from a json object by extracting relevant items.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>json_data</strong> – An invite item encoded as a json object.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">An Invite.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 
@@ -195,10 +219,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="discord.consumer.html" class="btn btn-neutral float-right" title="discord.consumer module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="discord.message.html" class="btn btn-neutral float-right" title="discord.message module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="database.thanks.html" class="btn btn-neutral float-left" title="database.thanks module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="discord.gateway_exceptions.html" class="btn btn-neutral float-left" title="discord.gateway_exceptions module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

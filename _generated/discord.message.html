@@ -36,7 +36,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="discord.payload module" href="discord.payload.html" />
-    <link rel="prev" title="discord.gateway_exceptions module" href="discord.gateway_exceptions.html" /> 
+    <link rel="prev" title="discord.invite module" href="discord.invite.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -90,8 +90,10 @@
 <li class="toctree-l3"><a class="reference internal" href="discord.gateway.html">discord.gateway module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="discord.gateway_connection.html">discord.gateway_connection module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="discord.gateway_exceptions.html">discord.gateway_exceptions module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="discord.invite.html">discord.invite module</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">discord.message module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="discord.payload.html">discord.payload module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="discord.user.html">discord.user module</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="discord.html#module-discord">Module contents</a></li>
@@ -169,7 +171,7 @@
 <span id="discord-message-module"></span><h1>discord.message module<a class="headerlink" href="#module-discord.message" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="discord.message.Message">
-<em class="property">class </em><code class="descclassname">discord.message.</code><code class="descname">Message</code><span class="sig-paren">(</span><em>content</em>, <em>channel_id</em>, <em>author_id</em>, <em>username</em>, <em>timestamp=None</em>, <em>attachment=None</em>, <em>embed=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/message.html#Message"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.message.Message" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">discord.message.</code><code class="descname">Message</code><span class="sig-paren">(</span><em>content</em>, <em>channel_id</em>, <em>author_id</em>, <em>username</em>, <em>timestamp=None</em>, <em>attachment=None</em>, <em>embed=None</em>, <em>mentions=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discord/message.html#Message"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discord.message.Message" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>A discord message as described here:
 <a class="reference external" href="https://discordapp.com/developers/docs/resources/channel#message-object">https://discordapp.com/developers/docs/resources/channel#message-object</a>
@@ -185,6 +187,8 @@ A message can be either received through the gateway websocket or sent to the RE
 <li><strong>username</strong> – The current username#discriminator combo for that user.</li>
 <li><strong>timestamp</strong> – The time of the message.</li>
 <li><strong>attachment</strong> – The file that will be attached to the message.</li>
+<li><strong>embed</strong> – # TODO: document.</li>
+<li><strong>mentions</strong> – A list of users mentioned in the message.</li>
 </ul>
 </td>
 </tr>
@@ -249,7 +253,7 @@ A message can be either received through the gateway websocket or sent to the RE
         <a href="discord.payload.html" class="btn btn-neutral float-right" title="discord.payload module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="discord.gateway_exceptions.html" class="btn btn-neutral float-left" title="discord.gateway_exceptions module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="discord.invite.html" class="btn btn-neutral float-left" title="discord.invite module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

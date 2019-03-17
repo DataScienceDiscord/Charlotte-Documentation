@@ -1,0 +1,7 @@
+database.thanks module
+======================
+
+.. automodule:: database.thanks
+    :members:
+    :undoc-members:
+    :show-inheritance:
