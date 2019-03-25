@@ -195,23 +195,7 @@
 <span class="sd">            A tuple containing the command identifier and the parameters.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_command</span><span class="p">(</span><span class="n">content</span><span class="p">):</span>
-
-            <span class="c1"># Extract command</span>
-            <span class="c1">#commands look like:</span>
-            <span class="c1"># prefix(includes delimiter) command delimiter params</span>
-            <span class="c1"># without spaces</span>
-            <span class="n">command</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">Dispatcher</span><span class="o">.</span><span class="n">DELIMITER</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Badly formatted command.&quot;</span><span class="p">)</span>
-
-            <span class="c1"># Extract params</span>
-            <span class="n">content_start</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">Dispatcher</span><span class="o">.</span><span class="n">COMMAND_PREFIX</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
-            <span class="n">params</span> <span class="o">=</span> <span class="n">content</span><span class="p">[</span><span class="n">content_start</span><span class="p">:]</span>
-
-            <span class="c1"># Getting rid of the delimiter</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">params</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">params</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
-
+            <span class="n">prefix</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="o">*</span><span class="n">params</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">Dispatcher</span><span class="o">.</span><span class="n">DELIMITER</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">command</span><span class="p">,</span> <span class="n">params</span>
         <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span></div>
 
@@ -244,7 +228,7 @@
         <span class="n">command</span><span class="p">,</span> <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">command</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">command</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">commands</span><span class="o">.</span><span class="n">identifiers</span><span class="p">:</span>
-                <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+                <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="o">*</span><span class="n">params</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s2">&quot;unknown_command&quot;</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">response</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
